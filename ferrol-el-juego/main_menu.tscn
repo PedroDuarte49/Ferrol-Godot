@@ -1,7 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://bvsi4gf3ygki4"]
+[gd_scene load_steps=8 format=3 uid="uid://blx7yjpqpj8bi"]
 
 [ext_resource type="Texture2D" uid="uid://b1a42xhugma0y" path="res://imagen menu.png" id="1_06t4h"]
-[ext_resource type="Script" uid="uid://w2rbh85bi0j7" path="res://main_menu.gd" id="1_7vrkn"]
+[ext_resource type="Script" path="res://main_menu.gd" id="1_7vrkn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jix8l"]
+bg_color = Color(0.015863016, 0.1832487, 0.26054394, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7vrkn"]
+bg_color = Color(0.008899616, 0.21171048, 0.31736523, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fu7sn"]
+bg_color = Color(0.045367405, 0.22010508, 0.29339182, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glbon"]
+bg_color = Color(0.03628493, 0.20536375, 0.271868, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nlkkf"]
+bg_color = Color(0.087316416, 0.14021453, 0.3659907, 1)
 
 [node name="Main Menu" type="Control"]
 layout_mode = 3
@@ -15,8 +30,19 @@ size_flags_vertical = 3
 script = ExtResource("1_7vrkn")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 40.0
+modulate = Color(1, 1, 1, 0.6431373)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -768.0
+offset_top = -512.0
+offset_right = 768.0
+offset_bottom = 512.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("1_06t4h")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -37,22 +63,28 @@ alignment = 1
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_jix8l")
 text = "MENU"
+horizontal_alignment = 1
 
 [node name="PLAY" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_7vrkn")
 text = "PLAY"
 
 [node name="OPTIONS" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_fu7sn")
 text = "OPTIONS"
 
 [node name="HOW TO" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_glbon")
 text = "HOW TO"
 
 [node name="EXIT" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_nlkkf")
 text = "EXIT"
 
 [connection signal="pressed" from="VBoxContainer/PLAY" to="." method="_on_play_pressed"]
