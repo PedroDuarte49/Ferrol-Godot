@@ -103,15 +103,13 @@ animations = [{
 [sub_resource type="FontVariation" id="FontVariation_w75gc"]
 base_font = ExtResource("2_1and6")
 
-[node name="Hud" type="Control"]
-z_index = 100
-layout_mode = 3
-anchors_preset = 0
+[node name="Hud" type="CanvasLayer"]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 477.0
-offset_bottom = 26.0
+offset_left = 8.0
+offset_top = 14.0
+offset_right = 485.0
+offset_bottom = 40.0
 
 [node name="Botellas" type="Control" parent="HBoxContainer"]
 layout_mode = 2
