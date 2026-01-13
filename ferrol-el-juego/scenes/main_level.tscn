@@ -27,9 +27,3 @@ script = ExtResource("2_6we3w")
 script = ExtResource("3_qmak7")
 
 [node name="Hud" parent="." instance=ExtResource("1_ufxs0")]
-top_level = true
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2

@@ -6,18 +6,18 @@ extends Node2D
 @onready var hud: Control = $Hud
 @onready var camera: Camera2D = $Camera2D
 
-#func _ready():
+func _ready():
 	# 🔗 Inyectar referencias en GameManager
-	#GameManager.hud = hud
-	#GameManager.player = drunkmaster
-	#GameManager.levelcontainer = levelcontainer
-	#GameManager.fade = fade
+	GameManager.hud = hud
+	#GameManager.player = player
+	GameManager.levelcontainer = levelcontainer
+	GameManager.fade = fade
 	
 	# 🔒 Player desactivado mientras carga
 	#player.set_physics_process(false)
 
 	# 📍 Checkpoint inicial (SIEMPRE)
-
+	#AAQUI ASIGNAMOS EL PRIMER SPAWN
 
 	# ▶️ Cargar primer nivel usando GameManager
 	#await GameManager.load_level(GameManager.levels[0])
