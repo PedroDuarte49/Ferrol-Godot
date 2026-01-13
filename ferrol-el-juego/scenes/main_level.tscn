@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bs30a2v76iu4q"]
+[gd_scene load_steps=5 format=3 uid="uid://bs30a2v76iu4q"]
 
 [ext_resource type="Script" uid="uid://b2yc4ki6hq2vp" path="res://scripts/main_level.gd" id="1_6we3w"]
 [ext_resource type="PackedScene" uid="uid://db8abtn46vd1r" path="res://scenes/HUD.tscn" id="1_ufxs0"]
 [ext_resource type="Script" uid="uid://ckb0lovbme3cj" path="res://scripts/fade.gd" id="2_6we3w"]
+[ext_resource type="Script" uid="uid://baqo0bwij0vcf" path="res://scripts/camera_2d.gd" id="3_qmak7"]
 
 [node name="main_level" type="Node2D"]
 script = ExtResource("1_6we3w")
@@ -23,6 +24,7 @@ color = Color(0, 0, 0, 1)
 script = ExtResource("2_6we3w")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("3_qmak7")
 
 [node name="Hud" parent="." instance=ExtResource("1_ufxs0")]
 top_level = true
