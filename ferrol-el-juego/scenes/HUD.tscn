@@ -104,6 +104,7 @@ animations = [{
 base_font = ExtResource("2_1and6")
 
 [node name="Hud" type="Control"]
+z_index = 100
 layout_mode = 3
 anchors_preset = 0
 
