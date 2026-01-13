@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=4 uid="uid://cdh0i6alksv40"]
+[gd_scene load_steps=6 format=4 uid="uid://cdh0i6alksv40"]
 
 [ext_resource type="Texture2D" uid="uid://dhx4iqhtnhp4i" path="res://assets/Stage Layers/tileset.png" id="1_1kq6m"]
 [ext_resource type="Texture2D" uid="uid://8y41inos6fdw" path="res://assets/Stage Layers/props/hydrant.png" id="1_1noi2"]
+[ext_resource type="Script" uid="uid://bhnqwgq4tejp3" path="res://scripts/mapa_1.gd" id="1_jl44s"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1noi2"]
 texture = ExtResource("1_1kq6m")
@@ -527,6 +528,10 @@ texture = ExtResource("1_1kq6m")
 sources/0 = SubResource("TileSetAtlasSource_1noi2")
 
 [node name="mapa-1" type="Node2D"]
+script = ExtResource("1_jl44s")
+cam_limit_top = -97
+cam_limit_right = 1887
+cam_limit_bottom = 732
 
 [node name="Detalles" type="Node2D" parent="."]
 position = Vector2(1730, 37)
