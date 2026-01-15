@@ -1,22 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://blx7yjpqpj8bi"]
+[gd_scene load_steps=3 format=3 uid="uid://r5fjd07m0acd"]
 
 [ext_resource type="Texture2D" uid="uid://b1a42xhugma0y" path="res://imagen menu.png" id="1_06t4h"]
 [ext_resource type="Script" path="res://main_menu.gd" id="1_7vrkn"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jix8l"]
-bg_color = Color(0.015863016, 0.1832487, 0.26054394, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7vrkn"]
-bg_color = Color(0.008899616, 0.21171048, 0.31736523, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fu7sn"]
-bg_color = Color(0.045367405, 0.22010508, 0.29339182, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glbon"]
-bg_color = Color(0.03628493, 0.20536375, 0.271868, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nlkkf"]
-bg_color = Color(0.087316416, 0.14021453, 0.3659907, 1)
 
 [node name="Main Menu" type="Control"]
 layout_mode = 3
@@ -29,6 +14,15 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_7vrkn")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = 3
+layout_mode = 0
+offset_left = 460.0
+offset_top = 142.0
+offset_right = 830.0
+offset_bottom = 610.0
+color = Color(0.60784316, 0.60784316, 0.60784316, 0.6627451)
+
 [node name="TextureRect" type="TextureRect" parent="."]
 modulate = Color(1, 1, 1, 0.6431373)
 layout_mode = 1
@@ -37,10 +31,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -768.0
-offset_top = -512.0
-offset_right = 768.0
-offset_bottom = 512.0
+offset_left = -697.0
+offset_top = -461.0
+offset_right = 839.0
+offset_bottom = 563.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_06t4h")
@@ -52,39 +46,44 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -39.5
-offset_top = -103.5
-offset_right = 39.5
-offset_bottom = 103.5
+offset_left = -98.0
+offset_top = -165.25
+offset_right = 233.5
+offset_bottom = 261.75
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 15
 alignment = 1
 
 [node name="Label" type="Label" parent="VBoxContainer"]
+z_index = 3
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_jix8l")
+theme_override_font_sizes/font_size = 48
 text = "MENU"
 horizontal_alignment = 1
 
 [node name="PLAY" type="Button" parent="VBoxContainer"]
+z_index = 99
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_7vrkn")
+theme_override_font_sizes/font_size = 48
 text = "PLAY"
 
 [node name="OPTIONS" type="Button" parent="VBoxContainer"]
+z_index = 3
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_fu7sn")
+theme_override_font_sizes/font_size = 48
 text = "OPTIONS"
 
 [node name="HOW TO" type="Button" parent="VBoxContainer"]
+z_index = 3
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_glbon")
+theme_override_font_sizes/font_size = 48
 text = "HOW TO"
 
 [node name="EXIT" type="Button" parent="VBoxContainer"]
+z_index = 3
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_nlkkf")
+theme_override_font_sizes/font_size = 48
 text = "EXIT"
 
 [connection signal="pressed" from="VBoxContainer/PLAY" to="." method="_on_play_pressed"]
