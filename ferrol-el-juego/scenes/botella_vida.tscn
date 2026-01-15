@@ -1,6 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://6d6lqbsmicn"]
+[gd_scene load_steps=15 format=3 uid="uid://dj1ib80drgnk3"]
 
-[ext_resource type="Script" uid="uid://imaddbgsjw8j" path="res://scripts/botella_ataque.gd" id="1_7o7og"]
+[ext_resource type="Script" uid="uid://d33wn34v3mpk" path="res://scripts/botella_vida.gd" id="1_7o7og"]
 [ext_resource type="Texture2D" uid="uid://dud5juj4bvel1" path="res://assets/bottle_animation.png" id="2_23pet"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5xt1d"]
@@ -84,16 +84,16 @@ animations = [{
 "speed": 7.0
 }]
 
-[node name="botella_ataque" type="Area2D"]
+[node name="botella_vida" type="Area2D"]
 script = ExtResource("1_7o7og")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_5xt1d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-modulate = Color(2.009787, 0, 0.29824534, 1)
+modulate = Color(0, 2.0098896, 0.68258536, 1)
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_0b0qm")
-frame_progress = 0.8340865
+frame_progress = 0.629377
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

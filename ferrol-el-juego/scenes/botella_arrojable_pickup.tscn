@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://bm8ehel1lm7o"]
 
-[ext_resource type="Script" uid="uid://bfa2gghgwunmp" path="res://scripts/botella_arrojable.gd" id="1_t1e55"]
+[ext_resource type="Script" uid="uid://bynb3ymao85bv" path="res://scripts/botella_arrojable_pickup.gd" id="1_vjrex"]
 [ext_resource type="Texture2D" uid="uid://dud5juj4bvel1" path="res://assets/bottle_animation.png" id="2_brb6s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5xt1d"]
@@ -85,7 +85,7 @@ animations = [{
 }]
 
 [node name="botella_arrojable_pickup" type="Area2D"]
-script = ExtResource("1_t1e55")
+script = ExtResource("1_vjrex")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_5xt1d")
