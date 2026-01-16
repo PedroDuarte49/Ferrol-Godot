@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dhx4iqhtnhp4i" path="res://assets/Stage Layers/tileset.png" id="1_1kq6m"]
 [ext_resource type="Texture2D" uid="uid://8y41inos6fdw" path="res://assets/Stage Layers/props/hydrant.png" id="1_1noi2"]
+[ext_resource type="PackedScene" uid="uid://dc623jpdtnl74" path="res://scenes/player.tscn" id="3_jl44s"]
 [ext_resource type="Script" path="res://scripts/mapa_1.gd" id="1_jl44s"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1noi2"]
@@ -562,6 +563,8 @@ tile_map_data = PackedByteArray("AAAAAPr/AAAAAAAAAAAAAPv/AAAAAAEAAAAAAPz/AAAAAAI
 tile_set = SubResource("TileSet_hpnlm")
 metadata/_edit_group_ = true
 
+[node name="player" parent="." instance=ExtResource("3_jl44s")]
+position = Vector2(197, 62)
 [node name="bordes" type="Node" parent="."]
 
 [node name="borde_izq" type="Area2D" parent="bordes"]
