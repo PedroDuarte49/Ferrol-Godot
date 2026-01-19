@@ -9,7 +9,7 @@ class_name enemy
 
 @onready var hurtbox: CollisionShape2D = $hurtbox
 
-enum State { IDLE, PATROL, CHASE, READY, READY_MELEE, ATTACK, ATTACK_MELEE, HEAD, HURT, DEAD }
+enum State { IDLE, CHASE, READY,  ATTACK, HURT, DEAD }
 var state: State = State.IDLE
 var direction = -1
 var life = 3
@@ -209,7 +209,7 @@ func apply_enemy_separation(delta: float) -> Vector2:
 			var diff = global_position - body.global_position
 			var dist = diff.length()
 			if dist > 0:
-				separation += diff.normalized() * (80.0 / dist) #cambiar el valor numerico mas bajo si se empujan mucho
+				separation += diff.normalized() * (100.0 / dist) #cambiar el valor numerico mas bajo si se empujan mucho
 	return separation * delta
 
 func spawn_blood():

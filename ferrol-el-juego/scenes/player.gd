@@ -4,6 +4,8 @@ class_name Player
 
 @export var speed := 200
 @export var attack_damage := 1
+@onready var attack_hitbox: Area2D = $attack_hitbox
+@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 
 @onready var sprite := $AnimatedSprite2D
 
@@ -19,8 +21,6 @@ var health = 100
 var alive = true
 #Vida
 
-func _ready():
-	$attack_hitbox.monitoring = false
 
 func _physics_process(delta):
 	if attacking:
@@ -69,9 +69,6 @@ func attack():
 	$attack_hitbox.monitoring = false
 	attacking = false
 
-func _on_area_2d_body_entered(body):
-	if body.is_in_group("Enemy"):
-		body.take_damage(attack_damage)
 		
 func start_hit_effect():
 	# Alterna el color del sprite para parpadear
@@ -93,3 +90,8 @@ func take_damage(amount: int = 1):
 	invulnerable = true
 	start_hit_effect()
 	
+
+
+func _on_attack_hitbox_body_entered(body: Node2D) -> void:
+		if body.is_in_group("Enemy"):
+			body.take_damage(attack_damage,global_position,0)

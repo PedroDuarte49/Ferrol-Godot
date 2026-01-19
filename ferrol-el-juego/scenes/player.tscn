@@ -529,7 +529,11 @@ position = Vector2(-6, 35)
 shape = SubResource("CapsuleShape2D_x5gf8")
 
 [node name="attack_hitbox" type="Area2D" parent="."]
+collision_mask = 2
+monitoring = false
 
 [node name="attackShape2D" type="CollisionShape2D" parent="attack_hitbox"]
 position = Vector2(14, 31)
 shape = SubResource("CapsuleShape2D_y4r1p")
+
+[connection signal="body_entered" from="attack_hitbox" to="." method="_on_attack_hitbox_body_entered"]
