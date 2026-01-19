@@ -99,7 +99,8 @@ func _on_frame_changed():
 func take_damage(amount: int, from_position: Vector2, attack_type: int):
 	if invulnerable or health <= 0:
 		return
-
+		#apagamos la hitbox de ataque 
+	attack_hitbox.monitoring = false
 	invulnerable = true
 	state = State.HURT
 	anim_modulate(Color(1,0,0))
