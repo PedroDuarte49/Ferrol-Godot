@@ -302,6 +302,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_k71ie")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_umvf4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hhttj")
 }],
 "loop": false,
 "name": &"ready",
@@ -328,7 +334,9 @@ script = ExtResource("1_hg6k4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="flipper"]
 sprite_frames = SubResource("SpriteFrames_jo5o4")
-animation = &"die"
+animation = &"ready"
+frame = 4
+frame_progress = 1.0
 
 [node name="enemy_avoid_area" type="Area2D" parent="flipper"]
 position = Vector2(-1, 1)
@@ -345,10 +353,11 @@ rotation = 1.5789889
 shape = SubResource("CapsuleShape2D_hg6k4")
 
 [node name="blood_particles" type="CPUParticles2D" parent="flipper"]
+z_index = 10
 position = Vector2(-6, 18)
 emitting = false
-amount = 40
-lifetime = 0.45
+amount = 80
+lifetime = 0.5
 one_shot = true
 explosiveness = 0.41
 emission_shape = 1
@@ -357,7 +366,7 @@ spread = 180.0
 gravity = Vector2(0, 200)
 initial_velocity_min = 100.0
 initial_velocity_max = 100.0
-color = Color(1, 0.039215688, 0, 1)
+color = Color(1, 0, 0, 1)
 
 [node name="hurtbox" type="CollisionShape2D" parent="."]
 position = Vector2(-7, 30)

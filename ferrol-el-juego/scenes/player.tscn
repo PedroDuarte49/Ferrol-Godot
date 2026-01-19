@@ -11,6 +11,10 @@
 [ext_resource type="Texture2D" uid="uid://btxbalt4bob2r" path="res://assets/Homeless_3/Jump.png" id="8_inrnk"]
 [ext_resource type="Texture2D" uid="uid://bhex6d6y3diem" path="res://assets/Homeless_3/Special.png" id="9_wqsd8"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x5gf8"]
+radius = 9.0
+height = 55.0
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ugk0l"]
 atlas = ExtResource("1_cibgq")
 region = Rect2(0, 0, 128, 128)
@@ -283,7 +287,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"ataque1",
-"speed": 8.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -295,7 +299,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mamov")
 }],
-"loop": true,
+"loop": false,
 "name": &"ataque2",
 "speed": 6.0
 }, {
@@ -456,7 +460,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ge44x")
 }],
-"loop": true,
+"loop": false,
 "name": &"sentarse",
 "speed": 4.0
 }, {
@@ -505,35 +509,35 @@ animations = [{
 "speed": 8.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x5gf8"]
-radius = 9.0
-height = 55.0
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y4r1p"]
-radius = 13.0
-height = 38.0
+radius = 7.0
+height = 28.01125
 
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_y4r1p")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_xq601")
-animation = &"hurt"
-autoplay = "idle"
-frame = 2
-frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-6, 35)
 shape = SubResource("CapsuleShape2D_x5gf8")
 
-[node name="attack_hitbox" type="Area2D" parent="."]
+[node name="flipper" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="flipper"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_xq601")
+animation = &"ataque1"
+autoplay = "idle"
+frame = 4
+frame_progress = 1.0
+
+[node name="attack_hitbox" type="Area2D" parent="flipper"]
 collision_mask = 2
 monitoring = false
 
-[node name="attackShape2D" type="CollisionShape2D" parent="attack_hitbox"]
-position = Vector2(14, 31)
+[node name="attackShape2D" type="CollisionShape2D" parent="flipper/attack_hitbox"]
+position = Vector2(14, 26.999998)
+rotation = 1.5679537
 shape = SubResource("CapsuleShape2D_y4r1p")
 
-[connection signal="body_entered" from="attack_hitbox" to="." method="_on_attack_hitbox_body_entered"]
+[connection signal="frame_changed" from="flipper/AnimatedSprite2D" to="." method="_on_frame_changed"]
+[connection signal="body_entered" from="flipper/attack_hitbox" to="." method="_on_attack_hitbox_body_entered"]

@@ -4,7 +4,8 @@ class_name enemy
 @onready var flipper: Node2D = $flipper
 @onready var anim: AnimatedSprite2D = $flipper/AnimatedSprite2D
 @onready var enemy_avoid_area: Area2D = $flipper/enemy_avoid_area
-@onready var blood_particles: CPUParticles2D = $flipper/Bloodparticles
+@onready var blood_particles: CPUParticles2D = $flipper/blood_particles
+
 @onready var attack_hitbox: Area2D = $flipper/attack_hitbox
 
 @onready var hurtbox: CollisionShape2D = $hurtbox
@@ -20,7 +21,7 @@ var patrol_time = 0.0
 var idle_time = 0.0
 
 const MAX_VERTICAL_DIFF := 20.0
-var attack_cooldown = 1.0 
+var attack_cooldown = 1.5 
 var attack_timer = 0.0
 var head_timer_started = false
 
@@ -77,7 +78,7 @@ func state_chase(_delta):
 		state = State.IDLE
 		return
 
-	var player_pos = GameManager.player.global_position
+	var player_pos = GameManager.player.global_position 
 	var dir = player_pos - global_position
 
 	# ---------- FASE 1: ALINEARSE EN Y ----------
@@ -170,7 +171,7 @@ func take_damage(amount, enemyposition: Vector2, attacktype: int):
 		state = State.DEAD
 	else:
 		state = State.HURT
-		anim.modulate = Color(0.796, 0.0, 0.0, 0.741)
+		#anim.modulate = Color(1.0, 0.408, 0.471, 1.0)
 		apply_knockback(amount, enemyposition, attacktype)
 
 func apply_knockback(amount:int, from_position: Vector2, attack_type:int, knockback_strength: float = 100.0,knockback_time = 0.5):
@@ -200,16 +201,16 @@ func set_direction(dir):
 func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	if body is Player:
 		var player: Player = body as Player
-		player.take_damage(attack_power)
+		player.take_damage(attack_power,global_position,0)
 
 func apply_enemy_separation(delta: float) -> Vector2:
 	var separation := Vector2.ZERO
 	for body in enemy_avoid_area.get_overlapping_bodies():
-		if body != self and body.is_in_group("Enemies"):
+		if body != self and body.is_in_group("Enemy"):
 			var diff = global_position - body.global_position
 			var dist = diff.length()
 			if dist > 0:
-				separation += diff.normalized() * (100.0 / dist) #cambiar el valor numerico mas bajo si se empujan mucho
+				separation += diff.normalized() * (200.0 / dist) #cambiar el valor numerico mas bajo si se empujan mucho
 	return separation * delta
 
 func spawn_blood():
