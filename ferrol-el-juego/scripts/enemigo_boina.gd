@@ -1,25 +1,24 @@
 extends CharacterBody2D
 class_name enemy
 
-@onready var flipper: Node2D = $Flipper
-@onready var anim: AnimatedSprite2D = $Flipper/AnimatedSprite2D
-@onready var raywall: RayCast2D = $Flipper/raywall
-@onready var rayattack: RayCast2D = $Flipper/rayattack
-@onready var detection_area: Area2D = $detection_area
-@onready var enemy_avoid_area: Area2D = $Flipper/enemy_avoid_area
-@onready var blood_particles: CPUParticles2D = $Flipper/Bloodparticles
-@onready var attack_hitbox: Area2D = $Flipper/attack_hitbox
+@onready var flipper: Node2D = $flipper
+@onready var anim: AnimatedSprite2D = $flipper/AnimatedSprite2D
+@onready var enemy_avoid_area: Area2D = $flipper/enemy_avoid_area
+@onready var blood_particles: CPUParticles2D = $flipper/Bloodparticles
+@onready var attack_hitbox: Area2D = $flipper/attack_hitbox
+
 @onready var hurtbox: CollisionShape2D = $hurtbox
 
 enum State { IDLE, PATROL, CHASE, READY, READY_MELEE, ATTACK, ATTACK_MELEE, HEAD, HURT, DEAD }
 var state: State = State.IDLE
 var direction = -1
-@export var life = 3
-@export var attack_power = 1
-@export var speed = 100.0
-@export var point_value=50
+var life = 3
+var attack_power = 1
+var speed = 100.0
+var point_value=50
 var patrol_time = 0.0
 var idle_time = 0.0
+
 const MAX_VERTICAL_DIFF := 20.0
 var attack_cooldown = 1.0 
 var attack_timer = 0.0
@@ -27,7 +26,8 @@ var head_timer_started = false
 
 func _ready():
 	state = State.IDLE
-	idle_time = randf_range(2.0, 10.0)  # ajusta según cuánto quieres que esté idle
+	idle_time = randf_range(2.0, 5.0)  # ajusta según cuánto quieres que esté idle
+	anim.connect("animation_finished", Callable(self, "_on_anim_finished"))
 
 
 func _physics_process(delta: float) -> void:
@@ -80,39 +80,44 @@ func state_chase(_delta):
 	var player_pos = GameManager.player.global_position
 	var dir = player_pos - global_position
 
-	# --- Movimiento horizontal (X) ---
-	set_direction(sign(dir.x))
-	velocity.x = direction * speed * 1.3
+	# ---------- FASE 1: ALINEARSE EN Y ----------
+	if abs(dir.y) > MAX_VERTICAL_DIFF:
+		var y_sign = sign(dir.y)
+		if y_sign != 0:
+			velocity.y = y_sign * speed * 0.6
+		else:
+			velocity.y = 0
 
-	# --- Movimiento vertical (Y) ---
-	var y_dir := 0.0
-	if abs(dir.y) > 6:  # zona muerta para evitar vibración
-		y_dir = sign(dir.y)
-
-	velocity.y = y_dir * speed * 0.6   # más lento en Y (estilo beat 'em up)
-
-	# --- Separación entre enemigos ---
-	var separation := apply_enemy_separation(_delta)
-	velocity += separation
-
-	# --- Obstáculos ---
-	if raywall.is_colliding():
 		velocity.x = 0
 		return
+	else:
+		velocity.y = 0
 
-	# --- Ataque SOLO si está alineado en Y y delante ---
-	if abs(dir.y) <= MAX_VERTICAL_DIFF and rayattack.is_colliding():
+	# ---------- FASE 2: ACERCARSE EN X ----------
+	if dir.x != 0:
+		set_direction(sign(dir.x))
+
+	velocity.x = direction * speed
+
+	# ---------- RESPETO DE ESPACIO ----------
+	var min_distance := 14.0
+	if abs(dir.x) < min_distance:
+		velocity.x = 0
+
+	# ---------- SEPARACIÓN ENTRE ENEMIGOS ----------
+	velocity += apply_enemy_separation(_delta)
+
+	# ---------- FASE 3: ATAQUE ----------
+	var attack_distance := 20.0
+	if abs(dir.x) <= attack_distance:
 		state = State.READY
 
 
 
 func state_ready(_delta):
 	if state != State.HURT:
-		velocity.x = 0
+		velocity = Vector2.ZERO
 		play_anim("ready")
-		
-		if not rayattack.is_colliding():
-			state = State.CHASE
 		
 
 func state_attack(_delta):
@@ -124,25 +129,10 @@ func state_attack(_delta):
 		if anim.frame == frames - 1:
 			state = State.CHASE
 			attack_timer = attack_cooldown
-
-func state_head(_delta):
-	velocity.x = 0
-	play_anim("head")
-	
-	var frames = anim.sprite_frames.get_frame_count("head")
-	var fps = anim.sprite_frames.get_animation_speed("head")
-	if fps > 0:
-		var t = Timer.new()
-		t.wait_time = frames / fps
-		t.one_shot = true
-		t.connect("timeout", Callable(self, "_on_head_timer_timeout"))
-		add_child(t)
-		t.start()
 		
 func state_hurt(_delta):
 	play_anim("hurt")
 	
-
 func state_dead(_delta):
 	velocity = Vector2.ZERO
 
@@ -151,9 +141,7 @@ func state_dead(_delta):
 		attack_hitbox.set_deferred("monitorable", false)
 		hurtbox.set_deferred("disabled", true)
 		play_anim("die")
-
 		#GameManager.add_point(point_value)
-
 
 		# Timer para desaparecer
 		var frames = anim.sprite_frames.get_frame_count("die")
@@ -199,16 +187,6 @@ func _end_knockback():
 		state = State.CHASE
 		anim.modulate = Color(1,1,1,1)
 # ------------------- Detección ------------------- #
-func _on_detection_area_body_entered(body: Node2D) -> void:
-	if state == State.DEAD: return
-	if body is Player:
-		state = State.CHASE
-
-func should_turn() -> bool:
-	if raywall.is_colliding():
-		return true
-	return false
-
 func turn():
 	direction *= -1
 	set_direction(direction)
@@ -222,8 +200,7 @@ func set_direction(dir):
 func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	if body is Player:
 		var player: Player = body as Player
-		player.take_damage(attack_power, global_position, 0)
-
+		player.take_damage(attack_power)
 
 func apply_enemy_separation(delta: float) -> Vector2:
 	var separation := Vector2.ZERO
@@ -235,13 +212,14 @@ func apply_enemy_separation(delta: float) -> Vector2:
 				separation += diff.normalized() * (80.0 / dist) #cambiar el valor numerico mas bajo si se empujan mucho
 	return separation * delta
 
-func _on_anim_finished():
-	if anim.animation == "ready" and state == State.READY:
-		state = State.ATTACK
-	
 func spawn_blood():
 	if blood_particles:
 				# Reiniciamos partículas
 		blood_particles.emitting = false
 		blood_particles.restart()
 		blood_particles.emitting = true
+
+func _on_anim_finished() -> void:
+	if anim.animation == "ready" and state == State.READY:
+		state = State.ATTACK
+	

@@ -69,9 +69,9 @@ func attack():
 	$attack_hitbox.monitoring = false
 	attacking = false
 
-#func _on_area_2d_body_entered(body):
-	#if body is Enemy:
-		#body.take_damage(attack_damage)
+func _on_area_2d_body_entered(body):
+	if body.is_in_group("Enemy"):
+		body.take_damage(attack_damage)
 		
 func start_hit_effect():
 	# Alterna el color del sprite para parpadear

@@ -1,5 +1,5 @@
 extends Node
-@onready var fade: ColorRect
+var fade: ColorRect
 var hud: Node = null
 var levelcontainer: Node2D = null
 var player: Node = null
@@ -11,6 +11,12 @@ var player_spawn_tag := "Spawn"
 var score := 0
 var saved_score := 0
 # Called when the node enters the scene tree for the first time.
+
+var levels = ["res://scenes/mapa-1.tscn",
+]
+
+
+
 func _ready() -> void:
 	pass # Replace with function body.
 

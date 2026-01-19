@@ -321,16 +321,13 @@ radius = 9.0
 height = 68.0
 
 [node name="enemigo_boina" type="CharacterBody2D" groups=["Enemy"]]
-collision_layer = 2
 script = ExtResource("1_hg6k4")
 
 [node name="flipper" type="Node2D" parent="."]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="flipper"]
 sprite_frames = SubResource("SpriteFrames_jo5o4")
-animation = &"ready"
-frame = 2
-frame_progress = 1.0
+animation = &"attack"
 
 [node name="enemy_avoid_area" type="Area2D" parent="flipper"]
 position = Vector2(-1, 1)
@@ -364,6 +361,3 @@ color = Color(1, 0.039215688, 0, 1)
 [node name="hurtbox" type="CollisionShape2D" parent="."]
 position = Vector2(-7, 30)
 shape = SubResource("CapsuleShape2D_t8frn")
-
-[connection signal="animation_finished" from="flipper/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="body_entered" from="flipper/attack_hitbox" to="." method="_on_attack_hitbox_body_entered"]
