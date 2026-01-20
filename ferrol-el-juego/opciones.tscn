@@ -1,0 +1,123 @@
+[gd_scene load_steps=9 format=3 uid="uid://cxohegqjpkutm"]
+
+[ext_resource type="Texture2D" uid="uid://b1a42xhugma0y" path="res://imagen menu.png" id="1_0bc36"]
+[ext_resource type="Script" uid="uid://dj04yrvk7xlbc" path="res://opciones.gd" id="1_wvblx"]
+
+[sub_resource type="Theme" id="Theme_wvblx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0bc36"]
+bg_color = Color(0.06514333, 0.057862744, 0.3379947, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wvblx"]
+bg_color = Color(0.005870532, 0.026569534, 0.27050987, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7bdti"]
+bg_color = Color(0.017019076, 0.026560137, 0.22997263, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j8itn"]
+bg_color = Color(0.018042883, 0.009622059, 0.23682171, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7yv08"]
+bg_color = Color(0.03357645, 0.01684101, 0.23423049, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wvblx")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -822.0
+offset_top = -595.0
+offset_right = 714.0
+offset_bottom = 429.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_0bc36")
+flip_h = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -173.5
+offset_right = 150.0
+offset_bottom = 173.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_wvblx")
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="OPTIONS" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_0bc36")
+text = "OPTIONS"
+horizontal_alignment = 1
+
+[node name="MUSIC" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_wvblx")
+text = "MUSIC
+"
+
+[node name="MusicSlider" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="SFX" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_7bdti")
+text = "SFX"
+
+[node name="SfxSlider" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="FULL SCREEN" type="Label" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_j8itn")
+text = "FULL SCREEN
+"
+
+[node name="FullScreenButton" type="CheckBox" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="BACK" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_7yv08")
+text = "BACK"
+
+[connection signal="value_changed" from="VBoxContainer/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/SfxSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer/FullScreenButton" to="." method="_on_full_screen_button_toggled"]
+[connection signal="pressed" from="VBoxContainer/BACK" to="." method="_on_back_pressed"]
