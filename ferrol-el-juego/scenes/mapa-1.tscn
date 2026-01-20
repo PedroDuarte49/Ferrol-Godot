@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://cdh0i6alksv40"]
+[gd_scene load_steps=11 format=4 uid="uid://cdh0i6alksv40"]
 
 [ext_resource type="Texture2D" uid="uid://dhx4iqhtnhp4i" path="res://assets/Stage Layers/tileset.png" id="1_1kq6m"]
 [ext_resource type="Texture2D" uid="uid://8y41inos6fdw" path="res://assets/Stage Layers/props/hydrant.png" id="1_1noi2"]
@@ -289,7 +289,9 @@ texture = ExtResource("1_1kq6m")
 12:11/0 = 0
 13:11/0 = 0
 14:11/0 = 0
+16:11/next_alternative_id = 2
 16:11/0 = 0
+16:11/1 = 1
 17:11/0 = 0
 18:11/0 = 0
 20:11/0 = 0
@@ -528,7 +530,17 @@ texture = ExtResource("1_1kq6m")
 [sub_resource type="TileSet" id="TileSet_hpnlm"]
 sources/0 = SubResource("TileSetAtlasSource_1noi2")
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jl44s"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5esth"]
+size = Vector2(247.00677, 24.936325)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_loevk"]
+size = Vector2(242.59639, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wyn66"]
+size = Vector2(1921.3843, 42.230824)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jjktd"]
+size = Vector2(1933.9546, 26.64235)
 
 [node name="mapa-1" type="Node2D"]
 script = ExtResource("1_jl44s")
@@ -569,24 +581,27 @@ metadata/_edit_group_ = true
 [node name="borde_izq" type="Area2D" parent="bordes"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bordes/borde_izq"]
+position = Vector2(-11.999999, 20)
 rotation = 1.5701782
-shape = SubResource("WorldBoundaryShape2D_jl44s")
+shape = SubResource("RectangleShape2D_5esth")
 
 [node name="borde_drch" type="Area2D" parent="bordes"]
 position = Vector2(1887.0001, 41)
 rotation = 3.1348584
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bordes/borde_drch"]
+position = Vector2(-11.120728, 18.190231)
 rotation = 1.5701782
-shape = SubResource("WorldBoundaryShape2D_jl44s")
+shape = SubResource("RectangleShape2D_loevk")
 
 [node name="borde_arriba" type="Area2D" parent="bordes"]
 position = Vector2(951, -33)
 rotation = 1.5646483
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bordes/borde_arriba"]
-rotation = 1.5701782
-shape = SubResource("WorldBoundaryShape2D_jl44s")
+position = Vector2(-45.184925, 10.712769)
+rotation = 1.5755577
+shape = SubResource("RectangleShape2D_wyn66")
 
 [node name="borde_abajo" type="Area2D" parent="bordes"]
 position = Vector2(1114, 143.99998)
@@ -594,8 +609,10 @@ rotation = -1.5660914
 scale = Vector2(0.99999994, 0.99999994)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bordes/borde_abajo"]
-rotation = 1.5701782
-shape = SubResource("WorldBoundaryShape2D_jl44s")
+position = Vector2(-14.818512, -173.93224)
+rotation = 1.5670587
+scale = Vector2(1.0000001, 1.0000001)
+shape = SubResource("RectangleShape2D_jjktd")
 
 [node name="enemigo_boina" parent="." instance=ExtResource("5_loevk")]
 position = Vector2(751, -25)

@@ -16,7 +16,7 @@ var state: State = State.IDLE
 # Propiedades
 var life = 3
 var speed = 100.0
-var attack_power = 1
+var attack_power = 5
 var attack_cooldown = 1.5
 var attack_timer = 0.0
 var direction = -1

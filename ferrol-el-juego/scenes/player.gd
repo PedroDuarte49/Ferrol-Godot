@@ -105,7 +105,7 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 	state = State.HURT
 	anim_modulate(Color(1,0,0))
 	apply_knockback(amount, from_position, attack_type)
-
+	health -= amount
 func apply_knockback(amount: int, from_position: Vector2, attack_type:int, knockback_strength: float = 75.0, knockback_time: float = 0.1):
 	var dir = (global_position - from_position).normalized()
 	dir.y = 0 if attack_type == 0 else -0.5

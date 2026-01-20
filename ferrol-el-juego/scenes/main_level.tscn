@@ -9,6 +9,9 @@
 [node name="main_level" type="Node2D"]
 script = ExtResource("1_6we3w")
 
+[node name="player" parent="." instance=ExtResource("5_8ra5a")]
+z_index = 1000
+
 [node name="levelcontainer" type="Node2D" parent="."]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -29,5 +32,3 @@ zoom = Vector2(2, 2)
 script = ExtResource("3_qmak7")
 
 [node name="Hud" parent="." instance=ExtResource("1_ufxs0")]
-
-[node name="player" parent="." instance=ExtResource("5_8ra5a")]

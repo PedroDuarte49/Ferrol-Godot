@@ -320,7 +320,7 @@ height = 72.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hg6k4"]
 radius = 4.99164
-height = 28.015448
+height = 29.982609
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t8frn"]
 radius = 9.0
