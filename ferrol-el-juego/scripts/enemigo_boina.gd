@@ -14,7 +14,7 @@ enum State { IDLE, CHASE, READY, ATTACK, HURT, DEAD }
 var state: State = State.IDLE
 
 # Propiedades
-var life = 3
+var health = 40
 var speed = 100.0
 var attack_power = 5
 var attack_cooldown = 1.5
@@ -137,6 +137,7 @@ func state_dead(delta):
 	play_anim("die")
 	attack_hitbox.monitoring = false
 	hurtbox.disabled = true
+
 	# timer para eliminar después de animación
 	if not has_node("delete_timer"):
 		var t = Timer.new()
@@ -146,7 +147,7 @@ func state_dead(delta):
 		t.connect("timeout", Callable(self, "queue_free"))
 		add_child(t)
 		t.start()
-
+		
 # ------------------- LÓGICA -------------------
 func apply_enemy_separation(delta: float) -> Vector2:
 	var push := Vector2.ZERO
@@ -175,16 +176,17 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 	if state == State.DEAD:
 		return
 
-	life -= amount
+	health -= amount
 	spawn_blood()
 
-	if life <= 0:
+	if health <= 0:
 		state = State.DEAD
+		GameManager.add_points(50)
 	else:
 		state = State.HURT
 		apply_knockback(amount, from_position, attack_type)
 
-func apply_knockback(amount:int, from_position: Vector2, attack_type:int, knockback_strength: float = 100.0, knockback_time = 0.5):
+func apply_knockback(amount:int, from_position: Vector2, attack_type:int, knockback_strength: float = 10.0, knockback_time = 0.5):
 	var dir = (global_position - from_position).normalized()
 	dir.y = -0.5 if attack_type == 1 else 0
 	velocity = dir * (knockback_strength * amount)

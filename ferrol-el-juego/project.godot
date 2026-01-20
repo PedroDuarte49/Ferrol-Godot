@@ -22,6 +22,7 @@ GameManager="*res://scripts/game_manager.gd"
 [global_group]
 
 Enemy=""
+destructibles=""
 
 [input]
 

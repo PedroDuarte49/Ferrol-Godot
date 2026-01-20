@@ -12,13 +12,13 @@ enum State { IDLE, RUN, ATTACK, HURT, DEAD }
 var state: State = State.IDLE
 
 # -------------------- VARIABLES --------------------
-@export var speed := 200
-@export var attack_power := 1
+@export var speed := 180
+@export var attack_power := 10
 var attack_timer := 0.0
 
 var health := 100
 var invulnerable := false
-
+var botellas = 0
 # -------------------- READY --------------------
 func _ready():
 	if not sprite.is_connected("frame_changed", Callable(self, "_on_frame_changed")):
@@ -106,10 +106,10 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 	anim_modulate(Color(1,0,0))
 	apply_knockback(amount, from_position, attack_type)
 	health -= amount
-func apply_knockback(amount: int, from_position: Vector2, attack_type:int, knockback_strength: float = 75.0, knockback_time: float = 0.1):
+func apply_knockback(amount: int, from_position: Vector2, attack_type:int, knockback_strength: float = 10.0, knockback_time: float = 0.1):
 	var dir = (global_position - from_position).normalized()
 	dir.y = 0 if attack_type == 0 else -0.5
-	velocity = dir * (knockback_strength * amount)
+	velocity = dir * (knockback_strength)
 
 	var t = get_tree().create_timer(knockback_time * amount)
 	t.connect("timeout", Callable(self, "_end_knockback"))
@@ -128,5 +128,22 @@ func anim_modulate(color: Color):
 
 
 func _on_attack_hitbox_body_entered(body: Node2D) -> void:
-	if body.is_in_group("Enemy"):
+	if body.is_in_group("Enemy") or body.is_in_group("destructibles"):
 		body.take_damage(attack_power,global_position,0)
+#---------------------SKILLS------------------------------
+func gain_life(amount:int):
+	health += amount
+	print("health: ",health)
+	#actualizar el hud
+
+func boost_ataque():
+	sprite.modulate = Color(0.643, 0.0, 0.643, 1.0)
+	attack_power *= 2
+	speed = 200
+	var t = get_tree().create_timer(5.0)
+	t.connect("timeout", Callable(self, "end_boost"))
+	
+func end_boost():
+		sprite.modulate = Color(1,1,1,1)
+		attack_power /= 2
+		speed = 180

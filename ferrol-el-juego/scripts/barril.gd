@@ -1,7 +1,7 @@
 extends RigidBody2D
 class_name Barrel
 
-@export var life := 3
+@export var life := 20
 @export var pickup_scene: PackedScene   # Si es null → barril vacío
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hitbox: Area2D = $Area2D
@@ -14,7 +14,7 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 		return
 
 	life -= amount
-	anim.play("damaged")
+	anim.play("damage")
 	shake()
 
 	if life <= 0:

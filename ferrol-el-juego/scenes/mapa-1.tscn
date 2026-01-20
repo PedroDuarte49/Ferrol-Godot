@@ -1,9 +1,14 @@
-[gd_scene load_steps=11 format=4 uid="uid://cdh0i6alksv40"]
+[gd_scene load_steps=17 format=4 uid="uid://cdh0i6alksv40"]
 
 [ext_resource type="Texture2D" uid="uid://dhx4iqhtnhp4i" path="res://assets/Stage Layers/tileset.png" id="1_1kq6m"]
-[ext_resource type="Texture2D" uid="uid://8y41inos6fdw" path="res://assets/Stage Layers/props/hydrant.png" id="1_1noi2"]
 [ext_resource type="Script" uid="uid://bhnqwgq4tejp3" path="res://scripts/mapa_1.gd" id="1_jl44s"]
+[ext_resource type="PackedScene" uid="uid://nxgdlia0kfhr" path="res://scenes/boca_incendios.tscn" id="2_acw2n"]
+[ext_resource type="Texture2D" uid="uid://cw5oxxxdf4s2w" path="res://assets/Stage Layers/fondonegro.png" id="4_acw2n"]
 [ext_resource type="PackedScene" uid="uid://bp174mq6y03ep" path="res://scenes/enemigo_boina.tscn" id="5_loevk"]
+[ext_resource type="PackedScene" uid="uid://bc7e17lxigpmi" path="res://scenes/barril.tscn" id="5_wyn66"]
+[ext_resource type="PackedScene" uid="uid://6d6lqbsmicn" path="res://scenes/botella_buffer.tscn" id="6_gymgq"]
+[ext_resource type="PackedScene" uid="uid://4yu436c3d7ki" path="res://scenes/dinero.tscn" id="6_jjktd"]
+[ext_resource type="PackedScene" uid="uid://dj1ib80drgnk3" path="res://scenes/botella_vida.tscn" id="7_acw2n"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1noi2"]
 texture = ExtResource("1_1kq6m")
@@ -527,8 +532,13 @@ texture = ExtResource("1_1kq6m")
 8:22/0 = 0
 9:22/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7yexa"]
+texture = ExtResource("4_acw2n")
+0:0/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_hpnlm"]
 sources/0 = SubResource("TileSetAtlasSource_1noi2")
+sources/1 = SubResource("TileSetAtlasSource_7yexa")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5esth"]
 size = Vector2(247.00677, 24.936325)
@@ -544,31 +554,21 @@ size = Vector2(1933.9546, 26.64235)
 
 [node name="mapa-1" type="Node2D"]
 script = ExtResource("1_jl44s")
-cam_limit_top = -93
+cam_limit_top = -150
 cam_limit_right = 1887
-cam_limit_bottom = 145
+cam_limit_bottom = 143
 
 [node name="Detalles" type="Node2D" parent="."]
 position = Vector2(1730, 37)
 
-[node name="Incendios_3" type="Sprite2D" parent="Detalles"]
-process_priority = 2
-z_index = 2
-texture = ExtResource("1_1noi2")
+[node name="boca_incendios" parent="Detalles" instance=ExtResource("2_acw2n")]
+position = Vector2(-1, 0)
 
-[node name="Incendios_1" type="Sprite2D" parent="Detalles"]
-process_priority = 2
-z_index = 2
-position = Vector2(-1588, 0)
-texture = ExtResource("1_1noi2")
+[node name="boca_incendios2" parent="Detalles" instance=ExtResource("2_acw2n")]
+position = Vector2(-765, 1)
 
-[node name="Incendios_2" type="Sprite2D" parent="Detalles"]
-process_priority = 2
-z_index = 2
-position = Vector2(-865, 0)
-texture = ExtResource("1_1noi2")
-
-[node name="Sprite2D" type="Sprite2D" parent="Detalles"]
+[node name="boca_incendios3" parent="Detalles" instance=ExtResource("2_acw2n")]
+position = Vector2(-1557, 3)
 
 [node name="Mapa" type="TileMapLayer" parent="."]
 show_behind_parent = true
@@ -578,14 +578,16 @@ metadata/_edit_group_ = true
 
 [node name="bordes" type="Node" parent="."]
 
-[node name="borde_izq" type="Area2D" parent="bordes"]
+[node name="borde_izq" type="StaticBody2D" parent="bordes"]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bordes/borde_izq"]
 position = Vector2(-11.999999, 20)
 rotation = 1.5701782
 shape = SubResource("RectangleShape2D_5esth")
 
-[node name="borde_drch" type="Area2D" parent="bordes"]
+[node name="borde_drch" type="StaticBody2D" parent="bordes"]
+visible = false
 position = Vector2(1887.0001, 41)
 rotation = 3.1348584
 
@@ -594,7 +596,8 @@ position = Vector2(-11.120728, 18.190231)
 rotation = 1.5701782
 shape = SubResource("RectangleShape2D_loevk")
 
-[node name="borde_arriba" type="Area2D" parent="bordes"]
+[node name="borde_arriba" type="StaticBody2D" parent="bordes"]
+visible = false
 position = Vector2(951, -33)
 rotation = 1.5646483
 
@@ -603,7 +606,8 @@ position = Vector2(-45.184925, 10.712769)
 rotation = 1.5755577
 shape = SubResource("RectangleShape2D_wyn66")
 
-[node name="borde_abajo" type="Area2D" parent="bordes"]
+[node name="borde_abajo" type="StaticBody2D" parent="bordes"]
+visible = false
 position = Vector2(1114, 143.99998)
 rotation = -1.5660914
 scale = Vector2(0.99999994, 0.99999994)
@@ -614,11 +618,26 @@ rotation = 1.5670587
 scale = Vector2(1.0000001, 1.0000001)
 shape = SubResource("RectangleShape2D_jjktd")
 
-[node name="enemigo_boina" parent="." instance=ExtResource("5_loevk")]
-position = Vector2(751, -25)
-
 [node name="enemigo_boina2" parent="." instance=ExtResource("5_loevk")]
 position = Vector2(916, 59)
 
 [node name="enemigo_boina3" parent="." instance=ExtResource("5_loevk")]
 position = Vector2(1165, -15)
+
+[node name="enemigo_boina" parent="." instance=ExtResource("5_loevk")]
+position = Vector2(751, -25)
+
+[node name="barril" parent="." instance=ExtResource("5_wyn66")]
+position = Vector2(406, 113)
+
+[node name="barril2" parent="." instance=ExtResource("5_wyn66")]
+position = Vector2(414, 64)
+pickup_scene = ExtResource("6_gymgq")
+
+[node name="barril3" parent="." instance=ExtResource("5_wyn66")]
+position = Vector2(286, 10)
+pickup_scene = ExtResource("7_acw2n")
+
+[node name="barril4" parent="." instance=ExtResource("5_wyn66")]
+position = Vector2(166, 106)
+pickup_scene = ExtResource("6_jjktd")

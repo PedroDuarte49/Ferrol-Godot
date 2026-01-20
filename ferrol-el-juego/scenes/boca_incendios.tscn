@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://nxgdlia0kfhr"]
+
+[ext_resource type="Texture2D" uid="uid://8y41inos6fdw" path="res://assets/Stage Layers/props/hydrant.png" id="1_ynmbh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sg560"]
+size = Vector2(10, 15)
+
+[node name="boca_incendios" type="StaticBody2D"]
+z_index = 1000
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_sg560")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ynmbh")
