@@ -20,8 +20,6 @@ func _on_server_has_responded(_result, response_code, headers, body):
 func _on_volver_pressed() -> void:
 	get_tree().change_scene_to_file("res://main_menu.tscn") 
 
-
-
 func _on_subir_pressed() -> void:
 	var username = line_edit.text
 	print("username is: " + username)
