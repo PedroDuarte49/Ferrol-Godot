@@ -1,0 +1,157 @@
+[gd_scene load_steps=22 format=3 uid="uid://db8abtn46vd1r"]
+
+[ext_resource type="Texture2D" uid="uid://sjcpqffxscps" path="res://assets/Score.png" id="1_gv1iq"]
+[ext_resource type="Texture2D" uid="uid://xixgiv328syk" path="res://assets/Under_health.png" id="1_vow1y"]
+[ext_resource type="FontFile" uid="uid://fvydufgav5sc" path="res://assets/Fonts/PixelOperator8-Bold.ttf" id="2_1and6"]
+[ext_resource type="Texture2D" uid="uid://od58ajh2wq7x" path="res://assets/Over_health.png" id="2_ne771"]
+[ext_resource type="Texture2D" uid="uid://do42p5qm1urwv" path="res://assets/Progress_health.png" id="3_xxqia"]
+[ext_resource type="Texture2D" uid="uid://cf0t82plasq36" path="res://assets/Botella.png" id="4_ne771"]
+[ext_resource type="Texture2D" uid="uid://dud5juj4bvel1" path="res://assets/bottle_animation.png" id="5_xxqia"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gv1iq"]
+atlas = ExtResource("4_ne771")
+region = Rect2(0, 0, 8, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1and6"]
+atlas = ExtResource("5_xxqia")
+region = Rect2(90, 0, 8, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w75gc"]
+atlas = ExtResource("5_xxqia")
+region = Rect2(81, 0, 8, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0ylh"]
+atlas = ExtResource("5_xxqia")
+region = Rect2(72, 0, 8, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gbfpv"]
+atlas = ExtResource("5_xxqia")
+region = Rect2(63, 0, 8, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4x0me"]
+atlas = ExtResource("5_xxqia")
+region = Rect2(54, 0, 8, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2afx3"]
+atlas = ExtResource("5_xxqia")
+region = Rect2(45, 0, 8, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x6is5"]
+atlas = ExtResource("5_xxqia")
+region = Rect2(36, 0, 8, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d5xqv"]
+atlas = ExtResource("5_xxqia")
+region = Rect2(27, 0, 8, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_41shd"]
+atlas = ExtResource("5_xxqia")
+region = Rect2(18, 0, 8, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cb8im"]
+atlas = ExtResource("5_xxqia")
+region = Rect2(9, 0, 8, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ptsyy"]
+atlas = ExtResource("5_xxqia")
+region = Rect2(0, 0, 8, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gv1iq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gv1iq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1and6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w75gc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n0ylh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gbfpv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4x0me")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2afx3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x6is5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d5xqv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_41shd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cb8im")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ptsyy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 9.0
+}]
+
+[sub_resource type="FontVariation" id="FontVariation_w75gc"]
+base_font = ExtResource("2_1and6")
+
+[node name="Hud" type="CanvasLayer"]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_left = 8.0
+offset_top = 14.0
+offset_right = 485.0
+offset_bottom = 40.0
+
+[node name="Botellas" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Botella_1" type="AnimatedSprite2D" parent="HBoxContainer/Botellas"]
+position = Vector2(131, 10)
+sprite_frames = SubResource("SpriteFrames_gv1iq")
+autoplay = "default"
+frame_progress = 0.1599478
+
+[node name="Botella_2" type="AnimatedSprite2D" parent="HBoxContainer/Botellas"]
+position = Vector2(149, 10)
+sprite_frames = SubResource("SpriteFrames_gv1iq")
+autoplay = "default"
+frame_progress = 0.89555204
+
+[node name="Botella_3" type="AnimatedSprite2D" parent="HBoxContainer/Botellas"]
+position = Vector2(167, 10)
+sprite_frames = SubResource("SpriteFrames_gv1iq")
+autoplay = "default"
+frame_progress = 0.3142362
+
+[node name="Barra_Vida" type="TextureProgressBar" parent="HBoxContainer"]
+layout_mode = 2
+value = 100.0
+texture_under = ExtResource("1_vow1y")
+texture_over = ExtResource("2_ne771")
+texture_progress = ExtResource("3_xxqia")
+texture_progress_offset = Vector2(25, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="HBoxContainer"]
+position = Vector2(350, 10)
+texture = ExtResource("1_gv1iq")
+
+[node name="Label" type="Label" parent="HBoxContainer/Sprite2D"]
+offset_left = -16.0
+offset_top = 2.0
+offset_right = 48.0
+offset_bottom = 21.0
+localize_numeral_system = false
+theme_override_fonts/font = SubResource("FontVariation_w75gc")
+theme_override_font_sizes/font_size = 8
+text = "9999"
+autowrap_trim_flags = 0
+metadata/_edit_use_anchors_ = true

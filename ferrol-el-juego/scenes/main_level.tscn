@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://bs30a2v76iu4q"]
+
+[ext_resource type="Script" uid="uid://b2yc4ki6hq2vp" path="res://scripts/main_level.gd" id="1_6we3w"]
+[ext_resource type="PackedScene" uid="uid://db8abtn46vd1r" path="res://scenes/HUD.tscn" id="1_ufxs0"]
+[ext_resource type="Script" path="res://scripts/fade.gd" id="2_6we3w"]
+[ext_resource type="Script" path="res://scripts/camera_2d.gd" id="3_qmak7"]
+[ext_resource type="PackedScene" uid="uid://dc623jpdtnl74" path="res://scenes/player.tscn" id="5_8ra5a"]
+
+[node name="main_level" type="Node2D"]
+script = ExtResource("1_6we3w")
+
+[node name="levelcontainer" type="Node2D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="fade" type="ColorRect" parent="CanvasLayer"]
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("2_6we3w")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+script = ExtResource("3_qmak7")
+
+[node name="Hud" parent="." instance=ExtResource("1_ufxs0")]
+
+[node name="player" parent="." instance=ExtResource("5_8ra5a")]
