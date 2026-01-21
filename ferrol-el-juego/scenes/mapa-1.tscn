@@ -579,7 +579,6 @@ metadata/_edit_group_ = true
 [node name="bordes" type="Node" parent="."]
 
 [node name="borde_izq" type="StaticBody2D" parent="bordes"]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bordes/borde_izq"]
 position = Vector2(-11.999999, 20)
@@ -587,7 +586,6 @@ rotation = 1.5701782
 shape = SubResource("RectangleShape2D_5esth")
 
 [node name="borde_drch" type="StaticBody2D" parent="bordes"]
-visible = false
 position = Vector2(1887.0001, 41)
 rotation = 3.1348584
 
@@ -597,7 +595,6 @@ rotation = 1.5701782
 shape = SubResource("RectangleShape2D_loevk")
 
 [node name="borde_arriba" type="StaticBody2D" parent="bordes"]
-visible = false
 position = Vector2(951, -33)
 rotation = 1.5646483
 
@@ -607,7 +604,6 @@ rotation = 1.5755577
 shape = SubResource("RectangleShape2D_wyn66")
 
 [node name="borde_abajo" type="StaticBody2D" parent="bordes"]
-visible = false
 position = Vector2(1114, 143.99998)
 rotation = -1.5660914
 scale = Vector2(0.99999994, 0.99999994)

@@ -335,9 +335,7 @@ script = ExtResource("1_hg6k4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="flipper"]
 sprite_frames = SubResource("SpriteFrames_jo5o4")
-animation = &"attack"
-frame = 8
-frame_progress = 1.0
+animation = &"ready"
 
 [node name="enemy_avoid_area" type="Area2D" parent="flipper"]
 position = Vector2(-1, 1)
@@ -347,6 +345,8 @@ position = Vector2(-7, 21)
 shape = SubResource("CapsuleShape2D_c5pem")
 
 [node name="attack_hitbox" type="Area2D" parent="flipper"]
+collision_mask = 3
+monitoring = false
 
 [node name="attack_collision" type="CollisionShape2D" parent="flipper/attack_hitbox"]
 position = Vector2(12, 17)
@@ -374,4 +374,4 @@ position = Vector2(0, 31)
 shape = SubResource("CapsuleShape2D_t8frn")
 debug_color = Color(0.8043963, 0.31351542, 0.70246893, 0.41960785)
 
-[connection signal="body_entered" from="flipper/attack_hitbox" to="." method="_on_attack_hitbox_body_entered"]
+[connection signal="area_entered" from="flipper/attack_hitbox" to="." method="_on_attack_hitbox_area_entered"]

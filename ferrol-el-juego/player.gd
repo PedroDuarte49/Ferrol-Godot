@@ -16,6 +16,7 @@ var state: State = State.IDLE
 @export var attack_power := 10
 var attack_timer := 0.0
 
+const Z_BASE = 100
 var health := 100
 var invulnerable := false
 var botellas = 0
@@ -26,6 +27,8 @@ func _ready():
 
 # -------------------- PHYSICS PROCESS --------------------
 func _physics_process(delta: float) -> void:
+	# Orden de dibujo según Y
+	z_index = Z_BASE + int(global_position.y)
 	if state == State.DEAD:
 		return
 

@@ -23,6 +23,7 @@ GameManager="*res://scripts/game_manager.gd"
 
 Enemy=""
 destructibles=""
+player_hurtbox=""
 
 [input]
 

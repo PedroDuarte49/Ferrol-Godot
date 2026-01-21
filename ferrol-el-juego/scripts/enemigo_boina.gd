@@ -211,10 +211,6 @@ func set_direction(dir):
 	var base_scale_x = abs(flipper.scale.x)
 	flipper.scale.x = base_scale_x if dir > 0 else -base_scale_x
 
-func _on_attack_hitbox_body_entered(body: Node2D):
-	if body is Player:
-		body.take_damage(attack_power, global_position, 0)
-
 func play_anim(anim_name: String):
 	if anim.animation != anim_name:
 		anim.play(anim_name)
@@ -222,3 +218,10 @@ func play_anim(anim_name: String):
 func _on_anim_finished():
 	if anim.animation == "ready" and state == State.READY:
 		state = State.ATTACK
+
+
+func _on_attack_hitbox_area_entered(area: Area2D):
+	if area.is_in_group("player_hurtbox"):
+		print(area)
+		var player = area.get_parent().get_parent() #dos get parent para acceder a la raiza de la escena player
+		player.take_damage(attack_power, global_position, 0)
