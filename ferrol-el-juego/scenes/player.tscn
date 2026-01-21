@@ -339,7 +339,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"beber",
-"speed": 8.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -510,7 +510,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y4r1p"]
-radius = 8.999962
+radius = 3.994297
 height = 31.999868
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d2wvv"]
@@ -528,15 +528,17 @@ shape = SubResource("CapsuleShape2D_x5gf8")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="flipper"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_xq601")
-animation = &"idle"
+animation = &"beber"
 autoplay = "idle"
+frame = 10
+frame_progress = 1.0
 
 [node name="attack_hitbox" type="Area2D" parent="flipper"]
 collision_mask = 3
 monitoring = false
 
 [node name="attackShape2D" type="CollisionShape2D" parent="flipper/attack_hitbox"]
-position = Vector2(15.999999, 31)
+position = Vector2(15.999999, 48)
 rotation = 1.5679537
 shape = SubResource("CapsuleShape2D_y4r1p")
 

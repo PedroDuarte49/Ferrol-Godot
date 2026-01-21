@@ -8,7 +8,7 @@ class_name Player
 @onready var blood_particles: CPUParticles2D = $flipper/Bloodparticles
 
 # -------------------- ESTADOS --------------------
-enum State { IDLE, RUN, ATTACK, HURT, DEAD }
+enum State { IDLE, RUN, ATTACK, HURT, DEAD, DRINK }
 var state: State = State.IDLE
 
 # -------------------- VARIABLES --------------------
@@ -35,7 +35,7 @@ func _physics_process(delta: float) -> void:
 	var direction := Vector2.ZERO
 
 	# Movimiento solo si no está atacando
-	if state not in [State.ATTACK, State.HURT]:
+	if state not in [State.ATTACK, State.HURT,State.DRINK]:
 		if Input.is_action_pressed("right"):
 			direction.x += 1
 		if Input.is_action_pressed("left"):
@@ -52,13 +52,13 @@ func _physics_process(delta: float) -> void:
 			flipper.scale.x = abs(flipper.scale.x) if direction.x > 0 else -abs(flipper.scale.x)
 
 	# Mientras atacas, bloquea la velocity
-	if state == State.ATTACK:
+	if state == State.ATTACK or state == State.DRINK:
 		velocity = Vector2.ZERO
 
 	move_and_slide()
 
 	# Animaciones
-	if state not in [State.ATTACK, State.HURT, State.DEAD]:
+	if state not in [State.ATTACK, State.HURT, State.DEAD, State.DRINK]:
 		if direction != Vector2.ZERO:
 			play_anim("correr")
 		else:
@@ -134,18 +134,27 @@ func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Enemy") or body.is_in_group("destructibles"):
 		body.take_damage(attack_power,global_position,0)
 #---------------------SKILLS------------------------------
-func gain_life(amount:int):
+func gain_life(amount:int) -> void:
 	health += amount
-	print("health: ",health)
-	#actualizar el hud
+	state = State.DRINK
+	play_anim("beber")
+	await sprite.animation_finished
+	state = State.IDLE
+	print("health:", health)
 
-func boost_ataque():
+func boost_ataque() -> void:
+	state = State.DRINK
+	play_anim("beber")
+	await sprite.animation_finished
 	sprite.modulate = Color(0.643, 0.0, 0.643, 1.0)
 	attack_power *= 2
 	speed = 200
+	state = State.IDLE
+
 	var t = get_tree().create_timer(5.0)
 	t.connect("timeout", Callable(self, "end_boost"))
-	
+
+
 func end_boost():
 		sprite.modulate = Color(1,1,1,1)
 		attack_power /= 2
