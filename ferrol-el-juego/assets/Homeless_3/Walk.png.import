@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk8w46m3lpy5f"
-path="res://.godot/imported/GalicianStar_animation.png-ed0d9515ad5c27f0901c988533a55469.ctex"
+uid="uid://bjqmdru771gmb"
+path="res://.godot/imported/Walk.png-0919e8c781f2b1a3fa0cbdedfba8f9a6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/GalicianStar_animation.png"
-dest_files=["res://.godot/imported/GalicianStar_animation.png-ed0d9515ad5c27f0901c988533a55469.ctex"]
+source_file="res://assets/Homeless_3/Walk.png"
+dest_files=["res://.godot/imported/Walk.png-0919e8c781f2b1a3fa0cbdedfba8f9a6.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk8w46m3lpy5f"
-path="res://.godot/imported/GalicianStar_animation.png-ed0d9515ad5c27f0901c988533a55469.ctex"
+uid="uid://de0hurmyu7mmm"
+path="res://.godot/imported/Idle.png-b29686ed6f5e35db4cdcb67563b8bce2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/GalicianStar_animation.png"
-dest_files=["res://.godot/imported/GalicianStar_animation.png-ed0d9515ad5c27f0901c988533a55469.ctex"]
+source_file="res://assets/Homeless_3/Idle.png"
+dest_files=["res://.godot/imported/Idle.png-b29686ed6f5e35db4cdcb67563b8bce2.ctex"]
 
 [params]
 

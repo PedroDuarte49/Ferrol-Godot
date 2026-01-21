@@ -10,14 +10,15 @@ var cam_float_pos := Vector2.ZERO
 
 func _ready() -> void:
 	enabled = true #las activa el gamemanager
-	#target=GameManager.player
+	target=GameManager.player
 	cam_float_pos=global_position
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+	
+
 func _process(_delta: float) -> void:
 	if not enabled:
 		return
 	if target == null:
-		#target=GameManager.player
+		target=GameManager.player
 		return
 	follow_with_deadzone(_delta)
 	
