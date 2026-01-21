@@ -595,7 +595,7 @@ rotation = 1.5701782
 shape = SubResource("RectangleShape2D_loevk")
 
 [node name="borde_arriba" type="StaticBody2D" parent="bordes"]
-position = Vector2(951, -33)
+position = Vector2(953.00006, 7.999996)
 rotation = 1.5646483
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bordes/borde_arriba"]
