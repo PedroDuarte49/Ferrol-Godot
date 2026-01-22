@@ -8,7 +8,7 @@ var current_level: Node = null
 var current_level_path := ""
 var player_spawn_tag := "Spawn"
 
-var score := 0
+var score := 5000
 var saved_score := 0
 # Called when the node enters the scene tree for the first time.
 
