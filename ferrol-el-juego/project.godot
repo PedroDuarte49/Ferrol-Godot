@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Ferrol El Juego"
-run/main_scene="uid://bs30a2v76iu4q"
+run/main_scene="uid://4ikrrbkn43po"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
