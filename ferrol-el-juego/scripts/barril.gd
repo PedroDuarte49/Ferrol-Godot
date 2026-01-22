@@ -1,20 +1,22 @@
 extends RigidBody2D
 class_name Barrel
 
-@export var life := 3
+@export var life := 20
 @export var pickup_scene: PackedScene   # Si es null → barril vacío
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hitbox: Area2D = $Area2D
-
+const Z_BASE = 100
 var is_breaking := false  # Evita romper dos veces
 
+func _physics_process(delta: float):
+	z_index = Z_BASE + int(global_position.y) -48 #para compensar la latura del barril
 # Recibe daño amount es el pdoer de etaque, posicion la del player, tipo es para patada o puño asi podemso uasar knockback
 func take_damage(amount: int, from_position: Vector2, attack_type: int):
 	if is_breaking:
 		return
 
 	life -= amount
-	anim.play("damaged")
+	anim.play("damage")
 	shake()
 
 	if life <= 0:

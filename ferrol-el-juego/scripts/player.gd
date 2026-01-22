@@ -8,17 +8,18 @@ class_name Player
 @onready var blood_particles: CPUParticles2D = $flipper/Bloodparticles
 
 # -------------------- ESTADOS --------------------
-enum State { IDLE, RUN, ATTACK, HURT, DEAD }
+enum State { IDLE, RUN, ATTACK, HURT, DEAD, DRINK }
 var state: State = State.IDLE
 
 # -------------------- VARIABLES --------------------
-@export var speed := 200
-@export var attack_power := 1
+@export var speed := 180
+@export var attack_power := 10
 var attack_timer := 0.0
 
+const Z_BASE = 100
 var health := 100
 var invulnerable := false
-
+var botellas = 0
 # -------------------- READY --------------------
 func _ready():
 	if not sprite.is_connected("frame_changed", Callable(self, "_on_frame_changed")):
@@ -26,13 +27,15 @@ func _ready():
 
 # -------------------- PHYSICS PROCESS --------------------
 func _physics_process(delta: float) -> void:
+	# Orden de dibujo según Y
+	z_index = Z_BASE + int(global_position.y)
 	if state == State.DEAD:
 		return
 
 	var direction := Vector2.ZERO
 
 	# Movimiento solo si no está atacando
-	if state not in [State.ATTACK, State.HURT]:
+	if state not in [State.ATTACK, State.HURT,State.DRINK]:
 		if Input.is_action_pressed("right"):
 			direction.x += 1
 		if Input.is_action_pressed("left"):
@@ -49,13 +52,13 @@ func _physics_process(delta: float) -> void:
 			flipper.scale.x = abs(flipper.scale.x) if direction.x > 0 else -abs(flipper.scale.x)
 
 	# Mientras atacas, bloquea la velocity
-	if state == State.ATTACK:
+	if state == State.ATTACK or state == State.DRINK:
 		velocity = Vector2.ZERO
 
 	move_and_slide()
 
 	# Animaciones
-	if state not in [State.ATTACK, State.HURT, State.DEAD]:
+	if state not in [State.ATTACK, State.HURT, State.DEAD, State.DRINK]:
 		if direction != Vector2.ZERO:
 			play_anim("correr")
 		else:
@@ -106,10 +109,10 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 	anim_modulate(Color(1,0,0))
 	apply_knockback(amount, from_position, attack_type)
 	health -= amount
-func apply_knockback(amount: int, from_position: Vector2, attack_type:int, knockback_strength: float = 75.0, knockback_time: float = 0.1):
+func apply_knockback(amount: int, from_position: Vector2, attack_type:int, knockback_strength: float = 10.0, knockback_time: float = 0.1):
 	var dir = (global_position - from_position).normalized()
 	dir.y = 0 if attack_type == 0 else -0.5
-	velocity = dir * (knockback_strength * amount)
+	velocity = dir * (knockback_strength)
 
 	var t = get_tree().create_timer(knockback_time * amount)
 	t.connect("timeout", Callable(self, "_end_knockback"))
@@ -128,5 +131,34 @@ func anim_modulate(color: Color):
 
 
 func _on_attack_hitbox_body_entered(body: Node2D) -> void:
-	if body.is_in_group("Enemy"):
+	if body.is_in_group("Enemy") or body.is_in_group("destructibles"):
 		body.take_damage(attack_power,global_position,0)
+#---------------------SKILLS------------------------------
+func gain_life(amount:int) -> void:
+	if health + amount >= 100:
+		health = 100
+	else:
+		health += amount
+	state = State.DRINK
+	play_anim("beber")
+	await sprite.animation_finished
+	state = State.IDLE
+	print("health:", health)
+
+func boost_ataque() -> void:
+	state = State.DRINK
+	play_anim("beber")
+	await sprite.animation_finished
+	sprite.modulate = Color(0.643, 0.0, 0.643, 1.0)
+	attack_power *= 2
+	speed = 200
+	state = State.IDLE
+
+	var t = get_tree().create_timer(5.0)
+	t.connect("timeout", Callable(self, "end_boost"))
+
+
+func end_boost():
+		sprite.modulate = Color(1,1,1,1)
+		attack_power /= 2
+		speed = 180

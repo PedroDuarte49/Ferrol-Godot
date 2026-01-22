@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://cxohegqjpkutm"]
 
-[ext_resource type="Texture2D" uid="uid://b1a42xhugma0y" path="res://imagen menu.png" id="1_0bc36"]
+[ext_resource type="Texture2D" uid="uid://b1a42xhugma0y" path="res://assets/imagen menu.png" id="1_0bc36"]
 [ext_resource type="Script" uid="uid://dj04yrvk7xlbc" path="res://opciones.gd" id="1_wvblx"]
 
 [sub_resource type="Theme" id="Theme_wvblx"]

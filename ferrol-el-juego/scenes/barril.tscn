@@ -8,10 +8,12 @@
 [ext_resource type="Texture2D" uid="uid://u1xvuhsh32eb" path="res://assets/barril/barrel.png" id="6_yhq5o"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jqhun"]
-height = 26.0
+radius = 9.0
+height = 18.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1xi4r"]
-height = 26.0
+radius = 9.0
+height = 18.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aj15n"]
 atlas = ExtResource("2_4f8ii")
@@ -73,12 +75,14 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="barril" type="RigidBody2D"]
+[node name="barril" type="RigidBody2D" groups=["destructibles"]]
+gravity_scale = 0.0
 script = ExtResource("1_13nob")
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+z_index = 1000
 shape = SubResource("CapsuleShape2D_jqhun")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

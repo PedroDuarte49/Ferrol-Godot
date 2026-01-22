@@ -8,6 +8,6 @@ func _on_body_entered(body: Node2D) -> void:
 		if picked:
 			return
 			
-		body.buffer_ataque()
+		body.boost_ataque()
 		picked = true
 		queue_free()

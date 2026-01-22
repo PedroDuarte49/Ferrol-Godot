@@ -21,7 +21,6 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 
-
 func load_level(path: String) -> void:
 	# Fade a negro instantáneo
 	fade.modulate.a = 1.0
@@ -52,3 +51,7 @@ func load_level(path: String) -> void:
 
 	# Ahora sí hacemos fade desde negro hacia transparente
 	fade.fade_from_black()
+
+func add_points(points:int):
+	score += points
+	print("Points: ", score)
