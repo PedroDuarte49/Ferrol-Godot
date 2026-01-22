@@ -135,7 +135,10 @@ func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 		body.take_damage(attack_power,global_position,0)
 #---------------------SKILLS------------------------------
 func gain_life(amount:int) -> void:
-	health += amount
+	if health + amount >= 100:
+		health = 100
+	else:
+		health += amount
 	state = State.DRINK
 	play_anim("beber")
 	await sprite.animation_finished

@@ -1,7 +1,7 @@
 [gd_scene load_steps=78 format=3 uid="uid://dc623jpdtnl74"]
 
 [ext_resource type="Texture2D" uid="uid://cybvquypdcaq2" path="res://assets/Homeless_3/Attack_1.png" id="1_cibgq"]
-[ext_resource type="Script" uid="uid://bkqcalh28qvrr" path="res://player.gd" id="1_y4r1p"]
+[ext_resource type="Script" uid="uid://bkqcalh28qvrr" path="res://scripts/player.gd" id="1_y4r1p"]
 [ext_resource type="Texture2D" uid="uid://daa54gptgp22y" path="res://assets/Homeless_3/Attack_2.png" id="2_mfdas"]
 [ext_resource type="Texture2D" uid="uid://b7evm7wfhpco6" path="res://assets/Homeless_3/Idle_2.png" id="3_8nwgm"]
 [ext_resource type="Texture2D" uid="uid://vw2tnhdefqfa" path="res://assets/Homeless_3/Run.png" id="4_7pl6r"]
