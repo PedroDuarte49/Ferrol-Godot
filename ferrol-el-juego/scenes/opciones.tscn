@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://cxohegqjpkutm"]
 
 [ext_resource type="Texture2D" uid="uid://b1a42xhugma0y" path="res://assets/imagen menu.png" id="1_0bc36"]
-[ext_resource type="Script" uid="uid://dj04yrvk7xlbc" path="res://opciones.gd" id="1_wvblx"]
+[ext_resource type="Script" uid="uid://dj04yrvk7xlbc" path="res://scripts/opciones.gd" id="1_wvblx"]
 
 [sub_resource type="Theme" id="Theme_wvblx"]
 
@@ -36,6 +36,8 @@ grow_vertical = 2
 script = ExtResource("1_wvblx")
 
 [node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.65034926, 0.65034926, 0.65034926, 0.64705884)
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -100,7 +102,7 @@ size_flags_vertical = 4
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="FULL SCREEN" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="FULLSCREEN" type="Label" parent="VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -108,9 +110,15 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_j8itn")
 text = "FULL SCREEN
 "
 
-[node name="FullScreenButton" type="CheckBox" parent="VBoxContainer/HBoxContainer"]
+[node name="FullScreenButton" type="CheckBox" parent="VBoxContainer/HBoxContainer/FULLSCREEN"]
+modulate = Color(18.892002, 18.892002, 18.892002, 1)
 custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
+layout_mode = 0
+offset_left = -2.0
+offset_top = 10.5
+offset_right = 198.0
+offset_bottom = 59.5
+icon_alignment = 1
 
 [node name="BACK" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -119,5 +127,5 @@ text = "BACK"
 
 [connection signal="value_changed" from="VBoxContainer/MusicSlider" to="." method="_on_music_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/SfxSlider" to="." method="_on_sfx_slider_value_changed"]
-[connection signal="toggled" from="VBoxContainer/HBoxContainer/FullScreenButton" to="." method="_on_full_screen_button_toggled"]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer/FULLSCREEN/FullScreenButton" to="." method="_on_full_screen_button_toggled"]
 [connection signal="pressed" from="VBoxContainer/BACK" to="." method="_on_back_pressed"]

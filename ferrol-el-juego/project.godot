@@ -11,13 +11,17 @@ config_version=5
 [application]
 
 config/name="Ferrol El Juego"
-run/main_scene="uid://4ikrrbkn43po"
+run/main_scene="uid://blx7yjpqpj8bi"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 GameManager="*res://scripts/game_manager.gd"
+
+[display]
+
+window/stretch/mode="canvas_items"
 
 [global_group]
 
