@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://4ikrrbkn43po"]
+[gd_scene load_steps=6 format=3 uid="uid://4ikrrbkn43po"]
 
 [ext_resource type="Texture2D" uid="uid://ddusyglkj7mpf" path="res://assets/Win.png" id="1_jdpjn"]
 [ext_resource type="Script" uid="uid://4j65p8767kca" path="res://scenes/win_scene.gd" id="1_ue0dd"]
 [ext_resource type="FontFile" uid="uid://fvydufgav5sc" path="res://assets/Fonts/PixelOperator8-Bold.ttf" id="2_ue0dd"]
 [ext_resource type="FontFile" uid="uid://vnt3flveknjj" path="res://assets/Fonts/PixelOperator8.ttf" id="3_6v0ig"]
+[ext_resource type="AudioStream" uid="uid://b77k3m5l1vegf" path="res://assets/Sonidos y Musica/Sonidos y Musica/musica win.mp3" id="5_6v0ig"]
 
 [node name="Win" type="Control"]
 layout_mode = 3
@@ -134,3 +135,9 @@ offset_top = 342.9414
 offset_right = 462.08823
 offset_bottom = 366.9414
 color = Color(0.44291076, 0.44291076, 0.44291073, 0.65882355)
+
+[node name="MusicaWin" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_6v0ig")
+autoplay = true
+max_polyphony = 10
+bus = &"Musica"
