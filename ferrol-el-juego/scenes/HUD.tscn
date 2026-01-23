@@ -1,6 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://db8abtn46vd1r"]
+[gd_scene load_steps=23 format=3 uid="uid://db8abtn46vd1r"]
 
 [ext_resource type="Texture2D" uid="uid://sjcpqffxscps" path="res://assets/Score.png" id="1_gv1iq"]
+[ext_resource type="Script" uid="uid://b5ussr0kp8kik" path="res://scenes/hud.gd" id="1_twldb"]
 [ext_resource type="Texture2D" uid="uid://xixgiv328syk" path="res://assets/Under_health.png" id="1_vow1y"]
 [ext_resource type="FontFile" uid="uid://fvydufgav5sc" path="res://assets/Fonts/PixelOperator8-Bold.ttf" id="2_1and6"]
 [ext_resource type="Texture2D" uid="uid://od58ajh2wq7x" path="res://assets/Over_health.png" id="2_ne771"]
@@ -104,6 +105,7 @@ animations = [{
 base_font = ExtResource("2_1and6")
 
 [node name="Hud" type="CanvasLayer"]
+script = ExtResource("1_twldb")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 offset_left = 8.0
@@ -155,3 +157,5 @@ theme_override_font_sizes/font_size = 8
 text = "9999"
 autowrap_trim_flags = 0
 metadata/_edit_use_anchors_ = true
+
+[connection signal="changed" from="HBoxContainer/Barra_Vida" to="." method="_on_barra_vida_changed"]
