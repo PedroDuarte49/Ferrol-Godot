@@ -437,7 +437,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xnlan")
 }],
-"loop": true,
+"loop": false,
 "name": &"muerte",
 "speed": 3.0
 }, {
@@ -528,9 +528,9 @@ shape = SubResource("CapsuleShape2D_x5gf8")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="flipper"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_xq601")
-animation = &"beber"
+animation = &"muerte"
 autoplay = "idle"
-frame = 10
+frame = 3
 frame_progress = 1.0
 
 [node name="attack_hitbox" type="Area2D" parent="flipper"]
@@ -550,5 +550,22 @@ position = Vector2(0, 31)
 shape = SubResource("CapsuleShape2D_d2wvv")
 debug_color = Color(0.8706867, 0.294819, 0.49437082, 0.41960785)
 
+[node name="blood_particles" type="CPUParticles2D" parent="flipper"]
+z_index = 1000
+position = Vector2(-6, 18)
+emitting = false
+amount = 70
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.41
+emission_shape = 1
+emission_sphere_radius = 12.88
+spread = 180.0
+gravity = Vector2(0, 200)
+initial_velocity_min = 100.0
+initial_velocity_max = 100.0
+color = Color(1, 0, 0, 1)
+
+[connection signal="animation_finished" from="flipper/AnimatedSprite2D" to="." method="_on_anim_finished"]
 [connection signal="frame_changed" from="flipper/AnimatedSprite2D" to="." method="_on_frame_changed"]
 [connection signal="body_entered" from="flipper/attack_hitbox" to="." method="_on_attack_hitbox_body_entered"]

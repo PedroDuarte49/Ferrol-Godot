@@ -16,11 +16,8 @@ var bottle := 1
 var levels = ["res://scenes/mapa-1.tscn",
 ]
 
-
-
 func _ready() -> void:
 	pass # Replace with function body.
-
 
 func load_level(path: String) -> void:
 	# Fade a negro instantáneo
@@ -49,12 +46,15 @@ func load_level(path: String) -> void:
 		current_level.apply_camera_limits(camera)
 
 	await get_tree().process_frame
-	
-	hud.bottle(bottle)
 
+	hud.bottle(bottle)
 	# Ahora sí hacemos fade desde negro hacia transparente
 	fade.fade_from_black()
 
 func add_points(points:int):
 	score += points
 	print("Points: ", score)
+
+func game_over():
+	await fade.fade_to_black()
+	get_tree().change_scene_to_file("res://scenes/game_over.tscn") 

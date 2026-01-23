@@ -224,4 +224,4 @@ func _on_attack_hitbox_area_entered(area: Area2D):
 	if area.is_in_group("player_hurtbox"):
 		print(area)
 		var player = area.get_parent().get_parent() #dos get parent para acceder a la raiza de la escena player
-		player.take_damage(attack_power, global_position, 0)
+		player.take_damage(attack_power, global_position, 1)
