@@ -9,7 +9,13 @@ func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
 		if picked:
 			return
+<<<<<<< HEAD
 			
+=======
+		if GameManager.bottle <3:
+			GameManager.bottle += 1
+			GameManager.hud.bottle(GameManager.bottle)
+>>>>>>> 66f44118e18f1791651eea997afe5d758b517be7
 		picked = true
 		
 		# Sumamos la botella al contador del jugador

@@ -9,17 +9,15 @@ var current_level_path := ""
 var player_spawn_tag := "Spawn"
 
 var score := 0
-
+var saved_score := 0
+var bottle := 1
 # Called when the node enters the scene tree for the first time.
 
 var levels = ["res://scenes/mapa-1.tscn",
 ]
 
-
-
 func _ready() -> void:
 	pass # Replace with function body.
-
 
 func load_level(path: String) -> void:
 	# Fade a negro instantáneo
@@ -49,9 +47,14 @@ func load_level(path: String) -> void:
 
 	await get_tree().process_frame
 
+	hud.bottle(bottle)
 	# Ahora sí hacemos fade desde negro hacia transparente
 	fade.fade_from_black()
 
 func add_points(points:int):
 	score += points
 	print("Points: ", score)
+
+func game_over():
+	await fade.fade_to_black()
+	get_tree().change_scene_to_file("res://scenes/game_over.tscn") 

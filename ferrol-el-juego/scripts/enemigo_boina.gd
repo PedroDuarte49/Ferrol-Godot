@@ -225,5 +225,11 @@ func _on_anim_finished():
 
 func _on_attack_hitbox_area_entered(area: Area2D):
 	if area.is_in_group("player_hurtbox"):
+<<<<<<< HEAD
 		var player = area.get_parent().get_parent()
 		player.take_damage(attack_power, global_position, 0)
+=======
+		print(area)
+		var player = area.get_parent().get_parent() #dos get parent para acceder a la raiza de la escena player
+		player.take_damage(attack_power, global_position, 1)
+>>>>>>> 66f44118e18f1791651eea997afe5d758b517be7

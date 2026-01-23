@@ -5,7 +5,10 @@ class_name Player
 @onready var flipper: Node2D = $flipper
 @onready var sprite: AnimatedSprite2D = $flipper/AnimatedSprite2D
 @onready var attack_hitbox: Area2D = $flipper/attack_hitbox
-@onready var blood_particles: CPUParticles2D = $flipper/Bloodparticles
+@onready var blood_particles: CPUParticles2D = $flipper/blood_particles
+
+
+@export var hud: CanvasLayer
 
 # NUEVOS: Nodos de Audio
 @onready var walk_sound = $Movimiento
@@ -108,8 +111,9 @@ func _on_frame_changed():
 
 # -------------------- DAÑO --------------------
 func take_damage(amount: int, from_position: Vector2, attack_type: int):
-	if invulnerable or health <= 0:
+	if invulnerable or state == State.DEAD:
 		return
+<<<<<<< HEAD
 	
 	attack_hitbox.monitoring = false
 	invulnerable = true
@@ -120,23 +124,75 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 		hurt_sound.play()
 		
 	anim_modulate(Color(1,0,0))
-	apply_knockback(amount, from_position, attack_type)
-	health -= amount
+=======
 
+	attack_hitbox.monitoring = false
+	invulnerable = true
+	state = State.HURT
+
+	play_anim("hurt")
+	spawn_blood()
+>>>>>>> 66f44118e18f1791651eea997afe5d758b517be7
+	apply_knockback(amount, from_position, attack_type)
+
+	health -= amount
+<<<<<<< HEAD
+
+=======
+	GameManager.hud.update_life_bar(health)
+
+	if health <= 0:
+		die()
+
+
+		
+>>>>>>> 66f44118e18f1791651eea997afe5d758b517be7
 func apply_knockback(amount: int, from_position: Vector2, attack_type:int, knockback_strength: float = 10.0, knockback_time: float = 0.1):
 	var dir = (global_position - from_position).normalized()
-	dir.y = 0 if attack_type == 0 else -0.5
+	dir.y = 0
 	velocity = dir * (knockback_strength)
 
 	var t = get_tree().create_timer(knockback_time * amount)
 	t.connect("timeout", Callable(self, "_end_knockback"))
 
 func _end_knockback():
+	if state == State.DEAD:
+		return
 	velocity = Vector2.ZERO
 	invulnerable = false
-	if state == State.HURT:
-		state = State.IDLE
 
+<<<<<<< HEAD
+=======
+
+func die():
+	if state == State.DEAD:
+		return
+
+	state = State.DEAD
+	invulnerable = true
+	velocity = Vector2.ZERO
+
+	# Apagar ataque
+	attack_hitbox.monitoring = false
+
+	# Apagar colisiones del cuerpo
+	if has_node("CollisionShape2D"):
+		$CollisionShape2D.disabled = true
+
+
+	blood_particles.emitting = true
+
+	# Animación
+	sprite.play("muerte")
+	await sprite.animation_finished
+
+
+	GameManager.game_over()
+
+
+	
+# -------------------- EFECTO VISUAL --------------------
+>>>>>>> 66f44118e18f1791651eea997afe5d758b517be7
 func anim_modulate(color: Color):
 	sprite.modulate = color
 	await get_tree().create_timer(0.1).timeout
@@ -145,16 +201,35 @@ func anim_modulate(color: Color):
 func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Enemy") or body.is_in_group("destructibles"):
 		body.take_damage(attack_power,global_position,0)
+<<<<<<< HEAD
 
 #---------------------SKILLS (BEBER)------------------------------
+=======
+		
+
+func spawn_blood():
+	if blood_particles:
+		blood_particles.emitting = false
+		blood_particles.restart()
+		blood_particles.emitting = true
+#---------------------SKILLS------------------------------
+>>>>>>> 66f44118e18f1791651eea997afe5d758b517be7
 func gain_life(amount:int) -> void:
 	if health + amount >= 100:
 		health = 100
 	else:
 		health += amount
+<<<<<<< HEAD
 	
 	realizar_accion_beber()
 	print("health:", health)
+=======
+	state = State.DRINK
+	play_anim("beber")
+	await sprite.animation_finished
+	state = State.IDLE
+	GameManager.hud.update_life_bar(health)
+>>>>>>> 66f44118e18f1791651eea997afe5d758b517be7
 
 func boost_ataque() -> void:
 	realizar_accion_beber()
@@ -165,6 +240,7 @@ func boost_ataque() -> void:
 	var t = get_tree().create_timer(5.0)
 	t.connect("timeout", Callable(self, "end_boost"))
 
+<<<<<<< HEAD
 # Función auxiliar para no repetir código de sonido/animación al beber
 func realizar_accion_beber():
 	state = State.DRINK
@@ -178,3 +254,13 @@ func end_boost():
 	sprite.modulate = Color(1,1,1,1)
 	attack_power /= 2
 	speed = 180
+=======
+func end_boost():
+		sprite.modulate = Color(1,1,1,1)
+		attack_power /= 2
+		speed = 180
+
+func _on_anim_finished() -> void:
+	if state == State.HURT:
+		state = State.IDLE
+>>>>>>> 66f44118e18f1791651eea997afe5d758b517be7
