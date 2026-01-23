@@ -1,4 +1,5 @@
 extends Enemy
+@onready var risa: AudioStreamPlayer2D = $risa
 
 var awakened = false
 
@@ -17,6 +18,7 @@ func state_idle(delta):
 
 func take_damage(amount: int, from_position: Vector2, attack_type: int):
 	if not awakened:
+		risa.play()
 		awakened = true
 		state = State.CHASE
 	
