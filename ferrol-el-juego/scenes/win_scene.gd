@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 @onready var line_edit: LineEdit = $LineEdit
 @onready var label: Label = $Label
 @onready var score: Label = $Score
@@ -35,4 +35,4 @@ func _on_subir_pressed() -> void:
 	var body = JSON.stringify({"username": username, "score": int(score.text)})
 	var headers = ["Content-Type: application/json", "Client-Secret: abc"] # CLIENT_SECRET should never be public! If leaked, AL
 	http_request.request("http://127.0.0.1:8000/score", headers, HTTPClient.METHOD_POST, body)
-	#cambio escena al scoreboard
+	get_tree().change_scene_to_file("res://scenes/scoreboard.tscn") 
