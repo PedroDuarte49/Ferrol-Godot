@@ -652,8 +652,8 @@ bus = &"Musica"
 [node name="botella_arrojable_pickup" parent="." instance=ExtResource("10_7yexa")]
 position = Vector2(281, 94)
 
-[node name="colegiala" parent="." instance=ExtResource("12_cpwvg")]
-position = Vector2(243, 42)
-
 [node name="enemigo_fuerte" parent="." instance=ExtResource("13_271fx")]
 position = Vector2(510, -28)
+
+[node name="colegiala" parent="." instance=ExtResource("12_cpwvg")]
+position = Vector2(198, 36)
