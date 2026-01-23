@@ -7,7 +7,8 @@ func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
 		if picked:
 			return
-			
-		body.botellas += 1
+		if GameManager.bottle <3:
+			GameManager.bottle += 1
+			GameManager.hud.bottle(GameManager.bottle)
 		picked = true
 		queue_free()
