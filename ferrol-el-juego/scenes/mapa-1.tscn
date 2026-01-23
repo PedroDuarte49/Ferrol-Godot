@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://cdh0i6alksv40"]
+[gd_scene load_steps=21 format=4 uid="uid://cdh0i6alksv40"]
 
 [ext_resource type="Texture2D" uid="uid://dhx4iqhtnhp4i" path="res://assets/Stage Layers/tileset.png" id="1_1kq6m"]
 [ext_resource type="Script" uid="uid://bhnqwgq4tejp3" path="res://scripts/mapa_1.gd" id="1_jl44s"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://dj1ib80drgnk3" path="res://scenes/botella_vida.tscn" id="7_acw2n"]
 [ext_resource type="PackedScene" uid="uid://bm8ehel1lm7o" path="res://scenes/botella_arrojable_pickup.tscn" id="10_7yexa"]
 [ext_resource type="AudioStream" uid="uid://dr8ta4q1c7cap" path="res://assets/Sonidos y Musica/Sonidos y Musica/musica fondo juego.mp3" id="10_ows7i"]
+[ext_resource type="PackedScene" uid="uid://ckcfd6c3x2wy3" path="res://scenes/colegiala.tscn" id="12_cpwvg"]
+[ext_resource type="PackedScene" uid="uid://lnsoqx8rjwaw" path="res://scenes/enemigo_fuerte.tscn" id="13_271fx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1noi2"]
 texture = ExtResource("1_1kq6m")
@@ -649,3 +651,9 @@ bus = &"Musica"
 
 [node name="botella_arrojable_pickup" parent="." instance=ExtResource("10_7yexa")]
 position = Vector2(281, 94)
+
+[node name="colegiala" parent="." instance=ExtResource("12_cpwvg")]
+position = Vector2(243, 42)
+
+[node name="enemigo_fuerte" parent="." instance=ExtResource("13_271fx")]
+position = Vector2(510, -28)
