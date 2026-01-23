@@ -124,7 +124,7 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 		
 func apply_knockback(amount: int, from_position: Vector2, attack_type:int, knockback_strength: float = 10.0, knockback_time: float = 0.1):
 	var dir = (global_position - from_position).normalized()
-	
+	dir.y = 0
 	velocity = dir * (knockback_strength)
 
 	var t = get_tree().create_timer(knockback_time * amount)
@@ -208,7 +208,6 @@ func end_boost():
 		sprite.modulate = Color(1,1,1,1)
 		attack_power /= 2
 		speed = 180
-
 
 func _on_anim_finished() -> void:
 	if state == State.HURT:
