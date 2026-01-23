@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name Enemy
 
-# Nodos
+# --- NODOS ---
 @onready var flipper: Node2D = $flipper
 @onready var anim: AnimatedSprite2D = $flipper/AnimatedSprite2D
 @onready var enemy_avoid_area: Area2D = $flipper/enemy_avoid_area
@@ -9,11 +9,17 @@ class_name Enemy
 @onready var hurtbox: CollisionShape2D = $hurtbox
 @onready var blood_particles: CPUParticles2D = $flipper/blood_particles
 
-# Estados
+# --- NODOS DE AUDIO ---
+# Asegúrate de que estos nodos existan en tu escena con estos nombres exactos
+@onready var walk_sound = $Movimiento
+@onready var attack_sound = $Golpe
+@onready var death_sound = $Muerte
+
+# --- ESTADOS ---
 enum State { IDLE, CHASE, READY, ATTACK, HURT, DEAD }
 var state: State = State.IDLE
 
-# Propiedades
+# --- PROPIEDADES ---
 var health = 40
 var speed = 100.0
 var attack_power = 5
@@ -21,11 +27,13 @@ var attack_cooldown = 1.5
 var attack_timer = 0.0
 var direction = -1
 var attack_offset_x := 0.0
-# Configuración de separación y ataque
+
 const MAX_VERTICAL_DIFF := 20.0
 const MIN_X_SEPARATION := 20.0
 const ATTACK_DISTANCE_X := 20.0
 const Z_BASE = 100
+
+# ------------------- CICLO DE VIDA -------------------
 
 func _ready():
 	anim.connect("animation_finished", Callable(self, "_on_anim_finished"))
@@ -34,25 +42,33 @@ func _ready():
 
 func _physics_process(delta: float) -> void:
 	if state == State.DEAD:
+		# Seguridad: Detener pasos si está muerto
+		if walk_sound.playing: walk_sound.stop()
 		state_dead(delta)
 		move_and_slide()
 		return
 
-	# Siempre restamos timer de ataque
 	attack_timer = max(attack_timer - delta, 0)
-
-	# Procesamos el estado
 	process_state(delta)
 
-	# Aplicamos separación con otros enemigos en cualquier estado
+	# --- LÓGICA DE AUDIO DE PASOS ---
+	# Solo suena si el enemigo tiene velocidad y está persiguiendo
+	if velocity.length() > 10 and state == State.CHASE:
+		if not walk_sound.playing:
+			walk_sound.play()
+	else:
+		if walk_sound.playing:
+			walk_sound.stop()
+
+	# Aplicar separación y mover
 	velocity += apply_enemy_separation(delta)
-
 	move_and_slide()
-
-	# Orden de dibujo según Y
+	
+	# Orden de dibujo (Y-Sort manual)
 	z_index = Z_BASE + int(global_position.y)
 
-# ------------------- ESTADOS -------------------
+# ------------------- GESTIÓN DE ESTADOS -------------------
+
 func process_state(delta: float):
 	match state:
 		State.IDLE: state_idle(delta)
@@ -62,83 +78,78 @@ func process_state(delta: float):
 		State.HURT: state_hurt(delta)
 		State.DEAD: state_dead(delta)
 
-func state_idle(delta):
+func state_idle(_delta):
 	velocity = Vector2.ZERO
 	play_anim("idle")
-
-	# Pasar a CHASE si hay player
 	if GameManager.player:
 		state = State.CHASE
 
-func state_chase(delta):
+func state_chase(_delta):
 	if state == State.HURT or not GameManager.player:
 		return
-
 	play_anim("chase")
 
 	var player_pos = GameManager.player.global_position
 	var target_pos = player_pos + Vector2(attack_offset_x, 0)
 	var dir = target_pos - global_position
 
-	# ---- ALINEARSE EN Y ----
+	# Alineación en Y
 	if abs(dir.y) > MAX_VERTICAL_DIFF:
 		velocity.y = sign(dir.y) * speed * 0.6
 	else:
 		velocity.y = 0
 
-	# ---- ACERCARSE EN X ----
+	# Acercamiento en X
 	if abs(dir.x) > ATTACK_DISTANCE_X:
 		set_direction(sign(dir.x))
 		velocity.x = direction * speed
 	else:
 		velocity.x = 0
-		if abs(dir.x) <= ATTACK_DISTANCE_X and abs(dir.y) <= MAX_VERTICAL_DIFF:
+		if abs(dir.y) <= MAX_VERTICAL_DIFF:
 			state = State.READY
 
-func state_ready(delta):
+func state_ready(_delta):
 	play_anim("ready")
 	velocity = Vector2.ZERO
-
 	if not GameManager.player:
 		state = State.IDLE
 		return
-
+	
 	var dir = GameManager.player.global_position - global_position
-
-	# Si deslinea eje vertical vuelve a  perseguir
 	if abs(dir.y) > MAX_VERTICAL_DIFF:
 		state = State.CHASE
-		return
 
-	if anim.frame == anim.sprite_frames.get_frame_count("ready") - 1:
-		state = State.ATTACK
-
-
-func state_attack(delta):
+func state_attack(_delta):
 	play_anim("attack")
 	velocity.x = 0
 
-	# Activar hitbox solo en frames de impacto
+	# --- AUDIO: Golpe al aire ---
+	if anim.frame == 0 and not attack_sound.playing:
+		attack_sound.play()
+
+	# Frames de impacto (ajusta según tu animación)
 	if anim.frame in [2, 6]:
 		attack_hitbox.monitoring = true
 	else:
 		attack_hitbox.monitoring = false
 
-	if anim.frame == anim.sprite_frames.get_frame_count("attack") - 1:
-		state = State.CHASE
-		attack_timer = attack_cooldown
-
-func state_hurt(delta):
+func state_hurt(_delta):
 	play_anim("hurt")
-	# Durante HURT se puede dejar que la separación actúe para que no se superpongan
+	# Se detienen los pasos mientras recibe el golpe
+	if walk_sound.playing: walk_sound.stop()
 
-func state_dead(delta):
+func state_dead(_delta):
 	velocity = Vector2.ZERO
 	play_anim("die")
 	attack_hitbox.monitoring = false
-	hurtbox.disabled = true
+	# Usamos set_deferred para evitar errores de física en Godot
+	hurtbox.set_deferred("disabled", true)
 
-	# timer para eliminar después de animación
+	# --- AUDIO: Muerte ---
+	if not death_sound.playing and anim.frame == 0:
+		death_sound.play()
+
+	# Timer para eliminar el enemigo después de su animación
 	if not has_node("delete_timer"):
 		var t = Timer.new()
 		t.name = "delete_timer"
@@ -147,30 +158,8 @@ func state_dead(delta):
 		t.connect("timeout", Callable(self, "queue_free"))
 		add_child(t)
 		t.start()
-		
-# ------------------- LÓGICA -------------------
-func apply_enemy_separation(delta: float) -> Vector2:
-	var push := Vector2.ZERO
 
-	for body in enemy_avoid_area.get_overlapping_bodies():
-		if body == self:
-			continue
-		if not body.is_in_group("Enemy"):
-			continue
-
-		var diff := global_position - body.global_position
-
-		# ---------- SEPARACIÓN HORIZONTAL (prioritaria) ----------
-		if abs(diff.x) < MIN_X_SEPARATION:
-			var strength_x = (MIN_X_SEPARATION - abs(diff.x)) / MIN_X_SEPARATION
-			push.x += sign(diff.x) * strength_x * speed
-
-		# ---------- SEPARACIÓN VERTICAL (suave) ----------
-		if abs(diff.y) < MAX_VERTICAL_DIFF:
-			var strength_y = (MAX_VERTICAL_DIFF - abs(diff.y)) / MAX_VERTICAL_DIFF
-			push.y += sign(diff.y) * strength_y * speed * 0.4
-
-	return push * delta
+# ------------------- LÓGICA DE COMBATE -------------------
 
 func take_damage(amount: int, from_position: Vector2, attack_type: int):
 	if state == State.DEAD:
@@ -183,6 +172,8 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 		state = State.DEAD
 		GameManager.add_points(50)
 	else:
+	
+		
 		state = State.HURT
 		apply_knockback(amount, from_position, attack_type)
 
@@ -197,19 +188,29 @@ func apply_knockback(amount:int, from_position: Vector2, attack_type:int, knockb
 func _end_knockback():
 	if state != State.DEAD:
 		state = State.CHASE
-		anim.modulate = Color(1,1,1,1)
+
+# ------------------- UTILIDADES -------------------
+
+func apply_enemy_separation(delta: float) -> Vector2:
+	var push := Vector2.ZERO
+	for body in enemy_avoid_area.get_overlapping_bodies():
+		if body == self or not body.is_in_group("Enemy"): continue
+		var diff := global_position - body.global_position
+		if abs(diff.x) < MIN_X_SEPARATION:
+			push.x += sign(diff.x) * (MIN_X_SEPARATION - abs(diff.x)) / MIN_X_SEPARATION * speed
+		if abs(diff.y) < MAX_VERTICAL_DIFF:
+			push.y += sign(diff.y) * (MAX_VERTICAL_DIFF - abs(diff.y)) / MAX_VERTICAL_DIFF * speed * 0.4
+	return push * delta
 
 func spawn_blood():
 	if blood_particles:
-		blood_particles.emitting = false
 		blood_particles.restart()
 		blood_particles.emitting = true
 
 func set_direction(dir):
 	if dir == 0: return
 	direction = dir
-	var base_scale_x = abs(flipper.scale.x)
-	flipper.scale.x = base_scale_x if dir > 0 else -base_scale_x
+	flipper.scale.x = abs(flipper.scale.x) if dir > 0 else -abs(flipper.scale.x)
 
 func play_anim(anim_name: String):
 	if anim.animation != anim_name:
@@ -218,10 +219,17 @@ func play_anim(anim_name: String):
 func _on_anim_finished():
 	if anim.animation == "ready" and state == State.READY:
 		state = State.ATTACK
-
+	elif anim.animation == "attack" and state == State.ATTACK:
+		state = State.CHASE
+		attack_timer = attack_cooldown
 
 func _on_attack_hitbox_area_entered(area: Area2D):
 	if area.is_in_group("player_hurtbox"):
+<<<<<<< HEAD
+		var player = area.get_parent().get_parent()
+		player.take_damage(attack_power, global_position, 0)
+=======
 		print(area)
 		var player = area.get_parent().get_parent() #dos get parent para acceder a la raiza de la escena player
 		player.take_damage(attack_power, global_position, 1)
+>>>>>>> 66f44118e18f1791651eea997afe5d758b517be7

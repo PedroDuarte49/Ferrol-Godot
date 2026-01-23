@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://iw4kqv0c3m7l"]
+[gd_scene load_steps=6 format=3 uid="uid://iw4kqv0c3m7l"]
 
-[ext_resource type="Script" uid="uid://d267rb1vkbbne" path="res://scripts/scoreboard.gd" id="1_g67ru"]
+[ext_resource type="Script" path="res://scripts/scoreboard.gd" id="1_g67ru"]
 [ext_resource type="Texture2D" uid="uid://b1a42xhugma0y" path="res://assets/imagen menu.png" id="2_g67ru"]
 [ext_resource type="FontFile" uid="uid://vnt3flveknjj" path="res://assets/Fonts/PixelOperator8.ttf" id="3_fpta5"]
 [ext_resource type="FontFile" uid="uid://fvydufgav5sc" path="res://assets/Fonts/PixelOperator8-Bold.ttf" id="4_7acvr"]
+[ext_resource type="AudioStream" uid="uid://cw6kxtw1lwf6a" path="res://assets/Sonidos y Musica/Sonidos y Musica/brass-fanfare-with-timpani-and-winchimes-reverberated-146260.mp3" id="5_6lsbm"]
 
 [node name="scoreboard" type="Control"]
 layout_mode = 3
@@ -85,5 +86,10 @@ grow_vertical = 0
 size_flags_stretch_ratio = 0.0
 theme_override_fonts/font = ExtResource("4_7acvr")
 text = "BACK"
+
+[node name="SonidoScore" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_6lsbm")
+autoplay = true
+bus = &"Musica"
 
 [connection signal="pressed" from="Volver" to="." method="_on_volver_pressed"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://bm8ehel1lm7o"]
+[gd_scene load_steps=16 format=3 uid="uid://bm8ehel1lm7o"]
 
 [ext_resource type="Script" uid="uid://bynb3ymao85bv" path="res://scripts/botella_arrojable_pickup.gd" id="1_vjrex"]
 [ext_resource type="Texture2D" uid="uid://dud5juj4bvel1" path="res://assets/bottle_animation.png" id="2_brb6s"]
+[ext_resource type="AudioStream" uid="uid://d1x6808mx8s0g" path="res://assets/Sonidos y Musica/Sonidos y Musica/botella.mp3" id="3_ppojw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5xt1d"]
 size = Vector2(8, 20)
@@ -94,5 +95,10 @@ shape = SubResource("RectangleShape2D_5xt1d")
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_0b0qm")
 frame_progress = 0.8340865
+
+[node name="Sonido" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_ppojw")
+max_polyphony = 10
+bus = &"Efectos"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

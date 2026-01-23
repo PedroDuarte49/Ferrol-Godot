@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cxohegqjpkutm"]
+[gd_scene load_steps=10 format=3 uid="uid://cxohegqjpkutm"]
 
 [ext_resource type="Texture2D" uid="uid://b1a42xhugma0y" path="res://assets/imagen menu.png" id="1_0bc36"]
 [ext_resource type="Script" uid="uid://dj04yrvk7xlbc" path="res://scripts/opciones.gd" id="1_wvblx"]
+[ext_resource type="AudioStream" uid="uid://ba7fq7po4drjl" path="res://assets/Sonidos y Musica/Sonidos y Musica/musica menu.mp3" id="3_hegvj"]
 
 [sub_resource type="Theme" id="Theme_wvblx"]
 
@@ -124,6 +125,12 @@ icon_alignment = 1
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_7yv08")
 text = "BACK"
+
+[node name="MusicaMenu" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_hegvj")
+autoplay = true
+max_polyphony = 10
+bus = &"Musica"
 
 [connection signal="value_changed" from="VBoxContainer/MusicSlider" to="." method="_on_music_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/SfxSlider" to="." method="_on_sfx_slider_value_changed"]

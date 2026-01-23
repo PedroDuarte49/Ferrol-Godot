@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://4yu436c3d7ki"]
+[gd_scene load_steps=12 format=3 uid="uid://4yu436c3d7ki"]
 
 [ext_resource type="Script" uid="uid://d15sum51ytpu2" path="res://scripts/dinero.gd" id="1_xyoo0"]
 [ext_resource type="Texture2D" uid="uid://b5uoognmts538" path="res://assets/Money.png" id="2_hokmm"]
+[ext_resource type="AudioStream" uid="uid://c7mgscimqqpkd" path="res://assets/Sonidos y Musica/Sonidos y Musica/money.mp3" id="3_hokmm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7h30k"]
 radius = 6.0
@@ -67,5 +68,10 @@ shape = SubResource("CapsuleShape2D_7h30k")
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_of8ht")
 frame_progress = 0.18328197
+
+[node name="Sonido" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_hokmm")
+max_polyphony = 10
+bus = &"Efectos"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
