@@ -1,10 +1,9 @@
-[gd_scene load_steps=17 format=4 uid="uid://cdh0i6alksv40"]
+[gd_scene load_steps=16 format=4 uid="uid://cdh0i6alksv40"]
 
 [ext_resource type="Texture2D" uid="uid://dhx4iqhtnhp4i" path="res://assets/Stage Layers/tileset.png" id="1_1kq6m"]
 [ext_resource type="Script" uid="uid://bhnqwgq4tejp3" path="res://scripts/mapa_1.gd" id="1_jl44s"]
 [ext_resource type="PackedScene" uid="uid://nxgdlia0kfhr" path="res://scenes/boca_incendios.tscn" id="2_acw2n"]
 [ext_resource type="Texture2D" uid="uid://cw5oxxxdf4s2w" path="res://assets/Stage Layers/fondonegro.png" id="4_acw2n"]
-[ext_resource type="PackedScene" uid="uid://bp174mq6y03ep" path="res://scenes/enemigo_boina.tscn" id="5_loevk"]
 [ext_resource type="PackedScene" uid="uid://bc7e17lxigpmi" path="res://scenes/barril.tscn" id="5_wyn66"]
 [ext_resource type="PackedScene" uid="uid://6d6lqbsmicn" path="res://scenes/botella_buffer.tscn" id="6_gymgq"]
 [ext_resource type="PackedScene" uid="uid://4yu436c3d7ki" path="res://scenes/dinero.tscn" id="6_jjktd"]
@@ -547,7 +546,7 @@ size = Vector2(247.00677, 24.936325)
 size = Vector2(242.59639, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wyn66"]
-size = Vector2(1921.3843, 42.230824)
+size = Vector2(1922.3376, 50.545845)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jjktd"]
 size = Vector2(1933.9546, 26.64235)
@@ -599,7 +598,7 @@ position = Vector2(953.00006, 7.999996)
 rotation = 1.5646483
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bordes/borde_arriba"]
-position = Vector2(-45.184925, 10.712769)
+position = Vector2(-42.02982, 6.2092896)
 rotation = 1.5755577
 shape = SubResource("RectangleShape2D_wyn66")
 
@@ -613,15 +612,6 @@ position = Vector2(-14.818512, -173.93224)
 rotation = 1.5670587
 scale = Vector2(1.0000001, 1.0000001)
 shape = SubResource("RectangleShape2D_jjktd")
-
-[node name="enemigo_boina2" parent="." instance=ExtResource("5_loevk")]
-position = Vector2(916, 59)
-
-[node name="enemigo_boina3" parent="." instance=ExtResource("5_loevk")]
-position = Vector2(1165, -15)
-
-[node name="enemigo_boina" parent="." instance=ExtResource("5_loevk")]
-position = Vector2(751, -25)
 
 [node name="barril" parent="." instance=ExtResource("5_wyn66")]
 position = Vector2(406, 113)

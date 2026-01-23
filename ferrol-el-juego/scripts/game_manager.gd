@@ -9,6 +9,12 @@ var current_level_path := ""
 var player_spawn_tag := "Spawn"
 
 var score := 0
+var cant_ene := 0
+var aleatoria := 0
+var enemigo 
+# PreCargar
+var enemigo_boina = preload("res://scenes/enemigo_boina.tscn")
+var enemigo_fuerte = preload("res://scenes/enemigo_fuerte.tscn")
 
 # Called when the node enters the scene tree for the first time.
 
@@ -51,7 +57,29 @@ func load_level(path: String) -> void:
 
 	# Ahora sí hacemos fade desde negro hacia transparente
 	fade.fade_from_black()
+	
+	spawn_enemies(0,500)
 
 func add_points(points:int):
 	score += points
 	print("Points: ", score)
+
+func spawn_enemies(left_border: int, right_border: int):
+	await get_tree().create_timer(5.0).timeout
+	while cant_ene > 0:
+		aleatoria = randi_range(1,2)
+		if aleatoria == 1:
+			enemigo = enemigo_boina.instantiate()
+		elif aleatoria == 2:
+			enemigo = enemigo_fuerte.instantiate()
+		
+		aleatoria = randi_range(1,2)
+		if aleatoria == 1:
+			enemigo.position = Vector2(randf_range(-500,-100 ), randf_range(50,-50 ))
+		elif aleatoria == 2:
+			enemigo.position = Vector2(randf_range(500,700 ), randf_range(50,-50 ))
+		
+		add_child(enemigo)
+		cant_ene -= 1
+		await get_tree().create_timer(2.0).timeout
+	

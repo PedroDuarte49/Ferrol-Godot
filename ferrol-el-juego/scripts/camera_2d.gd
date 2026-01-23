@@ -5,7 +5,7 @@ var shake_strength: float = 0.0
 var shake_decay: float = 5.0
 var shake_offset := Vector2.ZERO
 @export var smooth: float = 0.1        # Suavizado general
-@export var deadzone_size := Vector2(100, 60)  # Tamaño de la zona muerta (mitad ancho/alto)
+@export var deadzone_size := Vector2(150, 70)  # Tamaño de la zona muerta (mitad ancho/alto)
 var cam_float_pos := Vector2.ZERO
 
 func _ready() -> void:
