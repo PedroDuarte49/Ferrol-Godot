@@ -11,7 +11,7 @@ func _ready():
 	$VBoxContainer/SfxSlider.step = 0.05
 	
 	# Detecta si el juego ya inició en pantalla completa para marcar el botón
-	$VBoxContainer/HBoxContainer/FullScreenButton.button_pressed = (DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN)
+	$VBoxContainer/HBoxContainer/FULLSCREEN/FullScreenButton.button_pressed = (DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN)
 
 # Control de Volumen Música
 func _on_music_slider_value_changed(value: float) -> void:
@@ -30,4 +30,4 @@ func _on_full_screen_button_toggled(button_pressed: bool) -> void:
 
 # Botón para volver al menú 
 func _on_back_pressed() -> void:
-	get_tree().change_scene_to_file("res://main_menu.tscn")
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
