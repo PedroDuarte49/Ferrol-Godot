@@ -7,6 +7,8 @@ class_name Player
 @onready var attack_hitbox: Area2D = $flipper/attack_hitbox
 @onready var blood_particles: CPUParticles2D = $flipper/Bloodparticles
 
+@export var hud: CanvasLayer
+
 # -------------------- ESTADOS --------------------
 enum State { IDLE, RUN, ATTACK, HURT, DEAD, DRINK }
 var state: State = State.IDLE
@@ -109,6 +111,8 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 	anim_modulate(Color(1,0,0))
 	apply_knockback(amount, from_position, attack_type)
 	health -= amount
+	GameManager.hud.update_life_bar(health)
+	
 func apply_knockback(amount: int, from_position: Vector2, attack_type:int, knockback_strength: float = 10.0, knockback_time: float = 0.1):
 	var dir = (global_position - from_position).normalized()
 	dir.y = 0 if attack_type == 0 else -0.5
@@ -143,7 +147,7 @@ func gain_life(amount:int) -> void:
 	play_anim("beber")
 	await sprite.animation_finished
 	state = State.IDLE
-	print("health:", health)
+	GameManager.hud.update_life_bar(health)
 
 func boost_ataque() -> void:
 	state = State.DRINK
