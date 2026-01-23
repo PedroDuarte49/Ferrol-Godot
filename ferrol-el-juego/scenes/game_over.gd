@@ -40,5 +40,4 @@ func _on_subir_pressed() -> void:
 	var body = JSON.stringify({"player": username, "points": int(score.text)})
 	var headers = ["Content-Type: application/json", "Client-Secret: abc"] 
 	http_request.request("http://127.0.0.1:8000/score", headers, HTTPClient.METHOD_POST, body)
-	
-	#cambio a scoreboard si eso
+	get_tree().change_scene_to_file("res://scenes/scoreboard.tscn") 

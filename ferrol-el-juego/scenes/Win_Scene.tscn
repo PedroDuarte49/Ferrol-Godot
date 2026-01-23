@@ -97,6 +97,15 @@ size_flags_stretch_ratio = 0.0
 theme_override_fonts/font = ExtResource("2_ue0dd")
 text = "BACK"
 
+[node name="Fondo Secundario Boton" type="ColorRect" parent="."]
+z_index = 4
+layout_mode = 0
+offset_left = 174.1244
+offset_top = 345.14746
+offset_right = 276.1244
+offset_bottom = 369.14746
+color = Color(0.44291076, 0.44291076, 0.44291073, 0.65882355)
+
 [node name="Subir" type="Button" parent="."]
 z_index = 8
 layout_mode = 0
@@ -108,5 +117,20 @@ size_flags_stretch_ratio = 0.0
 theme_override_fonts/font = ExtResource("2_ue0dd")
 text = "UPLOAD"
 
-[connection signal="pressed" from="Volver" to="." method="_on_volver_pressed"]
-[connection signal="pressed" from="Subir" to="." method="_on_subir_pressed"]
+[node name="Fondo Secundario Boton3" type="ColorRect" parent="."]
+z_index = 4
+layout_mode = 0
+offset_left = 255.91501
+offset_top = 280.2853
+offset_right = 383.7552
+offset_bottom = 311.2853
+color = Color(0.44291076, 0.44291076, 0.44291073, 0.65882355)
+
+[node name="Fondo Secundario Boton2" type="ColorRect" parent="."]
+z_index = 4
+layout_mode = 0
+offset_left = 360.08823
+offset_top = 342.9414
+offset_right = 462.08823
+offset_bottom = 366.9414
+color = Color(0.44291076, 0.44291076, 0.44291073, 0.65882355)
