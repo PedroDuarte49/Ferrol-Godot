@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://blx7yjpqpj8bi"]
+[gd_scene load_steps=4 format=3 uid="uid://blx7yjpqpj8bi"]
 
-[ext_resource type="Texture2D" uid="uid://b1a42xhugma0y" path="res://assets/imagen menu.png" id="1_06t4h"]
-[ext_resource type="Script" uid="uid://w2rbh85bi0j7" path="res://main_menu.gd" id="1_7vrkn"]
+[ext_resource type="Script" uid="uid://w2rbh85bi0j7" path="res://scripts/main_menu.gd" id="1_7vrkn"]
+[ext_resource type="Texture2D" uid="uid://c5gwwimls7jaq" path="res://assets/HMepico.png" id="2_ekxnf"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ekxnf"]
 
 [node name="Main Menu" type="Control"]
 layout_mode = 3
@@ -16,8 +18,33 @@ script = ExtResource("1_7vrkn")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 40.0
-texture = ExtResource("1_06t4h")
+offset_left = 138.0
+offset_top = 3.0
+offset_right = 1015.0
+offset_bottom = 705.0
+texture = ExtResource("2_ekxnf")
+expand_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+modulate = Color(0, 0, 0, 1)
+show_behind_parent = true
+layout_mode = 0
+offset_left = -1.0
+offset_top = -14.0
+offset_right = 1171.0
+offset_bottom = 652.0
+texture = SubResource("CanvasTexture_ekxnf")
+expand_mode = 1
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+modulate = Color(0.14117648, 0, 0.13333334, 0.6156863)
+layout_mode = 0
+offset_left = 455.0
+offset_top = 349.0
+offset_right = 664.0
+offset_bottom = 495.0
+texture = SubResource("CanvasTexture_ekxnf")
+expand_mode = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -26,18 +53,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -39.5
-offset_top = -103.5
-offset_right = 39.5
-offset_bottom = 103.5
+offset_left = -118.0
+offset_top = -8.0
+offset_right = 84.0
+offset_bottom = 199.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 8
 alignment = 1
-
-[node name="Label" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "MENU"
 
 [node name="PLAY" type="Button" parent="VBoxContainer"]
 layout_mode = 2

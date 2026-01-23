@@ -6,6 +6,9 @@ extends Node2D
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var hud: CanvasLayer = $Hud
 @onready var player: Player = $player
+@onready var pause_menu: Control = $CanvasLayer2/pause_menu
+
+
 
 
 func _ready():
@@ -14,6 +17,7 @@ func _ready():
 	GameManager.player = player
 	GameManager.levelcontainer = levelcontainer
 	GameManager.fade = fade
+	GameManager.pause_menu = pause_menu
 	
 	#  Player desactivado mientras carga
 	player.set_physics_process(false)
