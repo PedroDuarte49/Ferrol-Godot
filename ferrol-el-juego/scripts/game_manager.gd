@@ -7,11 +7,17 @@ var level_index := 0
 var current_level: Node = null
 var current_level_path := ""
 var player_spawn_tag := "Spawn"
+var camera_locked := false
+var camera_lock_position := Vector2.ZERO
 
 var score := 0
 var cant_ene := 0
 var aleatoria := 0
-var enemigo 
+var enemigo
+var enemigo_vivo 
+var zona1
+var zona2
+
 # PreCargar
 var enemigo_boina = preload("res://scenes/enemigo_boina.tscn")
 var enemigo_fuerte = preload("res://scenes/enemigo_fuerte.tscn")
@@ -52,9 +58,10 @@ func load_level(path: String) -> void:
 	var camera := get_tree().current_scene.get_node_or_null("Camera2D")
 	if camera and current_level.has_method("apply_camera_limits"):
 		current_level.apply_camera_limits(camera)
-
+	zona1 = current_level.get_node("bordes/borde_zona1/CollisionShape2D")
+	zona2 = current_level.get_node("bordes/borde_zona2/CollisionShape2D")
 	await get_tree().process_frame
-
+	lock_camera()
 	# Ahora sí hacemos fade desde negro hacia transparente
 	fade.fade_from_black()
 	
@@ -66,6 +73,9 @@ func add_points(points:int):
 
 func spawn_enemies(left_border: int, right_border: int):
 	await get_tree().create_timer(5.0).timeout
+	enemigo_vivo = cant_ene
+	print(cant_ene)
+	print(enemigo_vivo)
 	while cant_ene > 0:
 		aleatoria = randi_range(1,2)
 		if aleatoria == 1:
@@ -83,3 +93,28 @@ func spawn_enemies(left_border: int, right_border: int):
 		cant_ene -= 1
 		await get_tree().create_timer(2.0).timeout
 	
+func enemigo_muerto():
+	enemigo_vivo -= 1
+	if enemigo_vivo == 0:
+			zona1.disabled = true
+			zona2.disabled = true
+			unlock_camera()
+			
+func enable_zones():
+	zona1.set_deferred("disabled", false)
+	zona2.set_deferred("disabled", false)
+func lock_camera():
+	var camera := get_tree().current_scene.get_node_or_null("Camera2D")
+	if camera:
+		camera.lock()
+		
+func unlock_camera():
+	var camera := get_tree().current_scene.get_node_or_null("Camera2D")
+	if camera:
+		camera.unlock()
+
+func new_zone(cant: int):
+	lock_camera()
+	enable_zones()
+	cant_ene= cant
+	spawn_enemies(0,200)

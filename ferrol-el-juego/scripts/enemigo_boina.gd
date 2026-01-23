@@ -137,6 +137,7 @@ func state_dead(delta):
 	play_anim("die")
 	attack_hitbox.monitoring = false
 	hurtbox.disabled = true
+	GameManager.enemigo_muerto()
 
 	# timer para eliminar después de animación
 	if not has_node("delete_timer"):
