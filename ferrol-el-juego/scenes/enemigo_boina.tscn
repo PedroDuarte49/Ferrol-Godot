@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-[gd_scene load_steps=54 format=3 uid="uid://bp174mq6y03ep"]
-=======
 [gd_scene load_steps=51 format=3 uid="uid://d33hhy1omnlco"]
->>>>>>> 66f44118e18f1791651eea997afe5d758b517be7
+
 
 [ext_resource type="Texture2D" uid="uid://l6fjm1m8y17" path="res://assets/Gangsters_2/Attack_2.png" id="1_c5pem"]
 [ext_resource type="Script" path="res://scripts/enemigo_boina.gd" id="1_hg6k4"]

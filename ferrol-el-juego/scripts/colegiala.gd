@@ -3,8 +3,8 @@ extends Enemy
 var awakened = false
 
 # Referencias a los nodos de sonido
-@onready var death_sound = $SonidoMuerte
-@onready var walk_sound = $Pasos # Añade este nodo en tu escena
+#@onready var death_sound = $SonidoMuerte
+#@onready var walk_sound = $Pasos # Añade este nodo en tu escena
 
 func _ready():
 	super._ready()

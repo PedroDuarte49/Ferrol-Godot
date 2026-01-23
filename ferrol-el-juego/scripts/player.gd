@@ -113,7 +113,7 @@ func _on_frame_changed():
 func take_damage(amount: int, from_position: Vector2, attack_type: int):
 	if invulnerable or state == State.DEAD:
 		return
-<<<<<<< HEAD
+
 	
 	attack_hitbox.monitoring = false
 	invulnerable = true
@@ -124,7 +124,7 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 		hurt_sound.play()
 		
 	anim_modulate(Color(1,0,0))
-=======
+
 
 	attack_hitbox.monitoring = false
 	invulnerable = true
@@ -132,13 +132,12 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 
 	play_anim("hurt")
 	spawn_blood()
->>>>>>> 66f44118e18f1791651eea997afe5d758b517be7
+
 	apply_knockback(amount, from_position, attack_type)
 
 	health -= amount
-<<<<<<< HEAD
 
-=======
+
 	GameManager.hud.update_life_bar(health)
 
 	if health <= 0:
@@ -146,7 +145,7 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 
 
 		
->>>>>>> 66f44118e18f1791651eea997afe5d758b517be7
+
 func apply_knockback(amount: int, from_position: Vector2, attack_type:int, knockback_strength: float = 10.0, knockback_time: float = 0.1):
 	var dir = (global_position - from_position).normalized()
 	dir.y = 0
@@ -160,9 +159,6 @@ func _end_knockback():
 		return
 	velocity = Vector2.ZERO
 	invulnerable = false
-
-<<<<<<< HEAD
-=======
 
 func die():
 	if state == State.DEAD:
@@ -192,7 +188,6 @@ func die():
 
 	
 # -------------------- EFECTO VISUAL --------------------
->>>>>>> 66f44118e18f1791651eea997afe5d758b517be7
 func anim_modulate(color: Color):
 	sprite.modulate = color
 	await get_tree().create_timer(0.1).timeout
@@ -201,10 +196,8 @@ func anim_modulate(color: Color):
 func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Enemy") or body.is_in_group("destructibles"):
 		body.take_damage(attack_power,global_position,0)
-<<<<<<< HEAD
 
 #---------------------SKILLS (BEBER)------------------------------
-=======
 		
 
 func spawn_blood():
@@ -213,23 +206,19 @@ func spawn_blood():
 		blood_particles.restart()
 		blood_particles.emitting = true
 #---------------------SKILLS------------------------------
->>>>>>> 66f44118e18f1791651eea997afe5d758b517be7
 func gain_life(amount:int) -> void:
 	if health + amount >= 100:
 		health = 100
 	else:
 		health += amount
-<<<<<<< HEAD
 	
 	realizar_accion_beber()
 	print("health:", health)
-=======
 	state = State.DRINK
 	play_anim("beber")
 	await sprite.animation_finished
 	state = State.IDLE
 	GameManager.hud.update_life_bar(health)
->>>>>>> 66f44118e18f1791651eea997afe5d758b517be7
 
 func boost_ataque() -> void:
 	realizar_accion_beber()
@@ -240,7 +229,6 @@ func boost_ataque() -> void:
 	var t = get_tree().create_timer(5.0)
 	t.connect("timeout", Callable(self, "end_boost"))
 
-<<<<<<< HEAD
 # Función auxiliar para no repetir código de sonido/animación al beber
 func realizar_accion_beber():
 	state = State.DRINK
@@ -254,13 +242,7 @@ func end_boost():
 	sprite.modulate = Color(1,1,1,1)
 	attack_power /= 2
 	speed = 180
-=======
-func end_boost():
-		sprite.modulate = Color(1,1,1,1)
-		attack_power /= 2
-		speed = 180
 
 func _on_anim_finished() -> void:
 	if state == State.HURT:
 		state = State.IDLE
->>>>>>> 66f44118e18f1791651eea997afe5d758b517be7

@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://4ikrrbkn43po"]
 
 [ext_resource type="Texture2D" uid="uid://ddusyglkj7mpf" path="res://assets/Win.png" id="1_jdpjn"]
-[ext_resource type="Script" uid="uid://4j65p8767kca" path="res://scenes/win_scene.gd" id="1_ue0dd"]
+[ext_resource type="Script" uid="uid://4j65p8767kca" path="res://scripts/win_scene.gd" id="1_ue0dd"]
 [ext_resource type="FontFile" uid="uid://fvydufgav5sc" path="res://assets/Fonts/PixelOperator8-Bold.ttf" id="2_ue0dd"]
 [ext_resource type="FontFile" uid="uid://vnt3flveknjj" path="res://assets/Fonts/PixelOperator8.ttf" id="3_6v0ig"]
 [ext_resource type="AudioStream" uid="uid://b77k3m5l1vegf" path="res://assets/Sonidos y Musica/Sonidos y Musica/musica win.mp3" id="5_6v0ig"]

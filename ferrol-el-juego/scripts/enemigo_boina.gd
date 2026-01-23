@@ -179,7 +179,7 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 
 func apply_knockback(amount:int, from_position: Vector2, attack_type:int, knockback_strength: float = 10.0, knockback_time = 0.5):
 	var dir = (global_position - from_position).normalized()
-	dir.y = -0.5 if attack_type == 1 else 0
+	dir.y = -0.5 if attack_type == 1 else 0.0
 	velocity = dir * (knockback_strength * amount)
 
 	var t = get_tree().create_timer(knockback_time)
@@ -225,11 +225,5 @@ func _on_anim_finished():
 
 func _on_attack_hitbox_area_entered(area: Area2D):
 	if area.is_in_group("player_hurtbox"):
-<<<<<<< HEAD
 		var player = area.get_parent().get_parent()
 		player.take_damage(attack_power, global_position, 0)
-=======
-		print(area)
-		var player = area.get_parent().get_parent() #dos get parent para acceder a la raiza de la escena player
-		player.take_damage(attack_power, global_position, 1)
->>>>>>> 66f44118e18f1791651eea997afe5d758b517be7
