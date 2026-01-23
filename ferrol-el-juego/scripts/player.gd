@@ -6,6 +6,8 @@ class_name Player
 @onready var sprite: AnimatedSprite2D = $flipper/AnimatedSprite2D
 @onready var attack_hitbox: Area2D = $flipper/attack_hitbox
 @onready var blood_particles: CPUParticles2D = $flipper/blood_particles
+@onready var hurtbox: CollisionShape2D = $CollisionShape2D
+@onready var boost_particles: CPUParticles2D = $flipper/boost_particles
 
 
 @export var hud: CanvasLayer
@@ -15,6 +17,7 @@ class_name Player
 @onready var attack_sound = $Ataque
 @onready var hurt_sound = $Muerte 
 @onready var drink_sound = $Beber
+@onready var boost: AudioStreamPlayer2D = $boost
 
 # -------------------- ESTADOS --------------------
 enum State { IDLE, RUN, ATTACK, HURT, DEAD, DRINK }
@@ -29,6 +32,10 @@ const Z_BASE = 100
 var health := 100
 var invulnerable := false
 var botellas = 0
+var is_boosted := false
+var drunk_time := 0.0
+var drunk_tween: Tween
+
 
 # -------------------- READY --------------------
 func _ready():
@@ -59,6 +66,11 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 
 	move_and_slide()
+	if is_boosted:
+		drunk_time += delta
+		sprite.position.y = sin(drunk_time * 10.0) * 2.0
+	else:
+		sprite.position.y = 0
 
 	# GESTIÓN DE ANIMACIONES Y SONIDO DE PASOS
 	if state not in [State.ATTACK, State.HURT, State.DEAD, State.DRINK]:
@@ -113,19 +125,6 @@ func _on_frame_changed():
 func take_damage(amount: int, from_position: Vector2, attack_type: int):
 	if invulnerable or state == State.DEAD:
 		return
-
-	
-	attack_hitbox.monitoring = false
-	invulnerable = true
-	state = State.HURT
-	
-	# Sonido al recibir daño
-	if hurt_sound:
-		hurt_sound.play()
-		
-	anim_modulate(Color(1,0,0))
-
-
 	attack_hitbox.monitoring = false
 	invulnerable = true
 	state = State.HURT
@@ -136,15 +135,11 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 	apply_knockback(amount, from_position, attack_type)
 
 	health -= amount
-
-
 	GameManager.hud.update_life_bar(health)
 
 	if health <= 0:
 		die()
 
-
-		
 
 func apply_knockback(amount: int, from_position: Vector2, attack_type:int, knockback_strength: float = 10.0, knockback_time: float = 0.1):
 	var dir = (global_position - from_position).normalized()
@@ -170,34 +165,19 @@ func die():
 
 	# Apagar ataque
 	attack_hitbox.monitoring = false
-
-	# Apagar colisiones del cuerpo
-	if has_node("CollisionShape2D"):
-		$CollisionShape2D.disabled = true
-
-
+	hurtbox.disabled = true
 	blood_particles.emitting = true
-
-	# Animación
+	
+	hurt_sound.play()
 	sprite.play("muerte")
 	await sprite.animation_finished
 
 
 	GameManager.game_over()
 
-
-	
-# -------------------- EFECTO VISUAL --------------------
-func anim_modulate(color: Color):
-	sprite.modulate = color
-	await get_tree().create_timer(0.1).timeout
-	sprite.modulate = Color(1,1,1,1)
-
 func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Enemy") or body.is_in_group("destructibles"):
 		body.take_damage(attack_power,global_position,0)
-
-#---------------------SKILLS (BEBER)------------------------------
 		
 
 func spawn_blood():
@@ -205,7 +185,7 @@ func spawn_blood():
 		blood_particles.emitting = false
 		blood_particles.restart()
 		blood_particles.emitting = true
-#---------------------SKILLS------------------------------
+
 func gain_life(amount:int) -> void:
 	if health + amount >= 100:
 		health = 100
@@ -215,21 +195,27 @@ func gain_life(amount:int) -> void:
 	realizar_accion_beber()
 	print("health:", health)
 	state = State.DRINK
+	invulnerable = true
 	play_anim("beber")
 	await sprite.animation_finished
+	invulnerable=false
 	state = State.IDLE
 	GameManager.hud.update_life_bar(health)
 
 func boost_ataque() -> void:
-	realizar_accion_beber()
-	sprite.modulate = Color(0.643, 0.0, 0.643, 1.0)
+	if is_boosted:
+		return
+	is_boosted = true
+	drunk_time = 0.0
+	boost.play()
+	await realizar_accion_beber()
+	start_drunk_effect()
 	attack_power *= 2
 	speed = 200
+	await get_tree().create_timer(10.0).timeout
+	end_boost()
 
-	var t = get_tree().create_timer(5.0)
-	t.connect("timeout", Callable(self, "end_boost"))
 
-# Función auxiliar para no repetir código de sonido/animación al beber
 func realizar_accion_beber():
 	state = State.DRINK
 	if drink_sound:
@@ -239,10 +225,43 @@ func realizar_accion_beber():
 	state = State.IDLE
 
 func end_boost():
-	sprite.modulate = Color(1,1,1,1)
+	is_boosted = false
+
+	stop_drunk_effect()
+	sprite.position = Vector2.ZERO
+
 	attack_power /= 2
 	speed = 180
+
 
 func _on_anim_finished() -> void:
 	if state == State.HURT:
 		state = State.IDLE
+		
+func start_drunk_effect():
+	if drunk_tween:
+		drunk_tween.kill()
+
+	drunk_tween = create_tween()
+	drunk_tween.set_loops()
+	drunk_tween.tween_property(
+		sprite,
+		"modulate",
+		Color(0.915, 0.617, 0.906, 1.0),
+		0.4
+	)
+	drunk_tween.tween_property(
+		sprite,
+		"modulate",
+		Color(0.643, 0.0, 0.643, 1.0),
+		0.4
+	)
+	boost_particles.emitting = true
+	
+func stop_drunk_effect():
+	if drunk_tween:
+		drunk_tween.kill()
+		drunk_tween = null
+
+	sprite.modulate = Color.WHITE
+	boost_particles.emitting = false
