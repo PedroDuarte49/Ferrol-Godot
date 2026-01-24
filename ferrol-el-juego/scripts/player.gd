@@ -5,9 +5,8 @@ class_name Player
 @onready var flipper: Node2D = $flipper
 @onready var sprite: AnimatedSprite2D = $flipper/AnimatedSprite2D
 @onready var attack_hitbox: Area2D = $flipper/attack_hitbox
-@onready var blood_particles: CPUParticles2D = $flipper/blood_particles
-
-
+@onready var blood_particles: CPUParticles2D = $flipper/Bloodparticles
+@export var botella_scene: PackedScene
 @export var hud: CanvasLayer
 
 # -------------------- ESTADOS --------------------
@@ -77,6 +76,10 @@ func _physics_process(delta: float) -> void:
 		if attack_timer <= 0:
 			state = State.IDLE
 			attack_hitbox.monitoring = false
+	
+	# Lanzar botella
+	if Input.is_action_just_pressed("lanzar") and state not in [State.ATTACK, State.HURT, State.DEAD, State.DRINK]:
+		lanzar_botella()
 
 # -------------------- ANIMACIONES --------------------
 func play_anim(name: String):
@@ -103,83 +106,41 @@ func _on_frame_changed():
 
 # -------------------- DAÑO Y KNOCKBACK --------------------
 func take_damage(amount: int, from_position: Vector2, attack_type: int):
-	if invulnerable or state == State.DEAD:
+	if invulnerable or health <= 0:
 		return
-
+		#apagamos la hitbox de ataque 
 	attack_hitbox.monitoring = false
 	invulnerable = true
 	state = State.HURT
-
-	play_anim("hurt")
-	spawn_blood()
+	anim_modulate(Color(1,0,0))
 	apply_knockback(amount, from_position, attack_type)
-
 	health -= amount
 	GameManager.hud.update_life_bar(health)
-
-	if health <= 0:
-		die()
-
-
-		
+	
 func apply_knockback(amount: int, from_position: Vector2, attack_type:int, knockback_strength: float = 10.0, knockback_time: float = 0.1):
 	var dir = (global_position - from_position).normalized()
-	dir.y = 0
+	dir.y = 0 if attack_type == 0 else -0.5
 	velocity = dir * (knockback_strength)
 
 	var t = get_tree().create_timer(knockback_time * amount)
 	t.connect("timeout", Callable(self, "_end_knockback"))
 
 func _end_knockback():
-	if state == State.DEAD:
-		return
 	velocity = Vector2.ZERO
 	invulnerable = false
+	if state == State.HURT:
+		state = State.IDLE
 
-
-func die():
-	if state == State.DEAD:
-		return
-
-	state = State.DEAD
-	invulnerable = true
-	velocity = Vector2.ZERO
-
-	# Apagar ataque
-	attack_hitbox.monitoring = false
-
-	# Apagar colisiones del cuerpo
-	if has_node("CollisionShape2D"):
-		$CollisionShape2D.disabled = true
-
-
-	blood_particles.emitting = true
-
-	# Animación
-	sprite.play("muerte")
-	await sprite.animation_finished
-
-
-	GameManager.game_over()
-
-
-	
 # -------------------- EFECTO VISUAL --------------------
 func anim_modulate(color: Color):
 	sprite.modulate = color
 	await get_tree().create_timer(0.1).timeout
 	sprite.modulate = Color(1,1,1,1)
 
+
 func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Enemy") or body.is_in_group("destructibles"):
 		body.take_damage(attack_power,global_position,0)
-		
-
-func spawn_blood():
-	if blood_particles:
-		blood_particles.emitting = false
-		blood_particles.restart()
-		blood_particles.emitting = true
 #---------------------SKILLS------------------------------
 func gain_life(amount:int) -> void:
 	if health + amount >= 100:
@@ -209,6 +170,14 @@ func end_boost():
 		attack_power /= 2
 		speed = 180
 
-func _on_anim_finished() -> void:
-	if state == State.HURT:
-		state = State.IDLE
+func lanzar_botella():
+	print("Intentando lanzar botella, botellas restantes:", botellas)
+	if GameManager.bottle <= 0:
+		return
+	GameManager.bottle -= 1
+	GameManager.hud.bottle(GameManager.bottle)
+
+	var b = botella_scene.instantiate()
+	get_parent().add_child(b)
+	b.global_position = global_position + Vector2(flipper.scale.x * 16, -10)
+	b.throw(Vector2(flipper.scale.x, 0))

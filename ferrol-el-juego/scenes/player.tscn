@@ -1,7 +1,8 @@
-[gd_scene load_steps=78 format=3 uid="uid://dc623jpdtnl74"]
+[gd_scene load_steps=79 format=3 uid="uid://dc623jpdtnl74"]
 
 [ext_resource type="Texture2D" uid="uid://cybvquypdcaq2" path="res://assets/Homeless_3/Attack_1.png" id="1_cibgq"]
 [ext_resource type="Script" uid="uid://bkqcalh28qvrr" path="res://scripts/player.gd" id="1_y4r1p"]
+[ext_resource type="PackedScene" uid="uid://b6m033avjvm7v" path="res://scenes/botella_arrojable.tscn" id="2_d2wvv"]
 [ext_resource type="Texture2D" uid="uid://daa54gptgp22y" path="res://assets/Homeless_3/Attack_2.png" id="2_mfdas"]
 [ext_resource type="Texture2D" uid="uid://b7evm7wfhpco6" path="res://assets/Homeless_3/Idle_2.png" id="3_8nwgm"]
 [ext_resource type="Texture2D" uid="uid://vw2tnhdefqfa" path="res://assets/Homeless_3/Run.png" id="4_7pl6r"]
@@ -518,6 +519,7 @@ height = 58.0
 
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_y4r1p")
+botella_scene = ExtResource("2_d2wvv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 59)
@@ -528,10 +530,8 @@ shape = SubResource("CapsuleShape2D_x5gf8")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="flipper"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_xq601")
-animation = &"muerte"
+animation = &"lanzar"
 autoplay = "idle"
-frame = 3
-frame_progress = 1.0
 
 [node name="attack_hitbox" type="Area2D" parent="flipper"]
 collision_mask = 3

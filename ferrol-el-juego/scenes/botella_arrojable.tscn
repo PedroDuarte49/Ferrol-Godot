@@ -207,7 +207,7 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_r7ujm"]
-radius = 45.01111
+radius = 67.00746
 
 [node name="botella_arrojable" type="Area2D"]
 script = ExtResource("1_t1e55")
@@ -218,9 +218,7 @@ shape = SubResource("RectangleShape2D_5xt1d")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_0b0qm")
-animation = &"explode"
-frame = 9
-frame_progress = 1.0
+autoplay = "default"
 speed_scale = 2.0
 
 [node name="animation_player" type="AnimationPlayer" parent="AnimatedSprite2D"]
@@ -228,10 +226,10 @@ libraries = {
 &"": SubResource("AnimationLibrary_ekguu")
 }
 
-[node name="Area2D" type="Area2D" parent="."]
-monitoring = false
+[node name="DamageArea" type="Area2D" parent="."]
+collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
 shape = SubResource("CircleShape2D_r7ujm")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
