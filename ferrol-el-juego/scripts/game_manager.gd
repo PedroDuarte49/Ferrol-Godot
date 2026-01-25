@@ -10,7 +10,7 @@ var player_spawn_tag := "Spawn"
 
 var score := 0
 var saved_score := 0
-var bottle := 1
+var bottle := 3
 # Called when the node enters the scene tree for the first time.
 
 var levels = ["res://scenes/mapa-1.tscn",

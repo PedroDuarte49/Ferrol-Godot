@@ -7,7 +7,7 @@ extends Node2D
 @export var gravity := 1400.0
 @export var ground_y := 300.0
 @export var damage := 50
-@export var arc_height := -100.0 # Altura máxima de la parábola
+@export var arc_height := 80.0 # Altura máxima de la parábola
 
 # ============================================================
 # ESTADO
@@ -16,8 +16,9 @@ var velocity := Vector2.ZERO
 var exploded := false
 var start_y := 0.0
 var t := 0.0 # tiempo de vuelo
-var flight_time := 0.5 # duración total del vuelo en segundos
-
+var flight_time := 0.7 # duración total del vuelo en segundos
+var target_x := 0.0
+var start_pos: Vector2
 
 # ============================================================
 # NODOS
@@ -36,13 +37,12 @@ func _ready():
 # ============================================================
 # LANZAMIENTO
 # ============================================================
-func throw(direction: Vector2):
-	start_y = position.y
-	velocity.x = direction.x * speed
-	velocity.y = -550.0
+func throw_cargada(dir: float, dist: float):
+	start_pos = global_position
+	target_x = start_pos.x + dir * dist
+	t = 0
 	sprite.play("default")
 	animation_player.play("rotar")
-	t = 0
 
 # ============================================================
 # FÍSICA / MOVIMIENTO
@@ -50,13 +50,18 @@ func throw(direction: Vector2):
 func _physics_process(delta):
 	if exploded:
 		return
-	t += delta
-	position.x += velocity.x * delta
-	# Altura simulada con parábola
-	var h = -4 * arc_height * (t/flight_time) * (t/flight_time - 1)
-	position.y = start_y + h
 
-	if t >= flight_time:
+	t += delta
+	var p = clamp(t / flight_time, 0.0, 1.0)
+
+	# Movimiento horizontal
+	global_position.x = lerp(start_pos.x, target_x, p)
+
+	# PARÁBOLA CORRECTA (sube y baja)
+	var h = 4.0 * arc_height * p * (1.0 - p)
+	global_position.y = start_pos.y - h
+
+	if p >= 1.0:
 		explode()
 # ============================================================
 # EXPLOSIÓN

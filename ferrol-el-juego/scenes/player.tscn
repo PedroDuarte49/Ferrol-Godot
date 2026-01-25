@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://dc623jpdtnl74"]
+[gd_scene load_steps=80 format=3 uid="uid://dc623jpdtnl74"]
 
 [ext_resource type="Texture2D" uid="uid://cybvquypdcaq2" path="res://assets/Homeless_3/Attack_1.png" id="1_cibgq"]
 [ext_resource type="Script" uid="uid://bkqcalh28qvrr" path="res://scripts/player.gd" id="1_y4r1p"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dqwom2lir0qvo" path="res://assets/Homeless_3/Dead.png" id="7_el37e"]
 [ext_resource type="Texture2D" uid="uid://btxbalt4bob2r" path="res://assets/Homeless_3/Jump.png" id="8_inrnk"]
 [ext_resource type="Texture2D" uid="uid://bhex6d6y3diem" path="res://assets/Homeless_3/Special.png" id="9_wqsd8"]
+[ext_resource type="Texture2D" uid="uid://gmhrgpn0dsb3" path="res://assets/flecha_roja.png" id="12_3v2ag"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x5gf8"]
 radius = 6.0
@@ -565,6 +566,14 @@ gravity = Vector2(0, 200)
 initial_velocity_min = 100.0
 initial_velocity_max = 100.0
 color = Color(1, 0, 0, 1)
+
+[node name="LandingIndicator" type="Node2D" parent="."]
+position = Vector2(77, 28)
+
+[node name="Sprite2D" type="Sprite2D" parent="LandingIndicator"]
+position = Vector2(1.0000002, 0)
+scale = Vector2(0.0104, 0.011499993)
+texture = ExtResource("12_3v2ag")
 
 [connection signal="animation_finished" from="flipper/AnimatedSprite2D" to="." method="_on_anim_finished"]
 [connection signal="frame_changed" from="flipper/AnimatedSprite2D" to="." method="_on_frame_changed"]
