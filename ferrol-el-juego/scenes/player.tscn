@@ -1,7 +1,8 @@
-[gd_scene load_steps=82 format=3 uid="uid://dc623jpdtnl74"]
+[gd_scene load_steps=80 format=3 uid="uid://dc623jpdtnl74"]
 
 [ext_resource type="Texture2D" uid="uid://cybvquypdcaq2" path="res://assets/Homeless_3/Attack_1.png" id="1_cibgq"]
 [ext_resource type="Script" uid="uid://bkqcalh28qvrr" path="res://scripts/player.gd" id="1_y4r1p"]
+[ext_resource type="PackedScene" uid="uid://b6m033avjvm7v" path="res://scenes/botella_arrojable.tscn" id="2_d2wvv"]
 [ext_resource type="Texture2D" uid="uid://daa54gptgp22y" path="res://assets/Homeless_3/Attack_2.png" id="2_mfdas"]
 [ext_resource type="Texture2D" uid="uid://b7evm7wfhpco6" path="res://assets/Homeless_3/Idle_2.png" id="3_8nwgm"]
 [ext_resource type="Texture2D" uid="uid://vw2tnhdefqfa" path="res://assets/Homeless_3/Run.png" id="4_7pl6r"]
@@ -10,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dqwom2lir0qvo" path="res://assets/Homeless_3/Dead.png" id="7_el37e"]
 [ext_resource type="Texture2D" uid="uid://btxbalt4bob2r" path="res://assets/Homeless_3/Jump.png" id="8_inrnk"]
 [ext_resource type="Texture2D" uid="uid://bhex6d6y3diem" path="res://assets/Homeless_3/Special.png" id="9_wqsd8"]
+[ext_resource type="Texture2D" uid="uid://gmhrgpn0dsb3" path="res://assets/flecha_roja.png" id="12_3v2ag"]
 [ext_resource type="AudioStream" uid="uid://dmgpb3fcvui7n" path="res://assets/Sonidos y Musica/Sonidos y Musica/movimiento.mp3" id="11_d2wvv"]
 [ext_resource type="AudioStream" uid="uid://cam4elm1rk5l2" path="res://assets/Sonidos y Musica/Sonidos y Musica/attack.mp3" id="12_f1ej7"]
 [ext_resource type="AudioStream" uid="uid://cxnkpvxnnwbog" path="res://assets/Sonidos y Musica/Sonidos y Musica/grito muerte hombre.mp3" id="13_oprun"]
@@ -522,6 +524,7 @@ height = 58.0
 
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_y4r1p")
+botella_scene = ExtResource("2_d2wvv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 59)
@@ -532,10 +535,8 @@ shape = SubResource("CapsuleShape2D_x5gf8")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="flipper"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_xq601")
-animation = &"muerte"
+animation = &"lanzar"
 autoplay = "idle"
-frame = 3
-frame_progress = 1.0
 
 [node name="attack_hitbox" type="Area2D" parent="flipper"]
 collision_mask = 3
@@ -590,6 +591,14 @@ gravity = Vector2(0, 200)
 initial_velocity_min = 100.0
 initial_velocity_max = 100.0
 color = Color(1, 0, 0, 1)
+
+[node name="LandingIndicator" type="Node2D" parent="."]
+position = Vector2(77, 28)
+
+[node name="Sprite2D" type="Sprite2D" parent="LandingIndicator"]
+position = Vector2(1.0000002, 0)
+scale = Vector2(0.0104, 0.011499993)
+texture = ExtResource("12_3v2ag")
 
 [connection signal="animation_finished" from="flipper/AnimatedSprite2D" to="." method="_on_anim_finished"]
 [connection signal="frame_changed" from="flipper/AnimatedSprite2D" to="." method="_on_frame_changed"]
