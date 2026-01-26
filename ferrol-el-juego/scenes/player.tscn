@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cybvquypdcaq2" path="res://assets/Homeless_3/Attack_1.png" id="1_cibgq"]
 [ext_resource type="Script" uid="uid://bkqcalh28qvrr" path="res://scripts/player.gd" id="1_y4r1p"]
+[ext_resource type="PackedScene" uid="uid://b6m033avjvm7v" path="res://scenes/botella_arrojable.tscn" id="2_d2wvv"]
 [ext_resource type="Texture2D" uid="uid://daa54gptgp22y" path="res://assets/Homeless_3/Attack_2.png" id="2_mfdas"]
 [ext_resource type="Texture2D" uid="uid://b7evm7wfhpco6" path="res://assets/Homeless_3/Idle_2.png" id="3_8nwgm"]
 [ext_resource type="Texture2D" uid="uid://vw2tnhdefqfa" path="res://assets/Homeless_3/Run.png" id="4_7pl6r"]
@@ -524,6 +525,7 @@ height = 58.0
 
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_y4r1p")
+botella_scene = ExtResource("2_d2wvv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 59)
@@ -538,6 +540,8 @@ animation = &"ataque1"
 autoplay = "idle"
 frame = 4
 frame_progress = 1.0
+animation = &"lanzar"
+autoplay = "idle"
 
 [node name="attack_hitbox" type="Area2D" parent="flipper"]
 collision_mask = 3
@@ -613,6 +617,14 @@ bus = &"Efectos"
 
 [node name="boost" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("15_oprun")
+
+[node name="LandingIndicator" type="Node2D" parent="."]
+position = Vector2(77, 28)
+
+[node name="Sprite2D" type="Sprite2D" parent="LandingIndicator"]
+position = Vector2(1.0000002, 0)
+scale = Vector2(0.0104, 0.011499993)
+texture = ExtResource("12_3v2ag")
 
 [connection signal="animation_finished" from="flipper/AnimatedSprite2D" to="." method="_on_anim_finished"]
 [connection signal="frame_changed" from="flipper/AnimatedSprite2D" to="." method="_on_frame_changed"]
