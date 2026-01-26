@@ -1,6 +1,7 @@
 extends Node
 var fade: ColorRect
 var hud: Node = null
+var pause_menu : Node = null
 var levelcontainer: Node2D = null
 var player: Node = null
 var level_index := 0
@@ -17,7 +18,7 @@ var levels = ["res://scenes/mapa-1.tscn",
 ]
 
 func _ready() -> void:
-	pass # Replace with function body.
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func load_level(path: String) -> void:
 	# Fade a negro instantáneo
@@ -55,6 +56,22 @@ func add_points(points:int):
 	score += points
 	print("Points: ", score)
 
+
 func game_over():
 	await fade.fade_to_black()
 	get_tree().change_scene_to_file("res://scenes/game_over.tscn") 
+
+func _input(event):
+	if event.is_action_pressed("Pause"):
+		if get_tree().paused:
+			resume_game()
+		else:
+			pause_game()
+			
+func pause_game():
+	get_tree().paused = true
+	pause_menu.visible = true
+func resume_game():
+	get_tree().paused = false
+	pause_menu.visible = false
+
