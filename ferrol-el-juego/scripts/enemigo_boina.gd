@@ -11,7 +11,7 @@ class_name Enemy
 
 # --- NODOS DE AUDIO ---
 # Asegúrate de que estos nodos existan en tu escena con estos nombres exactos
-@onready var walk_sound = $Movimiento
+@onready var walk_sound: AudioStreamPlayer2D = $Movimiento
 @onready var attack_sound = $Golpe
 @onready var death_sound = $Muerte
 
@@ -27,7 +27,7 @@ var attack_cooldown = 1.5
 var attack_timer = 0.0
 var direction = -1
 var attack_offset_x := 0.0
-
+var death_started 
 const MAX_VERTICAL_DIFF := 20.0
 const MIN_X_SEPARATION := 20.0
 const ATTACK_DISTANCE_X := 20.0
@@ -139,26 +139,20 @@ func state_hurt(_delta):
 	if walk_sound.playing: walk_sound.stop()
 
 func state_dead(_delta):
+	if death_started:
+		return
+
+	death_started = true
+
 	velocity = Vector2.ZERO
 	play_anim("die")
 	attack_hitbox.monitoring = false
-	# Usamos set_deferred para evitar errores de física en Godot
 	hurtbox.set_deferred("disabled", true)
 
-	# --- AUDIO: Muerte ---
-	if not death_sound.playing and anim.frame == 0:
-		death_sound.play()
+	death_sound.play()
+	await death_sound.finished
 
-	# Timer para eliminar el enemigo después de su animación
-	if not has_node("delete_timer"):
-		var t = Timer.new()
-		t.name = "delete_timer"
-		t.one_shot = true
-		t.wait_time = anim.sprite_frames.get_frame_count("die") / anim.sprite_frames.get_animation_speed("die")
-		t.connect("timeout", Callable(self, "queue_free"))
-		add_child(t)
-		t.start()
-
+	queue_free()
 # ------------------- LÓGICA DE COMBATE -------------------
 
 func take_damage(amount: int, from_position: Vector2, attack_type: int):

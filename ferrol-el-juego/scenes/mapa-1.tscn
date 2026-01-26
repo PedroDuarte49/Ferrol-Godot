@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://cdh0i6alksv40"]
+[gd_scene load_steps=21 format=4 uid="uid://cdh0i6alksv40"]
 
 [ext_resource type="Texture2D" uid="uid://dhx4iqhtnhp4i" path="res://assets/Stage Layers/tileset.png" id="1_1kq6m"]
 [ext_resource type="Script" uid="uid://bhnqwgq4tejp3" path="res://scripts/mapa_1.gd" id="1_jl44s"]
@@ -9,8 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://6d6lqbsmicn" path="res://scenes/botella_buffer.tscn" id="6_gymgq"]
 [ext_resource type="PackedScene" uid="uid://4yu436c3d7ki" path="res://scenes/dinero.tscn" id="6_jjktd"]
 [ext_resource type="PackedScene" uid="uid://dj1ib80drgnk3" path="res://scenes/botella_vida.tscn" id="7_acw2n"]
-[ext_resource type="AudioStream" uid="uid://dr8ta4q1c7cap" path="res://assets/Sonidos y Musica/Sonidos y Musica/musica fondo juego.mp3" id="10_7yexa"]
 [ext_resource type="PackedScene" uid="uid://bm8ehel1lm7o" path="res://scenes/botella_arrojable_pickup.tscn" id="10_7yexa"]
+[ext_resource type="AudioStream" uid="uid://dr8ta4q1c7cap" path="res://assets/Sonidos y Musica/Sonidos y Musica/musica fondo juego.mp3" id="10_ows7i"]
+[ext_resource type="PackedScene" uid="uid://ckcfd6c3x2wy3" path="res://scenes/colegiala.tscn" id="12_cpwvg"]
+[ext_resource type="PackedScene" uid="uid://lnsoqx8rjwaw" path="res://scenes/enemigo_fuerte.tscn" id="13_271fx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1noi2"]
 texture = ExtResource("1_1kq6m")
@@ -641,9 +643,17 @@ position = Vector2(166, 106)
 pickup_scene = ExtResource("6_jjktd")
 
 [node name="Musica de Fondo" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("10_7yexa")
+stream = ExtResource("10_ows7i")
+volume_db = -10.0
 autoplay = true
 max_polyphony = 10
 bus = &"Musica"
+
 [node name="botella_arrojable_pickup" parent="." instance=ExtResource("10_7yexa")]
 position = Vector2(281, 94)
+
+[node name="enemigo_fuerte" parent="." instance=ExtResource("13_271fx")]
+position = Vector2(510, -28)
+
+[node name="colegiala" parent="." instance=ExtResource("12_cpwvg")]
+position = Vector2(198, 36)
