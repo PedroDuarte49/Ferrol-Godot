@@ -536,10 +536,6 @@ shape = SubResource("CapsuleShape2D_x5gf8")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="flipper"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_xq601")
-animation = &"ataque1"
-autoplay = "idle"
-frame = 4
-frame_progress = 1.0
 animation = &"lanzar"
 autoplay = "idle"
 
@@ -622,9 +618,8 @@ stream = ExtResource("15_oprun")
 position = Vector2(77, 28)
 
 [node name="Sprite2D" type="Sprite2D" parent="LandingIndicator"]
-position = Vector2(1.0000002, 0)
-scale = Vector2(0.0104, 0.011499993)
-texture = ExtResource("12_3v2ag")
+position = Vector2(1, 0)
+scale = Vector2(0.0104, 0.0115)
 
 [connection signal="animation_finished" from="flipper/AnimatedSprite2D" to="." method="_on_anim_finished"]
 [connection signal="frame_changed" from="flipper/AnimatedSprite2D" to="." method="_on_frame_changed"]

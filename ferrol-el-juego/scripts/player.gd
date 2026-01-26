@@ -8,9 +8,6 @@ class_name Player
 @onready var blood_particles: CPUParticles2D = $flipper/blood_particles
 @onready var hurtbox: CollisionShape2D = $CollisionShape2D
 @onready var boost_particles: CPUParticles2D = $flipper/boost_particles
-
-
-@onready var blood_particles: CPUParticles2D = $flipper/Bloodparticles
 @onready var indicador: Node2D = $LandingIndicator
 @export var botella_scene: PackedScene
 @export var hud: CanvasLayer
