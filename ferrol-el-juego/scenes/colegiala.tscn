@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://ckcfd6c3x2wy3"]
+[gd_scene load_steps=49 format=3 uid="uid://ckcfd6c3x2wy3"]
 
 [ext_resource type="Script" uid="uid://dngj0jfqtqplq" path="res://scripts/colegiala.gd" id="1_2q8gv"]
 [ext_resource type="Texture2D" uid="uid://bniganj7jb7lk" path="res://assets/Girl_2/Attack.png" id="2_2q8gv"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://jakybnlm81k0" path="res://assets/Girl_2/die.png" id="4_1fqu1"]
 [ext_resource type="Texture2D" uid="uid://dso1gs7k4byb3" path="res://assets/Girl_2/Idle.png" id="5_rmmw2"]
 [ext_resource type="Texture2D" uid="uid://c42dljr28taej" path="res://assets/Girl_2/Protection.png" id="6_gqnfn"]
+[ext_resource type="AudioStream" uid="uid://cxrslgkf8qbku" path="res://assets/Sonidos y Musica/Sonidos y Musica/grito mujer muriendo.mp3" id="7_lehrx"]
+[ext_resource type="AudioStream" uid="uid://dmgpb3fcvui7n" path="res://assets/Sonidos y Musica/Sonidos y Musica/movimiento.mp3" id="8_1fqu1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2kw33"]
 atlas = ExtResource("2_2q8gv")
@@ -352,5 +354,15 @@ color = Color(1, 0, 0, 1)
 position = Vector2(0, 26)
 shape = SubResource("CapsuleShape2D_t8frn")
 debug_color = Color(0.8043963, 0.31351542, 0.70246893, 0.41960785)
+
+[node name="SonidoMuerte" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_lehrx")
+max_polyphony = 10
+bus = &"Efectos"
+
+[node name="Pasos" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_1fqu1")
+max_polyphony = 10
+bus = &"Efectos"
 
 [connection signal="area_entered" from="flipper/attack_hitbox" to="." method="_on_attack_hitbox_area_entered"]

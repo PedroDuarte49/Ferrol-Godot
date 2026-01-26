@@ -10,6 +10,12 @@ class_name Player
 @export var botella_scene: PackedScene
 @export var hud: CanvasLayer
 
+# NUEVOS: Nodos de Audio
+@onready var walk_sound = $Movimiento
+@onready var attack_sound = $Ataque
+@onready var hurt_sound = $Muerte 
+@onready var drink_sound = $Beber
+
 # -------------------- ESTADOS --------------------
 enum State { IDLE, RUN, ATTACK, HURT, DEAD, DRINK }
 var state: State = State.IDLE
@@ -31,6 +37,8 @@ var fuerza_dir := 1 # 1 sube, -1 baja
 @export var fuerza_speed := 1.5
 @export var dist_min := 80.0
 @export var dist_max := 350.0
+var botellas = 0
+
 # -------------------- READY --------------------
 func _ready():
 	if not sprite.is_connected("frame_changed", Callable(self, "_on_frame_changed")):
@@ -39,42 +47,41 @@ func _ready():
 
 # -------------------- PHYSICS PROCESS --------------------
 func _physics_process(delta: float) -> void:
-	# Orden de dibujo según Y
 	z_index = Z_BASE + int(global_position.y)
 	if state == State.DEAD:
+		walk_sound.stop() # Parar pasos si muere
 		return
 
 	var direction := Vector2.ZERO
 
-	# Movimiento solo si no está atacando
-	if state not in [State.ATTACK, State.HURT,State.DRINK]:
-		if Input.is_action_pressed("right"):
-			direction.x += 1
-		if Input.is_action_pressed("left"):
-			direction.x -= 1
-		if Input.is_action_pressed("down"):
-			direction.y += 1
-		if Input.is_action_pressed("up"):
-			direction.y -= 1
+	if state not in [State.ATTACK, State.HURT, State.DRINK]:
+		if Input.is_action_pressed("right"): direction.x += 1
+		if Input.is_action_pressed("left"): direction.x -= 1
+		if Input.is_action_pressed("down"): direction.y += 1
+		if Input.is_action_pressed("up"): direction.y -= 1
 
 		velocity = direction.normalized() * speed
 
-		# Flip usando flipper
 		if direction.x != 0:
 			flipper.scale.x = abs(flipper.scale.x) if direction.x > 0 else -abs(flipper.scale.x)
 
-	# Mientras atacas, bloquea la velocity
 	if state == State.ATTACK or state == State.DRINK:
 		velocity = Vector2.ZERO
 
 	move_and_slide()
 
-	# Animaciones
+	# GESTIÓN DE ANIMACIONES Y SONIDO DE PASOS
 	if state not in [State.ATTACK, State.HURT, State.DEAD, State.DRINK]:
 		if direction != Vector2.ZERO:
 			play_anim("correr")
+			if not walk_sound.playing:
+				walk_sound.play()
 		else:
 			play_anim("idle")
+			walk_sound.stop()
+	else:
+		# Si está atacando, herido o bebiendo, no suenan los pasos
+		walk_sound.stop()
 
 	# Ataque
 	if Input.is_action_just_pressed("attack") and state not in [State.ATTACK, State.HURT, State.DEAD]:
@@ -127,21 +134,23 @@ func play_anim(name: String):
 func start_attack():
 	state = State.ATTACK
 	play_anim("ataque1")
+	
+	# Sonido de ataque (el "swish" de la espada o golpe)
+	if attack_sound:
+		attack_sound.play()
 
-	# Duración del ataque según frames
 	var frames = sprite.sprite_frames.get_frame_count("ataque1")
 	var fps = sprite.sprite_frames.get_animation_speed("ataque1")
 	attack_timer = frames / fps
 
-# Activar hitbox solo en frame exacto
 func _on_frame_changed():
 	if state == State.ATTACK:
-		if sprite.frame == 2:  # ajusta a tu frame de impacto
+		if sprite.frame == 2:
 			attack_hitbox.monitoring = true
 		else:
 			attack_hitbox.monitoring = false
 
-# -------------------- DAÑO Y KNOCKBACK --------------------
+# -------------------- DAÑO --------------------
 func take_damage(amount: int, from_position: Vector2, attack_type: int):
 	if invulnerable or health <= 0:
 		return
@@ -150,10 +159,38 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 	invulnerable = true
 	state = State.HURT
 	anim_modulate(Color(1,0,0))
+
+	
+	attack_hitbox.monitoring = false
+	invulnerable = true
+	state = State.HURT
+	
+	# Sonido al recibir daño
+	if hurt_sound:
+		hurt_sound.play()
+		
+	anim_modulate(Color(1,0,0))
+
+
+	attack_hitbox.monitoring = false
+	invulnerable = true
+	state = State.HURT
+
+	play_anim("hurt")
+	spawn_blood()
+
 	apply_knockback(amount, from_position, attack_type)
 	health -= amount
+
+
 	GameManager.hud.update_life_bar(health)
-	
+
+	if health <= 0:
+		die()
+
+
+		
+
 func apply_knockback(amount: int, from_position: Vector2, attack_type:int, knockback_strength: float = 10.0, knockback_time: float = 0.1):
 	var dir = (global_position - from_position).normalized()
 	dir.y = 0 if attack_type == 0 else -0.5
@@ -168,6 +205,33 @@ func _end_knockback():
 	if state == State.HURT:
 		state = State.IDLE
 
+func die():
+	if state == State.DEAD:
+		return
+
+	state = State.DEAD
+	invulnerable = true
+	velocity = Vector2.ZERO
+
+	# Apagar ataque
+	attack_hitbox.monitoring = false
+
+	# Apagar colisiones del cuerpo
+	if has_node("CollisionShape2D"):
+		$CollisionShape2D.disabled = true
+
+
+	blood_particles.emitting = true
+
+	# Animación
+	sprite.play("muerte")
+	await sprite.animation_finished
+
+
+	GameManager.game_over()
+
+
+	
 # -------------------- EFECTO VISUAL --------------------
 func anim_modulate(color: Color):
 	sprite.modulate = color
@@ -178,12 +242,24 @@ func anim_modulate(color: Color):
 func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Enemy") or body.is_in_group("destructibles"):
 		body.take_damage(attack_power,global_position,0)
+
+#---------------------SKILLS (BEBER)------------------------------
+		
+
+func spawn_blood():
+	if blood_particles:
+		blood_particles.emitting = false
+		blood_particles.restart()
+		blood_particles.emitting = true
 #---------------------SKILLS------------------------------
 func gain_life(amount:int) -> void:
 	if health + amount >= 100:
 		health = 100
 	else:
 		health += amount
+	
+	realizar_accion_beber()
+	print("health:", health)
 	state = State.DRINK
 	play_anim("beber")
 	await sprite.animation_finished
@@ -191,21 +267,27 @@ func gain_life(amount:int) -> void:
 	GameManager.hud.update_life_bar(health)
 
 func boost_ataque() -> void:
-	state = State.DRINK
-	play_anim("beber")
-	await sprite.animation_finished
+	realizar_accion_beber()
 	sprite.modulate = Color(0.643, 0.0, 0.643, 1.0)
 	attack_power *= 2
 	speed = 200
-	state = State.IDLE
 
 	var t = get_tree().create_timer(5.0)
 	t.connect("timeout", Callable(self, "end_boost"))
 
+# Función auxiliar para no repetir código de sonido/animación al beber
+func realizar_accion_beber():
+	state = State.DRINK
+	if drink_sound:
+		drink_sound.play()
+	play_anim("beber")
+	await sprite.animation_finished
+	state = State.IDLE
+
 func end_boost():
-		sprite.modulate = Color(1,1,1,1)
-		attack_power /= 2
-		speed = 180
+	sprite.modulate = Color(1,1,1,1)
+	attack_power /= 2
+	speed = 180
 
 func lanzar_botella():
 	print("Intentando lanzar botella, botellas restantes:", GameManager.bottle)

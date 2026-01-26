@@ -1,136 +1,157 @@
-[gd_scene load_steps=5 format=3 uid="uid://4ikrrbkn43po"]
+[gd_scene load_steps=6 format=3 uid="uid://4ikrrbkn43po"]
 
 [ext_resource type="Texture2D" uid="uid://ddusyglkj7mpf" path="res://assets/Win.png" id="1_jdpjn"]
-[ext_resource type="Script" uid="uid://4j65p8767kca" path="res://scenes/win_scene.gd" id="1_ue0dd"]
+[ext_resource type="Script" uid="uid://4j65p8767kca" path="res://scripts/win_scene.gd" id="1_ue0dd"]
 [ext_resource type="FontFile" uid="uid://fvydufgav5sc" path="res://assets/Fonts/PixelOperator8-Bold.ttf" id="2_ue0dd"]
 [ext_resource type="FontFile" uid="uid://vnt3flveknjj" path="res://assets/Fonts/PixelOperator8.ttf" id="3_6v0ig"]
+[ext_resource type="AudioStream" uid="uid://b77k3m5l1vegf" path="res://assets/Sonidos y Musica/Sonidos y Musica/musica win.mp3" id="5_6v0ig"]
 
 [node name="Win" type="Control"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -502.0
+offset_bottom = -201.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_ue0dd")
 
 [node name="Fondo" type="Sprite2D" parent="."]
 z_index = 2
-position = Vector2(313.7513, 234.87062)
-scale = Vector2(0.40869144, 0.4116211)
+position = Vector2(600, 322)
+scale = Vector2(0.7539868, 0.6416015)
 texture = ExtResource("1_jdpjn")
-
-[node name="LineEdit" type="LineEdit" parent="."]
-top_level = true
-z_index = 20
-layout_mode = 0
-offset_left = 255.20816
-offset_top = 279.59326
-offset_right = 383.87076
-offset_bottom = 311.59326
-theme_override_fonts/font = ExtResource("3_6v0ig")
-theme_override_font_sizes/font_size = 24
-
-[node name="Titulo" type="Label" parent="."]
-z_index = 5
-layout_mode = 0
-offset_left = 165.7746
-offset_top = 96.10428
-offset_right = 476.33508
-offset_bottom = 128.10428
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("2_ue0dd")
-theme_override_font_sizes/font_size = 32
-text = "YOU WIN"
-horizontal_alignment = 1
 
 [node name="Fondo Secundario" type="ColorRect" parent="."]
 z_index = 4
-layout_mode = 0
-offset_left = 166.44608
-offset_top = 71.8569
-offset_right = 476.44608
-offset_bottom = 377.8569
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 109.0
+offset_top = -146.5
+offset_right = 419.0
+offset_bottom = 159.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(155, 153)
 color = Color(0.15294118, 0.15294118, 0.15294118, 0.65882355)
 
-[node name="Titulo Player" type="Label" parent="."]
+[node name="Titulo Player" type="Label" parent="Fondo Secundario"]
 z_index = 5
 layout_mode = 0
-offset_left = 166.11624
-offset_top = 239.70705
-offset_right = 475.87363
-offset_bottom = 263.70703
+offset_left = -3.8837585
+offset_top = 169.20705
+offset_right = 305.87363
+offset_bottom = 193.20705
 theme_override_fonts/font = ExtResource("3_6v0ig")
 theme_override_font_sizes/font_size = 24
 text = "NAME"
 horizontal_alignment = 1
 
-[node name="Titulo SCORE" type="Label" parent="."]
+[node name="Titulo SCORE" type="Label" parent="Fondo Secundario"]
 z_index = 5
 layout_mode = 0
-offset_left = 267.40866
-offset_top = 151.79189
-offset_right = 372.40866
-offset_bottom = 175.79189
+offset_left = 97.40866
+offset_top = 81.291885
+offset_right = 202.40866
+offset_bottom = 105.291885
 theme_override_fonts/font = ExtResource("3_6v0ig")
 theme_override_font_sizes/font_size = 24
 text = "SCORE"
 
-[node name="Score" type="Label" parent="."]
+[node name="Score" type="Label" parent="Fondo Secundario"]
 z_index = 5
 layout_mode = 0
-offset_left = 163.64139
-offset_top = 184.1692
-offset_right = 474.69418
-offset_bottom = 235.1692
+offset_left = -6.358612
+offset_top = 113.669205
+offset_right = 304.69418
+offset_bottom = 164.6692
 theme_override_fonts/font = ExtResource("3_6v0ig")
 theme_override_font_sizes/font_size = 24
 text = "9999
 "
 horizontal_alignment = 1
 
-[node name="Volver" type="Button" parent="."]
-top_level = true
+[node name="Subir" type="Button" parent="Fondo Secundario"]
 z_index = 8
 layout_mode = 0
-offset_left = 173.27716
-offset_top = 344.71826
-offset_right = 277.27716
-offset_bottom = 368.71826
-size_flags_stretch_ratio = 0.0
-theme_override_fonts/font = ExtResource("2_ue0dd")
-text = "BACK"
-
-[node name="Fondo Secundario Boton" type="ColorRect" parent="."]
-z_index = 4
-layout_mode = 0
-offset_left = 174.1244
-offset_top = 345.14746
-offset_right = 276.1244
-offset_bottom = 369.14746
-color = Color(0.44291076, 0.44291076, 0.44291073, 0.65882355)
-
-[node name="Subir" type="Button" parent="."]
-z_index = 8
-layout_mode = 0
-offset_left = 359.40686
-offset_top = 343.26004
-offset_right = 463.40686
-offset_bottom = 367.26004
+offset_left = 192.0
+offset_top = 276.0
+offset_right = 296.0
+offset_bottom = 300.0
 size_flags_stretch_ratio = 0.0
 theme_override_fonts/font = ExtResource("2_ue0dd")
 text = "UPLOAD"
 
-[node name="Fondo Secundario Boton3" type="ColorRect" parent="."]
+[node name="Fondo Secundario Boton3" type="ColorRect" parent="Fondo Secundario"]
 z_index = 4
 layout_mode = 0
-offset_left = 255.91501
-offset_top = 280.2853
-offset_right = 383.7552
-offset_bottom = 311.2853
+offset_left = 85.91501
+offset_top = 209.78531
+offset_right = 213.75519
+offset_bottom = 240.78531
 color = Color(0.44291076, 0.44291076, 0.44291073, 0.65882355)
 
-[node name="Fondo Secundario Boton2" type="ColorRect" parent="."]
+[node name="Fondo Secundario Boton2" type="ColorRect" parent="Fondo Secundario"]
 z_index = 4
 layout_mode = 0
-offset_left = 360.08823
-offset_top = 342.9414
-offset_right = 462.08823
-offset_bottom = 366.9414
+offset_left = 192.99997
+offset_top = 278.0
+offset_right = 294.99997
+offset_bottom = 302.0
 color = Color(0.44291076, 0.44291076, 0.44291073, 0.65882355)
+
+[node name="Fondo Secundario Boton" type="ColorRect" parent="Fondo Secundario"]
+z_index = 4
+layout_mode = 0
+offset_left = 7.0
+offset_top = 274.5
+offset_right = 108.999985
+offset_bottom = 298.5
+color = Color(0.44291076, 0.44291076, 0.44291073, 0.65882355)
+
+[node name="Titulo" type="Label" parent="Fondo Secundario"]
+z_index = 5
+layout_mode = 0
+offset_left = 8.0
+offset_top = 11.0
+offset_right = 318.5605
+offset_bottom = 43.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_ue0dd")
+theme_override_font_sizes/font_size = 32
+text = "YOU WIN"
+horizontal_alignment = 1
+
+[node name="Volver" type="Button" parent="Fondo Secundario"]
+top_level = true
+z_index = 8
+layout_mode = 0
+offset_left = 441.0
+offset_top = 351.0
+offset_right = 545.0
+offset_bottom = 375.0
+size_flags_stretch_ratio = 0.0
+theme_override_fonts/font = ExtResource("2_ue0dd")
+text = "BACK"
+
+[node name="LineEdit" type="LineEdit" parent="Fondo Secundario"]
+top_level = true
+z_index = 20
+layout_mode = 0
+offset_left = 520.0
+offset_top = 287.0
+offset_right = 648.6626
+offset_bottom = 319.0
+theme_override_fonts/font = ExtResource("3_6v0ig")
+theme_override_font_sizes/font_size = 24
+
+[node name="MusicaWin" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_6v0ig")
+autoplay = true
+max_polyphony = 10
+bus = &"Musica"

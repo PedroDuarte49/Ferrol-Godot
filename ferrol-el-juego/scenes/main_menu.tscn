@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://blx7yjpqpj8bi"]
+[gd_scene load_steps=4 format=3 uid="uid://blx7yjpqpj8bi"]
 
 [ext_resource type="Texture2D" uid="uid://b1a42xhugma0y" path="res://assets/imagen menu.png" id="1_06t4h"]
-[ext_resource type="Script" uid="uid://w2rbh85bi0j7" path="res://main_menu.gd" id="1_7vrkn"]
+[ext_resource type="Script" uid="uid://w2rbh85bi0j7" path="res://scripts/main_menu.gd" id="1_7vrkn"]
+[ext_resource type="AudioStream" uid="uid://ba7fq7po4drjl" path="res://assets/Sonidos y Musica/Sonidos y Musica/musica menu.mp3" id="3_bqqt6"]
 
 [node name="Main Menu" type="Control"]
 layout_mode = 3
@@ -54,6 +55,12 @@ text = "HOW TO"
 [node name="EXIT" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "EXIT"
+
+[node name="MusicaMenu" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_bqqt6")
+autoplay = true
+max_polyphony = 10
+bus = &"Musica"
 
 [connection signal="pressed" from="VBoxContainer/PLAY" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="VBoxContainer/OPTIONS" to="." method="_on_options_pressed"]

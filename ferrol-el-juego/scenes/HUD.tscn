@@ -1,7 +1,7 @@
 [gd_scene load_steps=23 format=3 uid="uid://db8abtn46vd1r"]
 
 [ext_resource type="Texture2D" uid="uid://sjcpqffxscps" path="res://assets/Score.png" id="1_gv1iq"]
-[ext_resource type="Script" uid="uid://b5ussr0kp8kik" path="res://scenes/hud.gd" id="1_twldb"]
+[ext_resource type="Script" uid="uid://b5ussr0kp8kik" path="res://scripts/hud.gd" id="1_twldb"]
 [ext_resource type="Texture2D" uid="uid://xixgiv328syk" path="res://assets/Under_health.png" id="1_vow1y"]
 [ext_resource type="FontFile" uid="uid://fvydufgav5sc" path="res://assets/Fonts/PixelOperator8-Bold.ttf" id="2_1and6"]
 [ext_resource type="Texture2D" uid="uid://od58ajh2wq7x" path="res://assets/Over_health.png" id="2_ne771"]

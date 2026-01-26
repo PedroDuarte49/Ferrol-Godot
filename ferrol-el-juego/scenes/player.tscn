@@ -12,6 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://btxbalt4bob2r" path="res://assets/Homeless_3/Jump.png" id="8_inrnk"]
 [ext_resource type="Texture2D" uid="uid://bhex6d6y3diem" path="res://assets/Homeless_3/Special.png" id="9_wqsd8"]
 [ext_resource type="Texture2D" uid="uid://gmhrgpn0dsb3" path="res://assets/flecha_roja.png" id="12_3v2ag"]
+[ext_resource type="AudioStream" uid="uid://dmgpb3fcvui7n" path="res://assets/Sonidos y Musica/Sonidos y Musica/movimiento.mp3" id="11_d2wvv"]
+[ext_resource type="AudioStream" uid="uid://cam4elm1rk5l2" path="res://assets/Sonidos y Musica/Sonidos y Musica/attack.mp3" id="12_f1ej7"]
+[ext_resource type="AudioStream" uid="uid://cxnkpvxnnwbog" path="res://assets/Sonidos y Musica/Sonidos y Musica/grito muerte hombre.mp3" id="13_oprun"]
+[ext_resource type="AudioStream" uid="uid://daxm7m23p2mfv" path="res://assets/Sonidos y Musica/Sonidos y Musica/botella vida.mp3" id="14_a8ls1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x5gf8"]
 radius = 6.0
@@ -550,6 +554,27 @@ collision_layer = 2
 position = Vector2(0, 31)
 shape = SubResource("CapsuleShape2D_d2wvv")
 debug_color = Color(0.8706867, 0.294819, 0.49437082, 0.41960785)
+
+
+[node name="Movimiento" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_d2wvv")
+max_polyphony = 10
+bus = &"Efectos"
+
+[node name="Ataque" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_f1ej7")
+max_polyphony = 10
+bus = &"Efectos"
+
+[node name="Muerte" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_oprun")
+max_polyphony = 10
+bus = &"Efectos"
+
+[node name="Beber" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_a8ls1")
+max_polyphony = 10
+bus = &"Efectos"
 
 [node name="blood_particles" type="CPUParticles2D" parent="flipper"]
 z_index = 1000

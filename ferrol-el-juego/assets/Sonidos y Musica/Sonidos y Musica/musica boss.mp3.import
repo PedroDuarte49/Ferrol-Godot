@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cmb1qj277iqtc"
+path="res://.godot/imported/musica boss.mp3-bfd5faf650d2e98001c7ae2917e5ec3c.mp3str"
+
+[deps]
+
+source_file="res://assets/Sonidos y Musica/Sonidos y Musica/musica boss.mp3"
+dest_files=["res://.godot/imported/musica boss.mp3-bfd5faf650d2e98001c7ae2917e5ec3c.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
