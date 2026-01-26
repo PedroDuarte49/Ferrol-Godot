@@ -319,6 +319,7 @@ script = ExtResource("1_2q8gv")
 [node name="flipper" type="Node2D" parent="."]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="flipper"]
+texture_filter = 1
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_jo5o4")
 animation = &"die"

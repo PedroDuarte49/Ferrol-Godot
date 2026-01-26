@@ -330,6 +330,7 @@ radius = 9.0
 height = 68.0
 
 [node name="enemigo_boina" type="CharacterBody2D" groups=["Enemy"]]
+texture_filter = 1
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_hg6k4")
@@ -358,6 +359,7 @@ shape = SubResource("CapsuleShape2D_hg6k4")
 
 [node name="blood_particles" type="CPUParticles2D" parent="flipper"]
 z_index = 10
+texture_filter = 1
 position = Vector2(-6, 18)
 emitting = false
 amount = 80
