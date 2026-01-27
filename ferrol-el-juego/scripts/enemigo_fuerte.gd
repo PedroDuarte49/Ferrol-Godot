@@ -7,7 +7,7 @@ func _ready():
 
 	# Stats modificados
 	health = 80
-	speed = 65
+	speed = 85
 	attack_power = 15
 
 func state_attack(delta):

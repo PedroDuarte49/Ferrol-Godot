@@ -29,8 +29,7 @@ var saved_score := 0
 var bottle := 3
 # Called when the node enters the scene tree for the first time.
 
-var levels = ["res://scenes/mapa-1.tscn","res://scenes/mapa-2.tscn"
-]
+var levels = ["res://scenes/mapa-1.tscn","res://scenes/mapa-2.tscn","res://scenes/mapa-3.tscn"]
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -98,7 +97,7 @@ func add_points(points:int):
 	print("Points: ", score)
 
 func spawn_enemies(left_border: int, right_border: int):
-	await get_tree().create_timer(5.0).timeout
+	await get_tree().create_timer(2.0).timeout
 	enemigo_vivo = cant_ene
 	print(cant_ene)
 	print(enemigo_vivo)
@@ -126,7 +125,7 @@ func enemigo_muerto():
 			zona = 0
 			level_index += 1
 			load_level(levels[level_index])
-		else:
+		elif zona == 1 or zona == 2:
 			zona1.disabled = true
 			zona2.disabled = true
 			unlock_camera()

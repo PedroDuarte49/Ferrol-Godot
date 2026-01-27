@@ -28,7 +28,7 @@ var has_started_summon := false
 var summon_round := 0
 var base_summons := 2
 # --- PROPIEDADES ---
-var health = 10
+var health = 100
 var speed = 100.0
 var attack_power = 10
 var attack_cooldown = 1.0
@@ -192,10 +192,6 @@ func state_summon(delta):
 	if is_sitting and not has_started_summon and anim.animation == "sentada":
 		start_summoning()
 
-	# 3️⃣ Esperar a que mueran todos
-	if has_started_summon and GameManager.summoned_enemies_alive == 0:
-		exit_summon_state()
-
 
 # ------------------- LÓGICA DE COMBATE -------------------
 
@@ -223,7 +219,7 @@ func apply_knockback(amount:int, from_position: Vector2, attack_type:int, knockb
 
 func _end_knockback():
 	if state != State.DEAD:
-		if health < 5 and state != State.SUMMON:
+		if health < 50 and state != State.SUMMON:
 			start_summon_state()
 		else:
 			state = State.CHASE
@@ -294,7 +290,7 @@ func start_summoning():
 	
 	GameManager.cant_ene = total_enemies
 	GameManager.enemigo_vivo = 0
-	GameManager.spawn_enemies(0, 0)
+	GameManager.spawn_enemies(-50, 0)
 
 	
 func exit_summon_state():

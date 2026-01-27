@@ -1,6 +1,6 @@
 extends ColorRect
 
-@export var fade_time := 1.5
+@export var fade_time := 2.5
 
 func fade_from_black():
 	# Negro -> transparente
