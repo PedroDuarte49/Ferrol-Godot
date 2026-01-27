@@ -6,7 +6,7 @@ var player: Node = null
 var level_index := 0
 var current_level: Node = null
 var current_level_path := ""
-var player_spawn_tag := "Spawn"
+var player_spawn := "spawn"
 var camera_locked := false
 var camera_lock_position := Vector2.ZERO
 
@@ -15,6 +15,7 @@ var cant_ene := 0
 var aleatoria := 0
 var enemigo
 var enemigo_vivo 
+var zona := 1
 var zona1
 var zona2
 
@@ -24,7 +25,7 @@ var enemigo_fuerte = preload("res://scenes/enemigo_fuerte.tscn")
 
 # Called when the node enters the scene tree for the first time.
 
-var levels = ["res://scenes/mapa-1.tscn",
+var levels = ["res://scenes/mapa-1.tscn","res://scenes/mapa-2.tscn"
 ]
 
 
@@ -50,22 +51,39 @@ func load_level(path: String) -> void:
 	await get_tree().process_frame
 
 	# Spawn
-	var spawn := current_level.get_node_or_null(player_spawn_tag)
+	var spawn := current_level.get_node_or_null(player_spawn)
 	if spawn:
 		player.global_position = spawn.global_position
 	await get_tree().process_frame  
 	# Cámara
 	var camera := get_tree().current_scene.get_node_or_null("Camera2D")
+	if camera:
+		# Fuerza actualización con el jugador
+		camera.global_position = player.global_position
+
+		# Resetea cualquier bloqueo anterior
+		camera.limit_left = -100000
+		camera.limit_right = 100000
+		camera.limit_top = -100000
+		camera.limit_bottom = 100000
+
+		# Asegura que la cámara esté activa
+		camera.process_mode = Node.PROCESS_MODE_INHERIT
+		camera.make_current()
+
 	if camera and current_level.has_method("apply_camera_limits"):
 		current_level.apply_camera_limits(camera)
 	zona1 = current_level.get_node("bordes/borde_zona1/CollisionShape2D")
 	zona2 = current_level.get_node("bordes/borde_zona2/CollisionShape2D")
 	await get_tree().process_frame
-	lock_camera()
 	# Ahora sí hacemos fade desde negro hacia transparente
+	if level_index == 0:
+		lock_camera()
+		spawn_enemies(0,500)
+		
 	fade.fade_from_black()
 	
-	spawn_enemies(0,500)
+	
 
 func add_points(points:int):
 	score += points
@@ -92,10 +110,16 @@ func spawn_enemies(left_border: int, right_border: int):
 		add_child(enemigo)
 		cant_ene -= 1
 		await get_tree().create_timer(2.0).timeout
-	
+
 func enemigo_muerto():
 	enemigo_vivo -= 1
 	if enemigo_vivo == 0:
+		if zona == 3:
+			unlock_camera()
+			zona = 0
+			level_index += 1
+			load_level(levels[level_index])
+		else:
 			zona1.disabled = true
 			zona2.disabled = true
 			unlock_camera()

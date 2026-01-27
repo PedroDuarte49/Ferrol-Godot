@@ -1,4 +1,5 @@
 extends Enemy
+class_name Colegiala
 var awakened = false
 
 

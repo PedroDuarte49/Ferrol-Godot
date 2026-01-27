@@ -6,7 +6,7 @@ extends Node2D
 @export var platform_to_activate: NodePath
 @onready var camera_test: Camera2D = $Camera2D
 @onready var player: Player = $player
-@onready var zone1: CollisionShape2D = $bordes/borde_zona1/CollisionShape2D
+
 func _ready() -> void:
 	GameManager.cant_ene = 1
 
