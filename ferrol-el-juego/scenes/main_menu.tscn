@@ -1,8 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://blx7yjpqpj8bi"]
+[gd_scene load_steps=5 format=3 uid="uid://blx7yjpqpj8bi"]
 
 [ext_resource type="Script" uid="uid://w2rbh85bi0j7" path="res://scripts/main_menu.gd" id="1_7vrkn"]
-[ext_resource type="AudioStream" uid="uid://ba7fq7po4drjl" path="res://assets/Sonidos y Musica/Sonidos y Musica/musica menu.mp3" id="3_bqqt6"]
 [ext_resource type="Texture2D" uid="uid://c5gwwimls7jaq" path="res://assets/HMepico.png" id="2_ekxnf"]
+[ext_resource type="AudioStream" uid="uid://ba7fq7po4drjl" path="res://assets/Sonidos y Musica/Sonidos y Musica/musica menu.mp3" id="3_bqqt6"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ekxnf"]
 

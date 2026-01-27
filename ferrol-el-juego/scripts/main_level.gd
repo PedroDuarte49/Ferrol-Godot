@@ -30,8 +30,3 @@ func _ready():
 
 	#  Activar player
 	player.set_physics_process(true)
-
-	# 🧠 HUD
-	#hud.set_max_health(drunkmaster.life)
-	#hud.update_health(drunkmaster.life)
-	#hud.update_points()

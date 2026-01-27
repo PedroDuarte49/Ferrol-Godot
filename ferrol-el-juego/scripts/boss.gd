@@ -1,5 +1,5 @@
 extends CharacterBody2D
-class_name Enemy
+class_name Boss
 
 # --- NODOS ---
 @onready var flipper: Node2D = $flipper
@@ -8,26 +8,34 @@ class_name Enemy
 @onready var attack_hitbox: Area2D = $flipper/attack_hitbox
 @onready var hurtbox: CollisionShape2D = $hurtbox
 @onready var blood_particles: CPUParticles2D = $flipper/blood_particles
+@onready var summon_particles: CPUParticles2D = $flipper/summon_particles
 
 # --- NODOS DE AUDIO ---
 # Asegúrate de que estos nodos existan en tu escena con estos nombres exactos
-@onready var walk_sound: AudioStreamPlayer2D = $Movimiento
+@onready var walk_sound = $Movimiento
 @onready var attack_sound = $Golpe
 @onready var death_sound = $Muerte
+@export var summon_markers: Array[Marker2D]
 
 # --- ESTADOS ---
-enum State { IDLE, CHASE, READY, ATTACK, HURT, DEAD }
+enum State { IDLE, CHASE, READY, ATTACK, HURT, DEAD, SUMMON}
 var state: State = State.IDLE
-
+var is_invulnerable := false
+var is_sitting := false
+var summon_target: Vector2
+var summon_speed := 140.0
+var has_started_summon := false
+var summon_round := 0
+var base_summons := 2
 # --- PROPIEDADES ---
-var health = 40
+var health = 10
 var speed = 100.0
-var attack_power = 5
-var attack_cooldown = 1.5
+var attack_power = 10
+var attack_cooldown = 1.0
 var attack_timer = 0.0
 var direction = -1
 var attack_offset_x := 0.0
-var death_started 
+
 const MAX_VERTICAL_DIFF := 20.0
 const MIN_X_SEPARATION := 20.0
 const ATTACK_DISTANCE_X := 20.0
@@ -37,8 +45,10 @@ const Z_BASE = 100
 
 func _ready():
 	anim.connect("animation_finished", Callable(self, "_on_anim_finished"))
+	if GameManager:
+		GameManager.connect("all_enemies_defeated", Callable(self, "_on_all_enemies_defeated"))
 	state = State.IDLE
-	attack_offset_x = randf_range(-30, 30)
+	attack_offset_x = randf_range(-20, 20)
 
 func _physics_process(delta: float) -> void:
 	if state == State.DEAD:
@@ -77,6 +87,7 @@ func process_state(delta: float):
 		State.ATTACK: state_attack(delta)
 		State.HURT: state_hurt(delta)
 		State.DEAD: state_dead(delta)
+		State.SUMMON: state_summon(delta)
 
 func state_idle(_delta):
 	velocity = Vector2.ZERO
@@ -127,8 +138,8 @@ func state_attack(_delta):
 	if anim.frame == 0 and not attack_sound.playing:
 		attack_sound.play()
 
-	# Frames de impacto (ajusta según tu animación)
-	if anim.frame in [2, 6]:
+	
+	if anim.frame == 8:
 		attack_hitbox.monitoring = true
 	else:
 		attack_hitbox.monitoring = false
@@ -139,28 +150,57 @@ func state_hurt(_delta):
 	if walk_sound.playing: walk_sound.stop()
 
 func state_dead(_delta):
-	if death_started:
-		return
-
-	death_started = true
-
 	velocity = Vector2.ZERO
 	play_anim("die")
 	attack_hitbox.monitoring = false
-	hurtbox.disabled = true
-	if not (self is Colegiala):
-		GameManager.enemigo_muerto()
-	
-	death_sound.play()
-	await death_sound.finished
-	queue_free()
+	# Usamos set_deferred para evitar errores de física en Godot
+	hurtbox.set_deferred("disabled", true)
 
-		
+	# --- AUDIO: Muerte ---
+	if not death_sound.playing and anim.frame == 0:
+		death_sound.play()
+
+	# Timer para eliminar el enemigo después de su animación
+	if not has_node("delete_timer"):
+		var t = Timer.new()
+		t.name = "delete_timer"
+		t.one_shot = true
+		t.wait_time = anim.sprite_frames.get_frame_count("die") / anim.sprite_frames.get_animation_speed("die")
+		t.connect("timeout", Callable(self, "queue_free"))
+		add_child(t)
+		t.start()
+func state_summon(delta):
+	# 1️⃣ Ir al marker
+	if not is_sitting:
+		play_anim("chase")
+
+		var dir = summon_target - global_position
+		if dir.length() > 5:
+			velocity = dir.normalized() * summon_speed
+			set_direction(sign(dir.x))
+		else:
+			velocity = Vector2.ZERO
+			is_sitting = true
+			play_anim("sentar")
+			summon_particles.emitting = true
+		return
+
+	# 2️⃣ Ya está sentado
+	velocity = Vector2.ZERO
+
+	# Empieza a invocar UNA sola vez
+	if is_sitting and not has_started_summon and anim.animation == "sentada":
+		start_summoning()
+
+	# 3️⃣ Esperar a que mueran todos
+	if has_started_summon and GameManager.summoned_enemies_alive == 0:
+		exit_summon_state()
+
 
 # ------------------- LÓGICA DE COMBATE -------------------
 
 func take_damage(amount: int, from_position: Vector2, attack_type: int):
-	if state == State.DEAD:
+	if state == State.DEAD or is_invulnerable:
 		return
 
 	health -= amount
@@ -168,10 +208,8 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 
 	if health <= 0:
 		state = State.DEAD
-		GameManager.add_points(50)
+		GameManager.add_points(200)
 	else:
-	
-		
 		state = State.HURT
 		apply_knockback(amount, from_position, attack_type)
 
@@ -185,7 +223,10 @@ func apply_knockback(amount:int, from_position: Vector2, attack_type:int, knockb
 
 func _end_knockback():
 	if state != State.DEAD:
-		state = State.CHASE
+		if health < 5 and state != State.SUMMON:
+			start_summon_state()
+		else:
+			state = State.CHASE
 
 # ------------------- UTILIDADES -------------------
 
@@ -220,8 +261,53 @@ func _on_anim_finished():
 	elif anim.animation == "attack" and state == State.ATTACK:
 		state = State.CHASE
 		attack_timer = attack_cooldown
-
+	elif anim.animation == "sentar" and state == State.SUMMON:
+		play_anim("sentada")
+	elif anim.animation == "levantar" and state == State.SUMMON:
+		is_invulnerable = false
+		is_sitting = false
+		has_started_summon = false
+		state = State.CHASE
+	
 func _on_attack_hitbox_area_entered(area: Area2D):
 	if area.is_in_group("player_hurtbox"):
 		var player = area.get_parent().get_parent()
 		player.take_damage(attack_power, global_position, 0)
+		
+func start_summon_state():
+	state = State.SUMMON
+	is_invulnerable = true
+	has_started_summon = false
+	velocity = Vector2.ZERO
+
+	# Elegir un marker al azar
+	if summon_markers.size() > 0:
+		var marker = summon_markers.pick_random()
+		summon_target = marker.global_position
+
+func start_summoning():
+	has_started_summon = true
+	summon_round += 1
+
+	var total_enemies := summon_round * base_summons
+
+	
+	GameManager.cant_ene = total_enemies
+	GameManager.enemigo_vivo = 0
+	GameManager.spawn_enemies(0, 0)
+
+	
+func exit_summon_state():
+	summon_particles.emitting = false
+	play_anim("levantar")
+
+func _on_all_enemies_defeated():
+	# Solo reaccionar si el boss está invocando
+	if state != State.SUMMON:
+		return
+
+	# Si aún no está sentado o no empezó a invocar, ignorar
+	if not has_started_summon:
+		return
+
+	exit_summon_state()

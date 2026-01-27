@@ -7,7 +7,8 @@ extends Node2D
 @onready var camera_test: Camera2D = $Camera2D
 @onready var player: Player = $player
 
-
+func _ready() -> void:
+	GameManager.cant_ene = 1
 
 func apply_camera_limits(camera: Camera2D):
 	camera.limit_left = cam_limit_left

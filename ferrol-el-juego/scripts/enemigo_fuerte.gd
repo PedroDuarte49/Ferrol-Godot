@@ -6,7 +6,7 @@ func _ready():
 	super._ready()
 
 	# Stats modificados
-	health = 60
+	health = 80
 	speed = 65
 	attack_power = 15
 

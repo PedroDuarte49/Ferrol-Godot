@@ -305,6 +305,7 @@ func stop_drunk_effect():
 
 	sprite.modulate = Color.WHITE
 	boost_particles.emitting = false
+
 func lanzar_botella():
 	print("Intentando lanzar botella, botellas restantes:", GameManager.bottle)
 	if GameManager.bottle <= 0:
