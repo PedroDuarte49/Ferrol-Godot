@@ -74,4 +74,3 @@ func pause_game():
 func resume_game():
 	get_tree().paused = false
 	pause_menu.visible = false
-
