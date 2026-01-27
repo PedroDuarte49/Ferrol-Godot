@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://vodxbjhevego"]
+[gd_scene load_steps=61 format=3 uid="uid://vodxbjhevego"]
 
 [ext_resource type="Script" uid="uid://dd0mrh8pyty7r" path="res://scripts/boss.gd" id="1_2cdgk"]
 [ext_resource type="Texture2D" uid="uid://dkovh5gkwua38" path="res://assets/Homeless_2/Attack_1.png" id="2_5f346"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://8cgcf08c2h51" path="res://assets/Homeless_2/Hurt.png" id="5_8eiau"]
 [ext_resource type="Texture2D" uid="uid://bwwb50a1tkha4" path="res://assets/Homeless_2/Idle.png" id="6_vn2fc"]
 [ext_resource type="Texture2D" uid="uid://dsqdg0gr2j6bk" path="res://assets/Homeless_2/Idle_2.png" id="7_gqd3i"]
+[ext_resource type="AudioStream" uid="uid://dmgpb3fcvui7n" path="res://assets/Sonidos y Musica/Sonidos y Musica/movimiento.mp3" id="8_5f346"]
+[ext_resource type="AudioStream" uid="uid://cam4elm1rk5l2" path="res://assets/Sonidos y Musica/Sonidos y Musica/attack.mp3" id="9_0onds"]
+[ext_resource type="AudioStream" uid="uid://cxrslgkf8qbku" path="res://assets/Sonidos y Musica/Sonidos y Musica/grito mujer muriendo.mp3" id="10_lfs1x"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mautr"]
 atlas = ExtResource("2_5f346")
@@ -456,11 +459,14 @@ shape = SubResource("CapsuleShape2D_t8frn")
 debug_color = Color(0.8043963, 0.31351542, 0.70246893, 0.41960785)
 
 [node name="Movimiento" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_5f346")
 max_polyphony = 10
 
 [node name="Golpe" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_0onds")
 
 [node name="Muerte" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_lfs1x")
 max_polyphony = 10
 
 [connection signal="area_entered" from="flipper/attack_hitbox" to="." method="_on_attack_hitbox_area_entered"]

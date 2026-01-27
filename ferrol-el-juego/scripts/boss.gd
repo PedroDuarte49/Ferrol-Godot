@@ -16,7 +16,7 @@ class_name Boss
 @onready var attack_sound = $Golpe
 @onready var death_sound = $Muerte
 @export var summon_markers: Array[Marker2D]
-
+var paquete_scene = preload("res://scenes/paquete.tscn")
 # --- ESTADOS ---
 enum State { IDLE, CHASE, READY, ATTACK, HURT, DEAD, SUMMON}
 var state: State = State.IDLE
@@ -166,7 +166,7 @@ func state_dead(_delta):
 		t.name = "delete_timer"
 		t.one_shot = true
 		t.wait_time = anim.sprite_frames.get_frame_count("die") / anim.sprite_frames.get_animation_speed("die")
-		t.connect("timeout", Callable(self, "queue_free"))
+		t.connect("timeout", Callable(self, "spawn_paquete"))
 		add_child(t)
 		t.start()
 func state_summon(delta):
@@ -307,3 +307,15 @@ func _on_all_enemies_defeated():
 		return
 
 	exit_summon_state()
+
+func spawn_paquete():
+	# Instanciar la escena
+	var paquete_instance = paquete_scene.instantiate()
+	paquete_instance.global_position = global_position  # Aparece donde estaba el boss
+	get_tree().current_scene.add_child(paquete_instance)
+	
+	# Eliminar al boss
+	queue_free()
+	
+	# Opcional: Si quieres que GameManager haga algo extra
+	# GameManager.win_game()

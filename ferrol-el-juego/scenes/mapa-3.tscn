@@ -615,10 +615,10 @@ position = Vector2(74, 19)
 position = Vector2(58, 124)
 
 [node name="Marker2D3" type="Marker2D" parent="."]
-position = Vector2(499, 106)
+position = Vector2(345, 6)
 
 [node name="Marker2D4" type="Marker2D" parent="."]
-position = Vector2(623, 12)
+position = Vector2(598, 57)
 
 [node name="spawn" type="Marker2D" parent="."]
 position = Vector2(35, 73)
@@ -626,3 +626,14 @@ position = Vector2(35, 73)
 [node name="boss" parent="." node_paths=PackedStringArray("summon_markers") instance=ExtResource("5_beywr")]
 position = Vector2(462, 53)
 summon_markers = [NodePath("../Marker2D"), NodePath("../Marker2D2"), NodePath("../Marker2D3"), NodePath("../Marker2D4")]
+
+[node name="GPUParticles2D" type="CPUParticles2D" parent="."]
+top_level = true
+z_index = 1000
+position = Vector2(317, -368)
+amount = 450
+lifetime = 1.5
+randomness = 0.35
+emission_shape = 3
+emission_rect_extents = Vector2(350, 1)
+color = Color(0.4627451, 1, 1, 1)

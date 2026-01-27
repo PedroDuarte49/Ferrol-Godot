@@ -124,6 +124,8 @@ func enemigo_muerto():
 			unlock_camera()
 			zona = 0
 			level_index += 1
+			fade.fade_to_black()
+			await get_tree().process_frame 
 			load_level(levels[level_index])
 		elif zona == 1 or zona == 2:
 			zona1.disabled = true
@@ -168,7 +170,9 @@ func new_zone(cant: int):
 			spawn_enemies(700,750)
 	
 	
-
+func win_game():
+	await fade.fade_to_black()
+	get_tree().change_scene_to_file("res://scenes/Win_Scene.tscn") 
 func game_over():
 	await fade.fade_to_black()
 	get_tree().change_scene_to_file("res://scenes/game_over.tscn") 
