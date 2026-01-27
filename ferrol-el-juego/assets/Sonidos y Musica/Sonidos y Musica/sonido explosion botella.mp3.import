@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dkanwvh8cknfw"
+path="res://.godot/imported/sonido explosion botella.mp3-3cdbc17d80de85705018f3dd7da4f9f0.mp3str"
+
+[deps]
+
+source_file="res://assets/Sonidos y Musica/Sonidos y Musica/sonido explosion botella.mp3"
+dest_files=["res://.godot/imported/sonido explosion botella.mp3-3cdbc17d80de85705018f3dd7da4f9f0.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
