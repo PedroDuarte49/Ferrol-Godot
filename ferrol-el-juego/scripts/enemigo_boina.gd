@@ -150,29 +150,12 @@ func state_dead(_delta):
 	hurtbox.disabled = true
 	if not (self is Colegiala):
 		GameManager.enemigo_muerto()
-    
-  death_sound.play()
+	
+	death_sound.play()
 	await death_sound.finished
-
 	queue_free()
 
 		
-# ------------------- LÓGICA -------------------
-func apply_enemy_separation(delta: float) -> Vector2:
-	var push := Vector2.ZERO
-
-	for body in enemy_avoid_area.get_overlapping_bodies():
-		if body == self:
-			continue
-		if not body.is_in_group("Enemy"):
-			continue
-
-		var diff := global_position - body.global_position
-
-		# ---------- SEPARACIÓN HORIZONTAL (prioritaria) ----------
-		if abs(diff.x) < MIN_X_SEPARATION:
-			var strength_x = (MIN_X_SEPARATION - abs(diff.x)) / MIN_X_SEPARATION
-			push.x += sign(diff.x) * strength_x * speed
 
 # ------------------- LÓGICA DE COMBATE -------------------
 

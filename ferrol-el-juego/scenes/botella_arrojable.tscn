@@ -210,6 +210,7 @@ _data = {
 radius = 67.00746
 
 [node name="botella_arrojable" type="Area2D"]
+z_index = 1000
 script = ExtResource("1_t1e55")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

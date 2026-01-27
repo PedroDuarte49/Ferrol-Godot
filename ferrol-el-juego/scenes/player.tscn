@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=3 uid="uid://dc623jpdtnl74"]
+[gd_scene load_steps=86 format=3 uid="uid://dc623jpdtnl74"]
 
 [ext_resource type="Texture2D" uid="uid://cybvquypdcaq2" path="res://assets/Homeless_3/Attack_1.png" id="1_cibgq"]
 [ext_resource type="Script" uid="uid://bkqcalh28qvrr" path="res://scripts/player.gd" id="1_y4r1p"]
@@ -17,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://cxnkpvxnnwbog" path="res://assets/Sonidos y Musica/Sonidos y Musica/grito muerte hombre.mp3" id="13_oprun"]
 [ext_resource type="AudioStream" uid="uid://daxm7m23p2mfv" path="res://assets/Sonidos y Musica/Sonidos y Musica/botella vida.mp3" id="14_a8ls1"]
 [ext_resource type="AudioStream" uid="uid://cw6kxtw1lwf6a" path="res://assets/Sonidos y Musica/Sonidos y Musica/brass-fanfare-with-timpani-and-winchimes-reverberated-146260.mp3" id="15_oprun"]
+[ext_resource type="Texture2D" uid="uid://gmhrgpn0dsb3" path="res://assets/flecha_roja.png" id="18_fulsm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x5gf8"]
 radius = 6.0
@@ -620,6 +621,7 @@ position = Vector2(77, 28)
 [node name="Sprite2D" type="Sprite2D" parent="LandingIndicator"]
 position = Vector2(1, 0)
 scale = Vector2(0.0104, 0.0115)
+texture = ExtResource("18_fulsm")
 
 [connection signal="animation_finished" from="flipper/AnimatedSprite2D" to="." method="_on_anim_finished"]
 [connection signal="frame_changed" from="flipper/AnimatedSprite2D" to="." method="_on_frame_changed"]

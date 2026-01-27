@@ -1,17 +1,14 @@
 extends Enemy
 
-@onready var risa: AudioStreamPlayer2D = $risa
 class_name Colegiala
-var awakened = false
-
-
+@onready var risa: AudioStreamPlayer2D = $risa
 var awakened = false
 
 func _ready():
 	super._ready()
-	health = 20
-	speed = 120
-	attack_power = 15
+	health = 60
+	speed = 140
+	attack_power = 25
 
 
 func state_idle(delta):
