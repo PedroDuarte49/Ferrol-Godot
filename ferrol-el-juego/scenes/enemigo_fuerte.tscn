@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://lnsoqx8rjwaw"]
+[gd_scene load_steps=45 format=3 uid="uid://lnsoqx8rjwaw"]
 
 [ext_resource type="Script" uid="uid://duq4iu4of1kj6" path="res://scripts/enemigo_fuerte.gd" id="1_hp7xw"]
 [ext_resource type="Texture2D" uid="uid://tv6s2khttgjc" path="res://assets/City_men_1/Attack.png" id="2_hp7xw"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://qnor5rwix4e1" path="res://assets/City_men_1/Dead.png" id="4_8wrqv"]
 [ext_resource type="Texture2D" uid="uid://bxvcymvu2gu2w" path="res://assets/City_men_1/Hurt.png" id="5_ri7ry"]
 [ext_resource type="Texture2D" uid="uid://7am68e7y7uef" path="res://assets/City_men_1/Idle.png" id="6_q3xtq"]
+[ext_resource type="AudioStream" uid="uid://dmgpb3fcvui7n" path="res://assets/Sonidos y Musica/Sonidos y Musica/movimiento.mp3" id="7_ri7ry"]
+[ext_resource type="AudioStream" uid="uid://cam4elm1rk5l2" path="res://assets/Sonidos y Musica/Sonidos y Musica/attack.mp3" id="8_q3xtq"]
+[ext_resource type="AudioStream" uid="uid://cqiosvfe31ioc" path="res://assets/Sonidos y Musica/Sonidos y Musica/grito enemigo muerte.mp3" id="9_iyae7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iyae7"]
 atlas = ExtResource("2_hp7xw")
@@ -319,5 +322,21 @@ color = Color(1, 0, 0, 1)
 position = Vector2(0, 39)
 shape = SubResource("CapsuleShape2D_t8frn")
 debug_color = Color(0.8043963, 0.31351542, 0.70246893, 0.41960785)
+
+[node name="Movimiento" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_ri7ry")
+volume_db = -3.0
+max_polyphony = 10
+bus = &"Efectos"
+
+[node name="Golpe" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_q3xtq")
+volume_db = -15.146
+bus = &"Efectos"
+
+[node name="Muerte" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_iyae7")
+max_polyphony = 10
+bus = &"Efectos"
 
 [connection signal="area_entered" from="flipper/attack_hitbox" to="." method="_on_attack_hitbox_area_entered"]

@@ -1,0 +1,239 @@
+[gd_scene load_steps=7 format=3 uid="uid://8pgh1arcxm71"]
+
+[ext_resource type="Script" uid="uid://2xxjm1qv1ey7" path="res://scripts/howto_menu.gd" id="1_34bv6"]
+[ext_resource type="Texture2D" uid="uid://c5gwwimls7jaq" path="res://assets/HMepico.png" id="2_22uua"]
+[ext_resource type="FontFile" uid="uid://fvydufgav5sc" path="res://assets/Fonts/PixelOperator8-Bold.ttf" id="3_4xq8o"]
+[ext_resource type="FontFile" uid="uid://vnt3flveknjj" path="res://assets/Fonts/PixelOperator8.ttf" id="4_avt2f"]
+[ext_resource type="Texture2D" uid="uid://itssnv6k80s2" path="res://assets/Icon_13.png" id="5_0cdol"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ekxnf"]
+
+[node name="Howto" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_34bv6")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 138.0
+offset_top = 3.0
+offset_right = 1015.0
+offset_bottom = 705.0
+texture = ExtResource("2_22uua")
+expand_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+modulate = Color(0, 0, 0, 1)
+show_behind_parent = true
+layout_mode = 0
+offset_left = -1.0
+offset_top = -14.0
+offset_right = 1171.0
+offset_bottom = 652.0
+texture = SubResource("CanvasTexture_ekxnf")
+expand_mode = 1
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+modulate = Color(0.14117648, 0, 0.13333334, 0.8352941)
+layout_mode = 0
+offset_left = 143.0
+offset_top = 19.0
+offset_right = 1012.0
+offset_bottom = 644.0
+texture = SubResource("CanvasTexture_ekxnf")
+expand_mode = 1
+
+[node name="TextureRect8" type="TextureRect" parent="."]
+modulate = Color(0.14117648, 0, 0.13333334, 0.8352941)
+layout_mode = 0
+offset_left = 143.0
+offset_top = 157.0
+offset_right = 998.0
+offset_bottom = 214.0
+texture = SubResource("CanvasTexture_ekxnf")
+expand_mode = 1
+
+[node name="TextureRect9" type="TextureRect" parent="."]
+modulate = Color(0.0845369, 4.597991e-06, 0.07895801, 0.8352941)
+layout_mode = 0
+offset_left = 143.0
+offset_top = 157.0
+offset_right = 1011.0
+offset_bottom = 214.0
+texture = SubResource("CanvasTexture_ekxnf")
+expand_mode = 1
+
+[node name="TextureRect10" type="TextureRect" parent="."]
+modulate = Color(0.0845369, 4.597991e-06, 0.07895801, 0.8352941)
+layout_mode = 0
+offset_left = 143.0
+offset_top = 247.0
+offset_right = 1011.0
+offset_bottom = 304.0
+texture = SubResource("CanvasTexture_ekxnf")
+expand_mode = 1
+
+[node name="TextureRect12" type="TextureRect" parent="."]
+modulate = Color(0.0845369, 4.597991e-06, 0.07895801, 0.8352941)
+layout_mode = 0
+offset_left = 143.0
+offset_top = 412.0
+offset_right = 1011.0
+offset_bottom = 469.0
+texture = SubResource("CanvasTexture_ekxnf")
+expand_mode = 1
+
+[node name="TextureRect11" type="TextureRect" parent="."]
+modulate = Color(0.0845369, 4.597991e-06, 0.07895801, 0.8352941)
+layout_mode = 0
+offset_left = 143.0
+offset_top = 334.0
+offset_right = 1011.0
+offset_bottom = 391.0
+texture = SubResource("CanvasTexture_ekxnf")
+expand_mode = 1
+
+[node name="VBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -388.0
+offset_top = 166.0
+offset_right = 363.0
+offset_bottom = 290.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 60
+alignment = 1
+
+[node name="Mainmenu" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Back To Main Menu"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 415.0
+offset_top = 78.0
+offset_right = 720.0
+offset_bottom = 118.0
+theme_override_fonts/font = ExtResource("3_4xq8o")
+theme_override_font_sizes/font_size = 40
+text = "Controls"
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 220.0
+offset_top = 164.0
+offset_right = 525.0
+offset_bottom = 204.0
+theme_override_fonts/font = ExtResource("4_avt2f")
+theme_override_font_sizes/font_size = 30
+text = "Movement"
+
+[node name="Label3" type="Label" parent="."]
+layout_mode = 0
+offset_left = 217.0
+offset_top = 255.0
+offset_right = 522.0
+offset_bottom = 295.0
+theme_override_fonts/font = ExtResource("4_avt2f")
+theme_override_font_sizes/font_size = 30
+text = "Attack"
+
+[node name="Label5" type="Label" parent="."]
+layout_mode = 0
+offset_left = 220.0
+offset_top = 348.0
+offset_right = 525.0
+offset_bottom = 388.0
+theme_override_fonts/font = ExtResource("4_avt2f")
+theme_override_font_sizes/font_size = 30
+text = "Throw bottle"
+
+[node name="Label7" type="Label" parent="."]
+layout_mode = 0
+offset_left = 220.0
+offset_top = 422.0
+offset_right = 663.0
+offset_bottom = 462.0
+theme_override_fonts/font = ExtResource("4_avt2f")
+theme_override_font_sizes/font_size = 30
+text = "Pause/Resume Game"
+
+[node name="Label4" type="Label" parent="."]
+layout_mode = 0
+offset_left = 939.0
+offset_top = 258.0
+offset_right = 1244.0
+offset_bottom = 298.0
+theme_override_fonts/font = ExtResource("3_4xq8o")
+theme_override_font_sizes/font_size = 30
+text = "Z"
+
+[node name="Label8" type="Label" parent="."]
+layout_mode = 0
+offset_left = 939.0
+offset_top = 422.0
+offset_right = 1244.0
+offset_bottom = 462.0
+theme_override_fonts/font = ExtResource("3_4xq8o")
+theme_override_font_sizes/font_size = 30
+text = "P"
+
+[node name="Label6" type="Label" parent="."]
+layout_mode = 0
+offset_left = 939.0
+offset_top = 348.0
+offset_right = 1244.0
+offset_bottom = 388.0
+theme_override_fonts/font = ExtResource("3_4xq8o")
+theme_override_font_sizes/font_size = 30
+text = "C"
+
+[node name="TextureRect4" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 773.0
+offset_top = 202.99998
+offset_right = 813.0
+offset_bottom = 242.99998
+rotation = -1.5701445
+texture = ExtResource("5_0cdol")
+
+[node name="TextureRect5" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 974.00006
+offset_top = 165.0
+offset_right = 1014.00006
+offset_bottom = 205.0
+rotation = 1.5739107
+texture = ExtResource("5_0cdol")
+
+[node name="TextureRect6" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 912.00006
+offset_top = 204.99998
+offset_right = 952.00006
+offset_bottom = 244.99998
+rotation = 3.130918
+texture = ExtResource("5_0cdol")
+
+[node name="TextureRect7" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 823.0
+offset_top = 164.0
+offset_right = 863.0
+offset_bottom = 204.0
+texture = ExtResource("5_0cdol")
+
+[connection signal="pressed" from="VBoxContainer/Mainmenu" to="." method="_on_mainmenu_pressed"]

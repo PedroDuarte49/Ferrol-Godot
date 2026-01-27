@@ -1,6 +1,7 @@
 extends RigidBody2D
 class_name Barrel
 
+@onready var audio: AudioStreamPlayer2D = $AudioStreamPlayer2D
 @export var life := 20
 @export var pickup_scene: PackedScene   # Si es null → barril vacío
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
@@ -26,7 +27,7 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 func break_barrel():
 	if is_breaking:
 		return
-
+	audio.play()
 	is_breaking = true
 
 	# Desactivamos hitbox
