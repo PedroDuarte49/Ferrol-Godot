@@ -12,7 +12,7 @@ var score := 0
 var saved_score := 0
 var bottle := 1
 # Called when the node enters the scene tree for the first time.
-
+var summoned_enemies_alive := 0
 var levels = ["res://scenes/mapa-1.tscn",
 ]
 
@@ -58,3 +58,11 @@ func add_points(points:int):
 func game_over():
 	await fade.fade_to_black()
 	get_tree().change_scene_to_file("res://scenes/game_over.tscn") 
+	
+func register_summoned_enemy():
+	summoned_enemies_alive += 1
+
+func summoned_enemy_died():
+	summoned_enemies_alive -= 1
+	if summoned_enemies_alive < 0:
+		summoned_enemies_alive = 0
