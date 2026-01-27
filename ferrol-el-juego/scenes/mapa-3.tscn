@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://brstcwgmndr2n"]
+[gd_scene load_steps=15 format=4 uid="uid://brstcwgmndr2n"]
 
 [ext_resource type="Script" uid="uid://bhnqwgq4tejp3" path="res://scripts/mapa_1.gd" id="1_beywr"]
 [ext_resource type="PackedScene" uid="uid://nxgdlia0kfhr" path="res://scenes/boca_incendios.tscn" id="2_wueyv"]
@@ -529,6 +529,44 @@ texture = ExtResource("3_n58y7")
 [sub_resource type="TileSet" id="TileSet_hpnlm"]
 sources/0 = SubResource("TileSetAtlasSource_1noi2")
 
+[sub_resource type="Animation" id="Animation_beywr"]
+resource_name = "luz"
+length = 5.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4.7, 4.89),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(9.318171, 9.353141, 4.666993, 0.7882353)]
+}
+
+[sub_resource type="Animation" id="Animation_wueyv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n58y7"]
+_data = {
+&"RESET": SubResource("Animation_wueyv"),
+&"luz": SubResource("Animation_beywr")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wyn66"]
 size = Vector2(675.0298, 42.230824)
 
@@ -564,6 +602,20 @@ metadata/_edit_group_ = true
 [node name="Fondo" type="Sprite2D" parent="."]
 process_priority = 2
 z_index = -1
+position = Vector2(320, -98)
+scale = Vector2(0.43684897, 0.5)
+texture = ExtResource("4_utkbf")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Fondo"]
+libraries = {
+&"": SubResource("AnimationLibrary_n58y7")
+}
+autoplay = "luz"
+
+[node name="Fondo2" type="Sprite2D" parent="."]
+process_priority = 2
+show_behind_parent = true
+z_index = -2
 position = Vector2(320, -98)
 scale = Vector2(0.43684897, 0.5)
 texture = ExtResource("4_utkbf")
@@ -612,7 +664,7 @@ shape = SubResource("RectangleShape2D_jjktd")
 position = Vector2(74, 19)
 
 [node name="Marker2D2" type="Marker2D" parent="."]
-position = Vector2(203, 100)
+position = Vector2(203, 99)
 
 [node name="Marker2D3" type="Marker2D" parent="."]
 position = Vector2(345, 6)

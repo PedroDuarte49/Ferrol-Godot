@@ -244,5 +244,5 @@ func spawn_pickup():
 		return	# No se spawnea nada
 
 	var instance = choice.instantiate()
-	instance.global_position = Vector2(global_position.x, 0) #valor y 0 para que no salgan fuera del mapa
+	instance.global_position = Vector2(global_position.x, 40) #valor y 0 para que no salgan fuera del mapa
 	get_tree().current_scene.add_child(instance)
