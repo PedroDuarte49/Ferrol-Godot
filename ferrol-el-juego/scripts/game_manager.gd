@@ -1,6 +1,7 @@
 extends Node
 var fade: ColorRect
 var hud: Node = null
+var pause_menu : Node = null
 var levelcontainer: Node2D = null
 var player: Node = null
 var level_index := 0
@@ -24,16 +25,15 @@ var zona2
 var enemigo_boina = preload("res://scenes/enemigo_boina.tscn")
 var enemigo_fuerte = preload("res://scenes/enemigo_fuerte.tscn")
 
+var saved_score := 0
+var bottle := 3
 # Called when the node enters the scene tree for the first time.
 
 var levels = ["res://scenes/mapa-1.tscn","res://scenes/mapa-2.tscn"
 ]
 
-
-
 func _ready() -> void:
-	pass # Replace with function body.
-
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func load_level(path: String) -> void:
 	# Fade a negro instantáneo
@@ -77,6 +77,8 @@ func load_level(path: String) -> void:
 	zona1 = current_level.get_node("bordes/borde_zona1/CollisionShape2D")
 	zona2 = current_level.get_node("bordes/borde_zona2/CollisionShape2D")
 	await get_tree().process_frame
+
+	hud.bottle(bottle)
 	# Ahora sí hacemos fade desde negro hacia transparente
 	if level_index == 0:
 		lock_camera()
@@ -167,3 +169,22 @@ func new_zone(cant: int):
 			spawn_enemies(700,750)
 	
 	
+
+func game_over():
+	await fade.fade_to_black()
+	get_tree().change_scene_to_file("res://scenes/game_over.tscn") 
+
+func _input(event):
+	if event.is_action_pressed("Pause"):
+		if get_tree().paused:
+			resume_game()
+		else:
+			pause_game()
+			
+func pause_game():
+	get_tree().paused = true
+	pause_menu.visible = true
+func resume_game():
+	get_tree().paused = false
+	pause_menu.visible = false
+

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://4nuxkjqaouf3"
+path="res://.godot/imported/girl-laugh-6689.mp3-8fde29a635e120babf443466e1c4d1cc.mp3str"
+
+[deps]
+
+source_file="res://assets/Sonidos y Musica/Sonidos y Musica/girl-laugh-6689.mp3"
+dest_files=["res://.godot/imported/girl-laugh-6689.mp3-8fde29a635e120babf443466e1c4d1cc.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

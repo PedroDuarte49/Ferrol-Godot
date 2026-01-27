@@ -2,12 +2,21 @@ extends Area2D
 
 var picked := false 
 
-#para que esto funcione player debe tener una funcion gain_life()
+# Referencia al nodo de sonido
+@onready var break_sound = $Sonido
+@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
+
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
 		if picked:
 			return
-			
-		body.botellas += 1
+
+		if GameManager.bottle <3:
+			GameManager.bottle += 1
+			GameManager.hud.bottle(GameManager.bottle)
 		picked = true
+		anim.visible = false
+		break_sound.play()
+		await break_sound.finished
+		
 		queue_free()

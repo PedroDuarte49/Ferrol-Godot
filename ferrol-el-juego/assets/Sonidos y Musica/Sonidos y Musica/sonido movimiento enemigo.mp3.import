@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cytuieryuy1kc"
+path="res://.godot/imported/sonido movimiento enemigo.mp3-5ede35ea125d44b412fd8e9a5f87e31d.mp3str"
+
+[deps]
+
+source_file="res://assets/Sonidos y Musica/Sonidos y Musica/sonido movimiento enemigo.mp3"
+dest_files=["res://.godot/imported/sonido movimiento enemigo.mp3-5ede35ea125d44b412fd8e9a5f87e31d.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

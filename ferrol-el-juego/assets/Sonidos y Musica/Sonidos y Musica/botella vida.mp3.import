@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://daxm7m23p2mfv"
+path="res://.godot/imported/botella vida.mp3-8f13d7f2ab73c507e204ce14181c6e9b.mp3str"
+
+[deps]
+
+source_file="res://assets/Sonidos y Musica/Sonidos y Musica/botella vida.mp3"
+dest_files=["res://.godot/imported/botella vida.mp3-8f13d7f2ab73c507e204ce14181c6e9b.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

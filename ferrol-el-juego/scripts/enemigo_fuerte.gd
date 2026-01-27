@@ -1,5 +1,6 @@
 extends Enemy
 #hereda de Enemy y sobreescibe comportamiento, stats aprovechando  ready y overiding state attack
+@onready var golpe: AudioStreamPlayer2D = $Golpe
 
 func _ready():
 	super._ready()
@@ -12,7 +13,7 @@ func _ready():
 func state_attack(delta):
 	play_anim("attack")
 	velocity.x = 0
-
+	golpe.play()
 	# SOLO frame 2
 	if anim.frame == 2:
 		attack_hitbox.monitoring = true

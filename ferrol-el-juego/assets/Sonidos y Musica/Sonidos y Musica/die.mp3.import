@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dssrbi4wr2pfi"
+path="res://.godot/imported/die.mp3-69dd6246cdfa5e1043d91e42a6629dcf.mp3str"
+
+[deps]
+
+source_file="res://assets/Sonidos y Musica/Sonidos y Musica/die.mp3"
+dest_files=["res://.godot/imported/die.mp3-69dd6246cdfa5e1043d91e42a6629dcf.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
