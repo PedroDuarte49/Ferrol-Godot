@@ -675,7 +675,7 @@ position = Vector2(1241.7655, 16.07473)
 shape = SubResource("RectangleShape2D_uo22h")
 
 [node name="ZonaIni" type="Area2D" parent="InicioZonas"]
-position = Vector2(-667.7467, -5.0579834)
+position = Vector2(-679.5649, -4.1488953)
 script = ExtResource("2_p71xj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InicioZonas/ZonaIni"]

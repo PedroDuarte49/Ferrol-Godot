@@ -9,6 +9,7 @@ var current_level_path := ""
 var player_spawn := "spawn"
 var camera_locked := false
 var camera_lock_position := Vector2.ZERO
+signal all_enemies_defeated
 
 var score := 0
 var cant_ene := 0
@@ -79,7 +80,12 @@ func load_level(path: String) -> void:
 	# Ahora sí hacemos fade desde negro hacia transparente
 	if level_index == 0:
 		lock_camera()
-		spawn_enemies(0,500)
+		aleatoria = randi_range(1,2)
+		if aleatoria == 1:
+			spawn_enemies(-64,0)
+		elif aleatoria == 2:
+			spawn_enemies(700,750)
+		
 		
 	fade.fade_from_black()
 	
@@ -101,11 +107,9 @@ func spawn_enemies(left_border: int, right_border: int):
 		elif aleatoria == 2:
 			enemigo = enemigo_fuerte.instantiate()
 		
-		aleatoria = randi_range(1,2)
 		if aleatoria == 1:
-			enemigo.position = Vector2(randf_range(-500,-100 ), randf_range(50,-50 ))
-		elif aleatoria == 2:
-			enemigo.position = Vector2(randf_range(500,700 ), randf_range(50,-50 ))
+			enemigo.position = Vector2(randf_range(left_border,right_border), randf_range(50,-50 ))
+		
 		
 		add_child(enemigo)
 		cant_ene -= 1
@@ -114,6 +118,7 @@ func spawn_enemies(left_border: int, right_border: int):
 func enemigo_muerto():
 	enemigo_vivo -= 1
 	if enemigo_vivo == 0:
+		emit_signal("all_enemies_defeated")
 		if zona == 3:
 			unlock_camera()
 			zona = 0
@@ -141,4 +146,24 @@ func new_zone(cant: int):
 	lock_camera()
 	enable_zones()
 	cant_ene= cant
-	spawn_enemies(0,200)
+	if player.global_position.x < 1300 and player.global_position.x > 700:
+		aleatoria = randi_range(1,2)
+		if aleatoria == 1:
+			spawn_enemies(650,690)
+		elif aleatoria == 2:
+			spawn_enemies(1350,1400)
+		
+	elif  player.global_position.x > 1300:
+		aleatoria = randi_range(1,2)
+		if aleatoria == 1:
+			spawn_enemies(1250,1290)
+		elif aleatoria == 2:
+			spawn_enemies(1950,2000)
+	else:
+		aleatoria = randi_range(1,2)
+		if aleatoria == 1:
+			spawn_enemies(-64,0)
+		elif aleatoria == 2:
+			spawn_enemies(700,750)
+	
+	
