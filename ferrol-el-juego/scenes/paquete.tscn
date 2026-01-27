@@ -35,6 +35,7 @@ sprite_frames = SubResource("SpriteFrames_0b0qm")
 frame_progress = 0.629377
 
 [node name="Sonido" type="AudioStreamPlayer2D" parent="."]
+top_level = true
 stream = ExtResource("3_qk3ur")
 max_polyphony = 10
 bus = &"Efectos"

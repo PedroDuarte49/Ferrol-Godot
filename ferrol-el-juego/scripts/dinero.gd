@@ -12,6 +12,7 @@ func _on_body_entered(body: Node2D) -> void:
 		picked = true
 		anim.visible = false
 		GameManager.add_points(point_value)
+		GameManager.hud.update_points()
 		sonido.play()
 		await sonido.finished
 		

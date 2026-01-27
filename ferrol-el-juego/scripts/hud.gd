@@ -1,5 +1,6 @@
 extends CanvasLayer
 
+@onready var points: Label = $HBoxContainer/Sprite2D/points
 @onready var Vida: TextureProgressBar = $HBoxContainer/Barra_Vida
 @onready var botella1: AnimatedSprite2D = $HBoxContainer/Botellas/Botella_1
 @onready var botella2: AnimatedSprite2D = $HBoxContainer/Botellas/Botella_2
@@ -28,3 +29,7 @@ func bottle(cant: int) -> void:
 		botella1.visible = true
 		botella2.visible = true
 		botella3.visible = true
+		
+func update_points():
+	var score_value := GameManager.score
+	points.text = str(score_value).pad_zeros(4)

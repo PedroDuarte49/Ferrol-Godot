@@ -11,7 +11,7 @@ var player_spawn := "spawn"
 var camera_locked := false
 var camera_lock_position := Vector2.ZERO
 signal all_enemies_defeated
-
+var pause_enabled := true
 var score := 0
 var cant_ene := 0
 var aleatoria := 0
@@ -171,19 +171,31 @@ func new_zone(cant: int):
 	
 	
 func win_game():
+	pause_enabled = false
+	get_tree().paused = false
+	pause_menu.visible = false
 	await fade.fade_to_black()
-	get_tree().change_scene_to_file("res://scenes/Win_Scene.tscn") 
+	get_tree().change_scene_to_file("res://scenes/Win_Scene.tscn")
+
+	#para pedro aqui es donde iria tu escena de cinematicas
 func game_over():
+	pause_enabled = false
+	get_tree().paused = false
+	pause_menu.visible = false
 	await fade.fade_to_black()
-	get_tree().change_scene_to_file("res://scenes/game_over.tscn") 
+	get_tree().change_scene_to_file("res://scenes/game_over.tscn")
+
 
 func _input(event):
+	if not pause_enabled:
+		return
+
 	if event.is_action_pressed("Pause"):
 		if get_tree().paused:
 			resume_game()
 		else:
 			pause_game()
-			
+
 func pause_game():
 	get_tree().paused = true
 	pause_menu.visible = true

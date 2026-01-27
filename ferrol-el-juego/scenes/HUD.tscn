@@ -105,6 +105,8 @@ animations = [{
 base_font = ExtResource("2_1and6")
 
 [node name="Hud" type="CanvasLayer"]
+scale = Vector2(1.5, 1.5)
+transform = Transform2D(1.5, 0, 0, 1.5, 0, 0)
 script = ExtResource("1_twldb")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -146,7 +148,7 @@ texture_progress_offset = Vector2(25, 0)
 position = Vector2(350, 10)
 texture = ExtResource("1_gv1iq")
 
-[node name="Label" type="Label" parent="HBoxContainer/Sprite2D"]
+[node name="points" type="Label" parent="HBoxContainer/Sprite2D"]
 offset_left = -16.0
 offset_top = 2.0
 offset_right = 48.0
@@ -154,7 +156,7 @@ offset_bottom = 21.0
 localize_numeral_system = false
 theme_override_fonts/font = SubResource("FontVariation_w75gc")
 theme_override_font_sizes/font_size = 8
-text = "9999"
+text = "0000"
 autowrap_trim_flags = 0
 metadata/_edit_use_anchors_ = true
 

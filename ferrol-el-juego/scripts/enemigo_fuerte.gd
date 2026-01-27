@@ -9,6 +9,7 @@ func _ready():
 	health = 80
 	speed = 85
 	attack_power = 15
+	point_value= 100
 
 func state_attack(delta):
 	play_anim("attack")

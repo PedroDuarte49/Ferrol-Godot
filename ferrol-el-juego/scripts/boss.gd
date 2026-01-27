@@ -219,7 +219,7 @@ func apply_knockback(amount:int, from_position: Vector2, attack_type:int, knockb
 
 func _end_knockback():
 	if state != State.DEAD:
-		if health < 50 and state != State.SUMMON:
+		if health < 10 and state != State.SUMMON:
 			start_summon_state()
 		else:
 			state = State.CHASE

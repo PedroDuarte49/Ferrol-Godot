@@ -9,6 +9,7 @@ func _ready():
 	health = 60
 	speed = 140
 	attack_power = 25
+	point_value = 150
 
 
 func state_idle(delta):
