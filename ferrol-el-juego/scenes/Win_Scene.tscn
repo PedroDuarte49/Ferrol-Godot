@@ -19,8 +19,8 @@ script = ExtResource("1_ue0dd")
 
 [node name="Fondo" type="Sprite2D" parent="."]
 z_index = 2
-position = Vector2(600, 322)
-scale = Vector2(0.7539868, 0.6416015)
+position = Vector2(588.03094, 322)
+scale = Vector2(0.76957154, 0.6416015)
 texture = ExtResource("1_jdpjn")
 
 [node name="Fondo Secundario" type="ColorRect" parent="."]
@@ -96,24 +96,6 @@ offset_right = 213.75519
 offset_bottom = 240.78531
 color = Color(0.44291076, 0.44291076, 0.44291073, 0.65882355)
 
-[node name="Fondo Secundario Boton2" type="ColorRect" parent="Fondo Secundario"]
-z_index = 4
-layout_mode = 0
-offset_left = 192.99997
-offset_top = 278.0
-offset_right = 294.99997
-offset_bottom = 302.0
-color = Color(0.44291076, 0.44291076, 0.44291073, 0.65882355)
-
-[node name="Fondo Secundario Boton" type="ColorRect" parent="Fondo Secundario"]
-z_index = 4
-layout_mode = 0
-offset_left = 7.0
-offset_top = 274.5
-offset_right = 108.999985
-offset_bottom = 298.5
-color = Color(0.44291076, 0.44291076, 0.44291073, 0.65882355)
-
 [node name="Titulo" type="Label" parent="Fondo Secundario"]
 z_index = 5
 layout_mode = 0
@@ -156,3 +138,6 @@ volume_db = -4.0
 autoplay = true
 max_polyphony = 10
 bus = &"Musica"
+
+[connection signal="pressed" from="Fondo Secundario/Subir" to="." method="_on_subir_pressed"]
+[connection signal="pressed" from="Fondo Secundario/Volver" to="." method="_on_volver_pressed"]

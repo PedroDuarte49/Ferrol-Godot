@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=4 uid="uid://cdh0i6alksv40"]
+[gd_scene load_steps=14 format=4 uid="uid://cdh0i6alksv40"]
 
 [ext_resource type="Texture2D" uid="uid://dhx4iqhtnhp4i" path="res://assets/Stage Layers/tileset.png" id="1_1kq6m"]
 [ext_resource type="Script" uid="uid://bhnqwgq4tejp3" path="res://scripts/mapa_1.gd" id="1_jl44s"]
 [ext_resource type="PackedScene" uid="uid://nxgdlia0kfhr" path="res://scenes/boca_incendios.tscn" id="2_5esth"]
 [ext_resource type="Texture2D" uid="uid://d1rmo8orikphs" path="res://assets/Alfonso_Molina.png" id="4_5esth"]
 [ext_resource type="Script" uid="uid://cf3efjynb3jvn" path="res://scenes/Zonas.gd" id="5_loevk"]
+[ext_resource type="PackedScene" uid="uid://b8itj26jbyko3" path="res://scenes/paquete.tscn" id="6_wyn66"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1noi2"]
 texture = ExtResource("1_1kq6m")
@@ -658,6 +659,9 @@ script = ExtResource("5_loevk")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InicioZonas/Zona2"]
 position = Vector2(1241.7655, 16.07473)
 shape = SubResource("RectangleShape2D_gymgq")
+
+[node name="paquete" parent="." instance=ExtResource("6_wyn66")]
+position = Vector2(319, 108)
 
 [connection signal="body_entered" from="InicioZonas/Zona1" to="InicioZonas/Zona1" method="_on_body_entered"]
 [connection signal="body_entered" from="InicioZonas/Zona2" to="InicioZonas/Zona2" method="_on_body_entered"]

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cq1oij1i2h68" path="res://scripts/paquete.gd" id="1_qk3ur"]
 [ext_resource type="Texture2D" uid="uid://dhea1osow3gmw" path="res://assets/Boxes/4.png" id="2_eiu7b"]
-[ext_resource type="AudioStream" uid="uid://b77k3m5l1vegf" path="res://assets/Sonidos y Musica/Sonidos y Musica/musica win.mp3" id="3_qk3ur"]
+[ext_resource type="AudioStream" uid="uid://bdgb3e303kqit" path="res://assets/Sonidos y Musica/Sonidos y Musica/you-win-sequence-1-183948.mp3" id="3_qk3ur"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5xt1d"]
 size = Vector2(20, 19)

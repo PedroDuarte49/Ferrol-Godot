@@ -186,9 +186,9 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 		state = State.HURT
 		apply_knockback(amount, from_position, attack_type)
 
-func apply_knockback(amount:int, from_position: Vector2, attack_type:int, knockback_strength: float = 10.0, knockback_time = 0.5):
+func apply_knockback(amount:int, from_position: Vector2, attack_type:int, knockback_strength: float = 5.0, knockback_time = 0.5):
 	var dir = (global_position - from_position).normalized()
-	dir.y = -0.5 if attack_type == 1 else 0.0
+	dir.y = -0.2 if attack_type == 1 else 0.0
 	velocity = dir * (knockback_strength * amount)
 
 	var t = get_tree().create_timer(knockback_time)
