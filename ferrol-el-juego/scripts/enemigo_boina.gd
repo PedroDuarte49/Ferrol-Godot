@@ -147,12 +147,16 @@ func state_dead(_delta):
 	velocity = Vector2.ZERO
 	play_anim("die")
 	attack_hitbox.monitoring = false
-	hurtbox.set_deferred("disabled", true)
-
+	hurtbox.disabled = true
+	if not (self is Colegiala):
+		GameManager.enemigo_muerto()
+	
 	death_sound.play()
 	await death_sound.finished
-
 	queue_free()
+
+		
+
 # ------------------- LÓGICA DE COMBATE -------------------
 
 func take_damage(amount: int, from_position: Vector2, attack_type: int):

@@ -6,7 +6,7 @@ extends Node2D
 @export var speed := 400.0
 @export var gravity := 1400.0
 @export var ground_y := 300.0
-@export var damage := 50
+@export var damage := 40
 @export var arc_height := 80.0 # Altura máxima de la parábola
 
 # ============================================================
