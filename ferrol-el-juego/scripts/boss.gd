@@ -200,6 +200,7 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 		return
 
 	health -= amount
+	print(health)
 	spawn_blood()
 
 	if health <= 0:
@@ -209,7 +210,7 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 		state = State.HURT
 		apply_knockback(amount, from_position, attack_type)
 
-func apply_knockback(amount:int, from_position: Vector2, attack_type:int, knockback_strength: float = 10.0, knockback_time = 0.5):
+func apply_knockback(amount:int, from_position: Vector2, attack_type:int, knockback_strength: float = 10.0, knockback_time = 0.2):
 	var dir = (global_position - from_position).normalized()
 	dir.y = -0.5 if attack_type == 1 else 0.0
 	velocity = dir * (knockback_strength * amount)
@@ -219,7 +220,7 @@ func apply_knockback(amount:int, from_position: Vector2, attack_type:int, knockb
 
 func _end_knockback():
 	if state != State.DEAD:
-		if health < 10 and state != State.SUMMON:
+		if health <= 20 and state != State.SUMMON:
 			start_summon_state()
 		else:
 			state = State.CHASE

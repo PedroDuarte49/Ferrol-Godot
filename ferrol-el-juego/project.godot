@@ -28,6 +28,7 @@ window/stretch/mode="canvas_items"
 Enemy=""
 destructibles=""
 player_hurtbox=""
+Boss=""
 
 [input]
 

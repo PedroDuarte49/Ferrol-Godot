@@ -124,8 +124,8 @@ func enemigo_muerto():
 			unlock_camera()
 			zona = 0
 			level_index += 1
-			fade.fade_to_black()
-			await get_tree().process_frame 
+			await fade.fade_to_black()
+			#await get_tree().process_frame 
 			load_level(levels[level_index])
 		elif zona == 1 or zona == 2:
 			zona1.disabled = true

@@ -393,7 +393,7 @@ height = 34.015244
 radius = 9.0
 height = 68.0
 
-[node name="boss" type="CharacterBody2D" groups=["Enemy"]]
+[node name="boss" type="CharacterBody2D" groups=["Boss", "Enemy"]]
 texture_filter = 1
 collision_layer = 2
 collision_mask = 0
