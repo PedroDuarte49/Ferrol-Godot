@@ -14,6 +14,14 @@ class_name Enemy
 @onready var walk_sound: AudioStreamPlayer2D = $Movimiento
 @onready var attack_sound = $Golpe
 @onready var death_sound = $Muerte
+#pickups
+var pickup_arrojable = preload("res://scenes/botella_arrojable_pickup.tscn")
+var pickup_vida = preload("res://scenes/botella_vida.tscn")
+var pickup_moneda = preload("res://scenes/dinero.tscn")
+var pickup_boost = preload("res://scenes/botella_buffer.tscn")
+var pickup_nada = null  # Representa que no aparece nada
+
+var pickups = [pickup_nada, pickup_vida, pickup_arrojable, pickup_moneda, pickup_boost]
 
 # --- ESTADOS ---
 enum State { IDLE, CHASE, READY, ATTACK, HURT, DEAD }
@@ -21,13 +29,14 @@ var state: State = State.IDLE
 
 # --- PROPIEDADES ---
 var health = 40
-var speed = 100.0
+var speed = 120.0
 var attack_power = 5
 var attack_cooldown = 1.5
 var attack_timer = 0.0
 var direction = -1
 var attack_offset_x := 0.0
 var death_started 
+var point_value= 50
 const MAX_VERTICAL_DIFF := 20.0
 const MIN_X_SEPARATION := 20.0
 const ATTACK_DISTANCE_X := 20.0
@@ -153,6 +162,7 @@ func state_dead(_delta):
 	
 	death_sound.play()
 	await death_sound.finished
+	spawn_pickup()
 	queue_free()
 
 		
@@ -168,16 +178,17 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 
 	if health <= 0:
 		state = State.DEAD
-		GameManager.add_points(50)
+		GameManager.add_points(point_value)
+		GameManager.hud.update_points()
 	else:
 	
 		
 		state = State.HURT
 		apply_knockback(amount, from_position, attack_type)
 
-func apply_knockback(amount:int, from_position: Vector2, attack_type:int, knockback_strength: float = 10.0, knockback_time = 0.5):
+func apply_knockback(amount:int, from_position: Vector2, attack_type:int, knockback_strength: float = 5.0, knockback_time = 0.5):
 	var dir = (global_position - from_position).normalized()
-	dir.y = -0.5 if attack_type == 1 else 0.0
+	dir.y = -0.2 if attack_type == 1 else 0.0
 	velocity = dir * (knockback_strength * amount)
 
 	var t = get_tree().create_timer(knockback_time)
@@ -225,3 +236,13 @@ func _on_attack_hitbox_area_entered(area: Area2D):
 	if area.is_in_group("player_hurtbox"):
 		var player = area.get_parent().get_parent()
 		player.take_damage(attack_power, global_position, 0)
+
+func spawn_pickup():
+	# Escoger aleatoriamente uno de los 5
+	var choice = pickups[randi() % pickups.size()]
+	if choice == null:
+		return	# No se spawnea nada
+
+	var instance = choice.instantiate()
+	instance.global_position = Vector2(global_position.x, 40) #valor y 0 para que no salgan fuera del mapa
+	get_tree().current_scene.add_child(instance)

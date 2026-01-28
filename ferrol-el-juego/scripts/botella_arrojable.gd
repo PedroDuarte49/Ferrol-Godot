@@ -92,11 +92,13 @@ func explode():
 	var radius_y = 35   # profundidad permitida
 
 	for enemy in get_tree().get_nodes_in_group("Enemy"):
-		var dx = abs(enemy.global_position.x - global_position.x)
-		var dy = abs(enemy.global_position.y - global_position.y)
+		# Si es boss, hacemos solo 1 de daño y saltamos al siguiente
+		if enemy.is_in_group("Boss"):
+			enemy.take_damage(10, global_position, 1)
+			continue  # importante: no aplicar daño normal después
 
-		if dx <= radius_x and dy <= radius_y:
-			enemy.take_damage(damage, global_position, 1)
+		# Solo enemigos normales reciben el daño completo
+		enemy.take_damage(damage, global_position, 1)
 
 	# Esperar a que termine la animación antes de destruir
 	await sprite.animation_finished

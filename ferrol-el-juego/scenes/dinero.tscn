@@ -59,6 +59,7 @@ animations = [{
 }]
 
 [node name="dinero" type="Area2D"]
+top_level = true
 script = ExtResource("1_xyoo0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

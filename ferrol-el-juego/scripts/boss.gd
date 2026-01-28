@@ -16,7 +16,7 @@ class_name Boss
 @onready var attack_sound = $Golpe
 @onready var death_sound = $Muerte
 @export var summon_markers: Array[Marker2D]
-
+var paquete_scene = preload("res://scenes/paquete.tscn")
 # --- ESTADOS ---
 enum State { IDLE, CHASE, READY, ATTACK, HURT, DEAD, SUMMON}
 var state: State = State.IDLE
@@ -28,7 +28,7 @@ var has_started_summon := false
 var summon_round := 0
 var base_summons := 2
 # --- PROPIEDADES ---
-var health = 10
+var health = 100
 var speed = 100.0
 var attack_power = 10
 var attack_cooldown = 1.0
@@ -166,7 +166,7 @@ func state_dead(_delta):
 		t.name = "delete_timer"
 		t.one_shot = true
 		t.wait_time = anim.sprite_frames.get_frame_count("die") / anim.sprite_frames.get_animation_speed("die")
-		t.connect("timeout", Callable(self, "queue_free"))
+		t.connect("timeout", Callable(self, "spawn_paquete"))
 		add_child(t)
 		t.start()
 func state_summon(delta):
@@ -192,10 +192,6 @@ func state_summon(delta):
 	if is_sitting and not has_started_summon and anim.animation == "sentada":
 		start_summoning()
 
-	# 3️⃣ Esperar a que mueran todos
-	if has_started_summon and GameManager.summoned_enemies_alive == 0:
-		exit_summon_state()
-
 
 # ------------------- LÓGICA DE COMBATE -------------------
 
@@ -204,6 +200,7 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 		return
 
 	health -= amount
+	print(health)
 	spawn_blood()
 
 	if health <= 0:
@@ -213,7 +210,7 @@ func take_damage(amount: int, from_position: Vector2, attack_type: int):
 		state = State.HURT
 		apply_knockback(amount, from_position, attack_type)
 
-func apply_knockback(amount:int, from_position: Vector2, attack_type:int, knockback_strength: float = 10.0, knockback_time = 0.5):
+func apply_knockback(amount:int, from_position: Vector2, attack_type:int, knockback_strength: float = 10.0, knockback_time = 0.2):
 	var dir = (global_position - from_position).normalized()
 	dir.y = -0.5 if attack_type == 1 else 0.0
 	velocity = dir * (knockback_strength * amount)
@@ -223,7 +220,7 @@ func apply_knockback(amount:int, from_position: Vector2, attack_type:int, knockb
 
 func _end_knockback():
 	if state != State.DEAD:
-		if health < 5 and state != State.SUMMON:
+		if health <= 20 and state != State.SUMMON:
 			start_summon_state()
 		else:
 			state = State.CHASE
@@ -294,7 +291,7 @@ func start_summoning():
 	
 	GameManager.cant_ene = total_enemies
 	GameManager.enemigo_vivo = 0
-	GameManager.spawn_enemies(0, 0)
+	GameManager.spawn_enemies(-50, 0)
 
 	
 func exit_summon_state():
@@ -311,3 +308,15 @@ func _on_all_enemies_defeated():
 		return
 
 	exit_summon_state()
+
+func spawn_paquete():
+	# Instanciar la escena
+	var paquete_instance = paquete_scene.instantiate()
+	paquete_instance.global_position = global_position  # Aparece donde estaba el boss
+	get_tree().current_scene.add_child(paquete_instance)
+	
+	# Eliminar al boss
+	queue_free()
+	
+	# Opcional: Si quieres que GameManager haga algo extra
+	# GameManager.win_game()

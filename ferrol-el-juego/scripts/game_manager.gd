@@ -11,7 +11,7 @@ var player_spawn := "spawn"
 var camera_locked := false
 var camera_lock_position := Vector2.ZERO
 signal all_enemies_defeated
-
+var pause_enabled := true
 var score := 0
 var cant_ene := 0
 var aleatoria := 0
@@ -29,8 +29,7 @@ var saved_score := 0
 var bottle := 3
 # Called when the node enters the scene tree for the first time.
 
-var levels = ["res://scenes/mapa-1.tscn","res://scenes/mapa-2.tscn"
-]
+var levels = ["res://scenes/mapa-1.tscn","res://scenes/mapa-2.tscn","res://scenes/mapa-3.tscn"]
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -98,7 +97,7 @@ func add_points(points:int):
 	print("Points: ", score)
 
 func spawn_enemies(left_border: int, right_border: int):
-	await get_tree().create_timer(5.0).timeout
+	await get_tree().create_timer(2.0).timeout
 	enemigo_vivo = cant_ene
 	print(cant_ene)
 	print(enemigo_vivo)
@@ -125,8 +124,10 @@ func enemigo_muerto():
 			unlock_camera()
 			zona = 0
 			level_index += 1
+			await fade.fade_to_black()
+			#await get_tree().process_frame 
 			load_level(levels[level_index])
-		else:
+		elif zona == 1 or zona == 2:
 			zona1.disabled = true
 			zona2.disabled = true
 			unlock_camera()
@@ -169,18 +170,32 @@ func new_zone(cant: int):
 			spawn_enemies(700,750)
 	
 	
-
-func game_over():
+func win_game():
+	pause_enabled = false
+	get_tree().paused = false
+	pause_menu.visible = false
 	await fade.fade_to_black()
-	get_tree().change_scene_to_file("res://scenes/game_over.tscn") 
+	get_tree().change_scene_to_file("res://scenes/Win_Scene.tscn")
+
+	#para pedro aqui es donde iria tu escena de cinematicas
+func game_over():
+	pause_enabled = false
+	get_tree().paused = false
+	pause_menu.visible = false
+	await fade.fade_to_black()
+	get_tree().change_scene_to_file("res://scenes/game_over.tscn")
+
 
 func _input(event):
+	if not pause_enabled:
+		return
+
 	if event.is_action_pressed("Pause"):
 		if get_tree().paused:
 			resume_game()
 		else:
 			pause_game()
-			
+
 func pause_game():
 	get_tree().paused = true
 	pause_menu.visible = true

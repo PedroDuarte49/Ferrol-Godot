@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://b8itj26jbyko3"]
+
+[ext_resource type="Script" uid="uid://cq1oij1i2h68" path="res://scripts/paquete.gd" id="1_qk3ur"]
+[ext_resource type="Texture2D" uid="uid://dhea1osow3gmw" path="res://assets/Boxes/4.png" id="2_eiu7b"]
+[ext_resource type="AudioStream" uid="uid://bdgb3e303kqit" path="res://assets/Sonidos y Musica/Sonidos y Musica/you-win-sequence-1-183948.mp3" id="3_qk3ur"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5xt1d"]
+size = Vector2(20, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7twdy"]
+atlas = ExtResource("2_eiu7b")
+region = Rect2(0, 0, 30, 17)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0b0qm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7twdy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[node name="paquete" type="Area2D"]
+script = ExtResource("1_qk3ur")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0.5)
+shape = SubResource("RectangleShape2D_5xt1d")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_0b0qm")
+frame_progress = 0.629377
+
+[node name="Sonido" type="AudioStreamPlayer2D" parent="."]
+top_level = true
+stream = ExtResource("3_qk3ur")
+max_polyphony = 10
+bus = &"Efectos"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
