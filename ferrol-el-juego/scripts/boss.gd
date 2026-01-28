@@ -28,7 +28,7 @@ var has_started_summon := false
 var summon_round := 0
 var base_summons := 2
 # --- PROPIEDADES ---
-var health = 100
+var health = 150
 var speed = 100.0
 var attack_power = 10
 var attack_cooldown = 1.0
@@ -220,7 +220,7 @@ func apply_knockback(amount:int, from_position: Vector2, attack_type:int, knockb
 
 func _end_knockback():
 	if state != State.DEAD:
-		if health <= 20 and state != State.SUMMON:
+		if health <= 70 and state != State.SUMMON:
 			start_summon_state()
 		else:
 			state = State.CHASE

@@ -1,10 +1,14 @@
-[gd_scene load_steps=15 format=4 uid="uid://brstcwgmndr2n"]
+[gd_scene load_steps=19 format=4 uid="uid://brstcwgmndr2n"]
 
 [ext_resource type="Script" uid="uid://bhnqwgq4tejp3" path="res://scripts/mapa_1.gd" id="1_beywr"]
 [ext_resource type="PackedScene" uid="uid://nxgdlia0kfhr" path="res://scenes/boca_incendios.tscn" id="2_wueyv"]
 [ext_resource type="Texture2D" uid="uid://dhx4iqhtnhp4i" path="res://assets/Stage Layers/tileset.png" id="3_n58y7"]
 [ext_resource type="Texture2D" uid="uid://br2a7vj21xels" path="res://assets/torrehercules.png" id="4_utkbf"]
 [ext_resource type="PackedScene" uid="uid://vodxbjhevego" path="res://scenes/boss.tscn" id="5_beywr"]
+[ext_resource type="PackedScene" uid="uid://bc7e17lxigpmi" path="res://scenes/barril.tscn" id="6_g0rgk"]
+[ext_resource type="PackedScene" uid="uid://dj1ib80drgnk3" path="res://scenes/botella_vida.tscn" id="7_xgxi2"]
+[ext_resource type="PackedScene" uid="uid://b6m033avjvm7v" path="res://scenes/botella_arrojable.tscn" id="8_sigjx"]
+[ext_resource type="PackedScene" uid="uid://ckcfd6c3x2wy3" path="res://scenes/colegiala.tscn" id="9_xgxi2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1noi2"]
 texture = ExtResource("3_n58y7")
@@ -529,6 +533,21 @@ texture = ExtResource("3_n58y7")
 [sub_resource type="TileSet" id="TileSet_hpnlm"]
 sources/0 = SubResource("TileSetAtlasSource_1noi2")
 
+[sub_resource type="Animation" id="Animation_wueyv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_beywr"]
 resource_name = "luz"
 length = 5.0
@@ -544,21 +563,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(9.318171, 9.353141, 4.666993, 0.7882353)]
-}
-
-[sub_resource type="Animation" id="Animation_wueyv"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n58y7"]
@@ -664,20 +668,20 @@ shape = SubResource("RectangleShape2D_jjktd")
 position = Vector2(74, 19)
 
 [node name="Marker2D2" type="Marker2D" parent="."]
-position = Vector2(203, 99)
+position = Vector2(556, 8)
 
 [node name="Marker2D3" type="Marker2D" parent="."]
 position = Vector2(345, 6)
 
 [node name="Marker2D4" type="Marker2D" parent="."]
-position = Vector2(598, 57)
+position = Vector2(486, 54)
 
 [node name="spawn" type="Marker2D" parent="."]
 position = Vector2(35, 73)
 
 [node name="boss" parent="." node_paths=PackedStringArray("summon_markers") instance=ExtResource("5_beywr")]
 position = Vector2(462, 53)
-summon_markers = [NodePath("../Marker2D"), NodePath("../Marker2D2"), NodePath("../Marker2D3"), NodePath("../Marker2D4")]
+summon_markers = [NodePath("../Marker2D2"), NodePath("../Marker2D"), NodePath("../Marker2D3"), NodePath("../Marker2D4")]
 
 [node name="GPUParticles2D" type="CPUParticles2D" parent="."]
 top_level = true
@@ -689,3 +693,22 @@ randomness = 0.35
 emission_shape = 3
 emission_rect_extents = Vector2(350, 1)
 color = Color(0.4627451, 1, 1, 1)
+
+[node name="barrels" type="Node" parent="."]
+
+[node name="barril" parent="barrels" instance=ExtResource("6_g0rgk")]
+position = Vector2(150, 121)
+pickup_scene = ExtResource("7_xgxi2")
+
+[node name="barril2" parent="barrels" instance=ExtResource("6_g0rgk")]
+position = Vector2(304, -3)
+
+[node name="barril3" parent="barrels" instance=ExtResource("6_g0rgk")]
+position = Vector2(586, 113)
+pickup_scene = ExtResource("8_sigjx")
+
+[node name="colegiala" parent="." instance=ExtResource("9_xgxi2")]
+position = Vector2(197, -5)
+
+[node name="colegiala2" parent="." instance=ExtResource("9_xgxi2")]
+position = Vector2(606, -38)

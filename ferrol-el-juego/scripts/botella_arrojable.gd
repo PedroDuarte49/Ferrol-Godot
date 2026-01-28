@@ -26,7 +26,6 @@ var start_pos: Vector2
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var damage_area: Area2D = $DamageArea
 @onready var animation_player: AnimationPlayer = $AnimatedSprite2D/animation_player
-@onready var audio: AudioStreamPlayer2D = $SonidoExplosionBotella
 
 # ============================================================
 # INICIALIZACIÓN
@@ -64,7 +63,6 @@ func _physics_process(delta):
 
 	if p >= 1.0:
 		explode()
-
 # ============================================================
 # EXPLOSIÓN
 # ============================================================
@@ -73,14 +71,10 @@ func explode():
 		return
 
 	exploded = true
-
-	# 🔊 SONIDO DE IMPACTO
-	audio.play()
-
-	# Detener animación de rotación
+		# Detener animación de rotación
 	if animation_player.is_playing():
 		animation_player.stop()
-
+	
 	sprite.play("explode")
 	damage_area.monitoring = true
 	print("Detectados:", damage_area.get_overlapping_bodies())
@@ -92,14 +86,11 @@ func explode():
 	var radius_y = 35   # profundidad permitida
 
 	for enemy in get_tree().get_nodes_in_group("Enemy"):
-		# Si es boss, hacemos solo 1 de daño y saltamos al siguiente
-		if enemy.is_in_group("Boss"):
-			enemy.take_damage(10, global_position, 1)
-			continue  # importante: no aplicar daño normal después
+		var dx = abs(enemy.global_position.x - global_position.x)
+		var dy = abs(enemy.global_position.y - global_position.y)
 
-		# Solo enemigos normales reciben el daño completo
-		enemy.take_damage(damage, global_position, 1)
+		if dx <= radius_x and dy <= radius_y:
+			enemy.take_damage(damage, global_position, 1)
 
-	# Esperar a que termine la animación antes de destruir
 	await sprite.animation_finished
 	queue_free()

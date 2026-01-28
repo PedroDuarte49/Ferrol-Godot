@@ -323,9 +323,7 @@ script = ExtResource("1_2q8gv")
 texture_filter = 1
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_jo5o4")
-animation = &"die"
-frame = 3
-frame_progress = 1.0
+animation = &"idle"
 
 [node name="enemy_avoid_area" type="Area2D" parent="flipper"]
 position = Vector2(-1, 1)

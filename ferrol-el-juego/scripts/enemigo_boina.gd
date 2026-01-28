@@ -47,7 +47,7 @@ const Z_BASE = 100
 func _ready():
 	anim.connect("animation_finished", Callable(self, "_on_anim_finished"))
 	state = State.IDLE
-	attack_offset_x = randf_range(-30, 30)
+	attack_offset_x = randf_range(-20, 20)
 
 func _physics_process(delta: float) -> void:
 	if state == State.DEAD:

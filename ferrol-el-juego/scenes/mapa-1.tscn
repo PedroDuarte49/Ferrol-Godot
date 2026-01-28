@@ -1,10 +1,15 @@
-[gd_scene load_steps=13 format=4 uid="uid://cdh0i6alksv40"]
+[gd_scene load_steps=18 format=4 uid="uid://cdh0i6alksv40"]
 
 [ext_resource type="Texture2D" uid="uid://dhx4iqhtnhp4i" path="res://assets/Stage Layers/tileset.png" id="1_1kq6m"]
 [ext_resource type="Script" uid="uid://bhnqwgq4tejp3" path="res://scripts/mapa_1.gd" id="1_jl44s"]
 [ext_resource type="PackedScene" uid="uid://nxgdlia0kfhr" path="res://scenes/boca_incendios.tscn" id="2_5esth"]
 [ext_resource type="Texture2D" uid="uid://d1rmo8orikphs" path="res://assets/Alfonso_Molina.png" id="4_5esth"]
 [ext_resource type="Script" uid="uid://cf3efjynb3jvn" path="res://scenes/Zonas.gd" id="5_loevk"]
+[ext_resource type="PackedScene" uid="uid://bc7e17lxigpmi" path="res://scenes/barril.tscn" id="6_7yexa"]
+[ext_resource type="PackedScene" uid="uid://bm8ehel1lm7o" path="res://scenes/botella_arrojable_pickup.tscn" id="7_ows7i"]
+[ext_resource type="PackedScene" uid="uid://4yu436c3d7ki" path="res://scenes/dinero.tscn" id="8_gsgyg"]
+[ext_resource type="PackedScene" uid="uid://dj1ib80drgnk3" path="res://scenes/botella_vida.tscn" id="9_cpwvg"]
+[ext_resource type="PackedScene" uid="uid://ckcfd6c3x2wy3" path="res://scenes/colegiala.tscn" id="10_271fx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1noi2"]
 texture = ExtResource("1_1kq6m")
@@ -645,6 +650,7 @@ shape = SubResource("RectangleShape2D_loevk")
 [node name="Zona1" type="Area2D" parent="InicioZonas"]
 position = Vector2(-31.0708, -5.856491)
 script = ExtResource("5_loevk")
+cant = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InicioZonas/Zona1"]
 z_index = 3
@@ -654,10 +660,49 @@ shape = SubResource("RectangleShape2D_gymgq")
 [node name="Zona2" type="Area2D" parent="InicioZonas"]
 position = Vector2(640.0651, 6.915779)
 script = ExtResource("5_loevk")
+cant = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InicioZonas/Zona2"]
 position = Vector2(1241.7655, 16.07473)
 shape = SubResource("RectangleShape2D_gymgq")
+
+[node name="barilles" type="Node" parent="."]
+
+[node name="barril" parent="barilles" instance=ExtResource("6_7yexa")]
+position = Vector2(284, 114)
+pickup_scene = ExtResource("7_ows7i")
+
+[node name="barril2" parent="barilles" instance=ExtResource("6_7yexa")]
+position = Vector2(521, 1)
+
+[node name="barril3" parent="barilles" instance=ExtResource("6_7yexa")]
+position = Vector2(815, 126)
+pickup_scene = ExtResource("8_gsgyg")
+
+[node name="barril4" parent="barilles" instance=ExtResource("6_7yexa")]
+position = Vector2(830, 82)
+
+[node name="barril5" parent="barilles" instance=ExtResource("6_7yexa")]
+position = Vector2(1089, 14)
+pickup_scene = ExtResource("8_gsgyg")
+
+[node name="barril6" parent="barilles" instance=ExtResource("6_7yexa")]
+position = Vector2(1442, 126)
+
+[node name="barril7" parent="barilles" instance=ExtResource("6_7yexa")]
+position = Vector2(1562, 5)
+pickup_scene = ExtResource("9_cpwvg")
+
+[node name="colegialas" type="Node" parent="."]
+
+[node name="colegiala" parent="colegialas" instance=ExtResource("10_271fx")]
+position = Vector2(536, 87)
+
+[node name="colegiala2" parent="colegialas" instance=ExtResource("10_271fx")]
+position = Vector2(1040, -30)
+
+[node name="colegiala3" parent="colegialas" instance=ExtResource("10_271fx")]
+position = Vector2(1697, 26)
 
 [connection signal="body_entered" from="InicioZonas/Zona1" to="InicioZonas/Zona1" method="_on_body_entered"]
 [connection signal="body_entered" from="InicioZonas/Zona2" to="InicioZonas/Zona2" method="_on_body_entered"]

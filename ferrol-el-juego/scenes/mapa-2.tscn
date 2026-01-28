@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://nbg25i4atvmb"]
+[gd_scene load_steps=21 format=4 uid="uid://nbg25i4atvmb"]
 
 [ext_resource type="Script" uid="uid://bhnqwgq4tejp3" path="res://scripts/mapa_1.gd" id="1_m7f6j"]
 [ext_resource type="Script" uid="uid://cf3efjynb3jvn" path="res://scenes/Zonas.gd" id="2_p71xj"]
@@ -6,6 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://dhx4iqhtnhp4i" path="res://assets/Stage Layers/tileset.png" id="3_vkl20"]
 [ext_resource type="Texture2D" uid="uid://b3x3oaan00fc6" path="res://assets/Mapa2_2.png" id="4_vkl20"]
 [ext_resource type="PackedScene" uid="uid://nxgdlia0kfhr" path="res://scenes/boca_incendios.tscn" id="5_p71xj"]
+[ext_resource type="PackedScene" uid="uid://bc7e17lxigpmi" path="res://scenes/barril.tscn" id="7_tw2lx"]
+[ext_resource type="PackedScene" uid="uid://dj1ib80drgnk3" path="res://scenes/botella_vida.tscn" id="8_ha12q"]
+[ext_resource type="PackedScene" uid="uid://4yu436c3d7ki" path="res://scenes/dinero.tscn" id="9_u16eg"]
+[ext_resource type="PackedScene" uid="uid://bm8ehel1lm7o" path="res://scenes/botella_arrojable_pickup.tscn" id="10_53lll"]
+[ext_resource type="PackedScene" uid="uid://ckcfd6c3x2wy3" path="res://scenes/colegiala.tscn" id="11_ie6l1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6luwp"]
 size = Vector2(242.59639, 20)
@@ -662,6 +667,7 @@ position = Vector2(-865.07886, -1.1354675)
 [node name="Zona1" type="Area2D" parent="InicioZonas"]
 position = Vector2(-31.0708, -5.856491)
 script = ExtResource("2_p71xj")
+cant = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InicioZonas/Zona1"]
 position = Vector2(1158.1885, 24.916092)
@@ -670,6 +676,7 @@ shape = SubResource("RectangleShape2D_uo22h")
 [node name="Zona2" type="Area2D" parent="InicioZonas"]
 position = Vector2(640.0651, 6.915779)
 script = ExtResource("2_p71xj")
+cant = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InicioZonas/Zona2"]
 position = Vector2(1241.7655, 16.07473)
@@ -678,6 +685,7 @@ shape = SubResource("RectangleShape2D_uo22h")
 [node name="ZonaIni" type="Area2D" parent="InicioZonas"]
 position = Vector2(-679.5649, -4.1488953)
 script = ExtResource("2_p71xj")
+cant = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InicioZonas/ZonaIni"]
 position = Vector2(1158.1885, 24.916092)
@@ -685,6 +693,55 @@ shape = SubResource("RectangleShape2D_uo22h")
 
 [node name="spawn" type="Marker2D" parent="."]
 position = Vector2(176.55898, 60.105186)
+
+[node name="barriles" type="Node" parent="."]
+
+[node name="barril" parent="barriles" instance=ExtResource("7_tw2lx")]
+position = Vector2(405, 122)
+pickup_scene = ExtResource("8_ha12q")
+
+[node name="barril2" parent="barriles" instance=ExtResource("7_tw2lx")]
+position = Vector2(536, 13)
+pickup_scene = ExtResource("9_u16eg")
+
+[node name="barril3" parent="barriles" instance=ExtResource("7_tw2lx")]
+position = Vector2(812, 126)
+pickup_scene = ExtResource("10_53lll")
+
+[node name="barril4" parent="barriles" instance=ExtResource("7_tw2lx")]
+position = Vector2(1098, 12)
+
+[node name="barril5" parent="barriles" instance=ExtResource("7_tw2lx")]
+position = Vector2(1269, 109)
+pickup_scene = ExtResource("9_u16eg")
+
+[node name="barril6" parent="barriles" instance=ExtResource("7_tw2lx")]
+position = Vector2(1514, 4)
+pickup_scene = ExtResource("9_u16eg")
+
+[node name="barril7" parent="barriles" instance=ExtResource("7_tw2lx")]
+position = Vector2(1542, 4)
+
+[node name="barril8" parent="barriles" instance=ExtResource("7_tw2lx")]
+position = Vector2(1419, 45)
+pickup_scene = ExtResource("10_53lll")
+
+[node name="colegialas" type="Node" parent="."]
+
+[node name="colegiala" parent="colegialas" instance=ExtResource("11_ie6l1")]
+position = Vector2(95, -36)
+
+[node name="colegiala2" parent="colegialas" instance=ExtResource("11_ie6l1")]
+position = Vector2(590, 91)
+
+[node name="colegiala3" parent="colegialas" instance=ExtResource("11_ie6l1")]
+position = Vector2(1201, -39)
+
+[node name="colegiala4" parent="colegialas" instance=ExtResource("11_ie6l1")]
+position = Vector2(1568, -27)
+
+[node name="colegiala5" parent="colegialas" instance=ExtResource("11_ie6l1")]
+position = Vector2(1340, 91)
 
 [connection signal="body_entered" from="InicioZonas/Zona1" to="InicioZonas/Zona1" method="_on_body_entered"]
 [connection signal="body_entered" from="InicioZonas/Zona2" to="InicioZonas/Zona2" method="_on_body_entered"]
