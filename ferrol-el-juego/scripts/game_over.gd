@@ -3,9 +3,9 @@ extends Node
 @onready var label: Label = $Label
 @onready var score: Label = $Score
 @onready var submit: Button = $Subir
-const API_BASE_URL = "http://127.0.0.1:8000/score"
+const API_BASE_URL ="https://breixo.pythonanywhere.com/score"
 #https://breixo.pythonanywhere.com/score" para usar el server online 
-
+# para servidor local -> "http://127.0.0.1:8000/score"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	score.text=str(GameManager.score)

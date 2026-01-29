@@ -5,8 +5,10 @@ extends Control
 @onready var label: Label = $"Fondo Secundario/Titulo" 
 @onready var score: Label = $"Fondo Secundario/Score"
 @onready var submit: Button = $"Fondo Secundario/Subir"
-const API_BASE_URL = "http://127.0.0.1:8000/score"
+const API_BASE_URL ="https://breixo.pythonanywhere.com/score"
 #https://breixo.pythonanywhere.com/score" para usar el server online 
+# para servidor local -> "http://127.0.0.1:8000/score"
+
 
 func _ready() -> void:
 	# Verificación de seguridad para evitar el error 'null instance'
