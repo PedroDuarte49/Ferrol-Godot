@@ -24,6 +24,7 @@ func _on_server_has_responded(_result, response_code, headers, body):
 	# Solo cambiamos de escena cuando el servidor responde correctamente
 	if response_code == 200 or response_code == 201:
 		get_tree().change_scene_to_file("res://scenes/scoreboard.tscn")
+		queue_free()
 	else:
 		printerr("Error al subir puntuación. Código: ", response_code)
 

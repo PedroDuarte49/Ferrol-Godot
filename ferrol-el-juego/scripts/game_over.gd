@@ -16,9 +16,9 @@ func _on_server_has_responded(_result, response_code, _headers, body):
 	var response = JSON.parse_string(body.get_string_from_utf8())
 	print("Server response:", response)
 
-	if response_code == 201:
+	if response_code in [200,201]:
 		print("Score guardado correctamente")
-
+	get_tree().change_scene_to_file("res://scenes/scoreboard.tscn")
 	queue_free()
 
 
@@ -41,4 +41,4 @@ func _on_subir_pressed() -> void:
 	var body = JSON.stringify({"player": username, "points": int(score.text)})
 	var headers = ["Content-Type: application/json", "Client-Secret: abc"] 
 	http_request.request(API_BASE_URL, headers, HTTPClient.METHOD_POST, body)
-	get_tree().change_scene_to_file("res://scenes/scoreboard.tscn") 
+	 
