@@ -1,7 +1,14 @@
 extends Control
 
 func _on_play_pressed():
-	
+	GameManager.player = null
+	GameManager.hud = null
+	GameManager.levelcontainer = null
+	GameManager.fade = null
+	GameManager.pause_menu = null
+
+	# Resetear datos globales
+	GameManager.score = 0
 	get_tree().change_scene_to_file("res://scenes/main_level.tscn")
 
 func _on_options_pressed():
