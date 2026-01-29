@@ -26,6 +26,7 @@ var start_pos: Vector2
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var damage_area: Area2D = $DamageArea
 @onready var animation_player: AnimationPlayer = $AnimatedSprite2D/animation_player
+@onready var audio: AudioStreamPlayer2D = $SonidoExplosionBotella
 
 # ============================================================
 # INICIALIZACIÓN
@@ -69,7 +70,7 @@ func _physics_process(delta):
 func explode():
 	if exploded:
 		return
-
+	audio.play()
 	exploded = true
 		# Detener animación de rotación
 	if animation_player.is_playing():

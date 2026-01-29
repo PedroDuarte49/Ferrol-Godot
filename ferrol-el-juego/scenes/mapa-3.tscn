@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://brstcwgmndr2n"]
+[gd_scene load_steps=20 format=4 uid="uid://brstcwgmndr2n"]
 
 [ext_resource type="Script" uid="uid://bhnqwgq4tejp3" path="res://scripts/mapa_1.gd" id="1_beywr"]
 [ext_resource type="PackedScene" uid="uid://nxgdlia0kfhr" path="res://scenes/boca_incendios.tscn" id="2_wueyv"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dj1ib80drgnk3" path="res://scenes/botella_vida.tscn" id="7_xgxi2"]
 [ext_resource type="PackedScene" uid="uid://b6m033avjvm7v" path="res://scenes/botella_arrojable.tscn" id="8_sigjx"]
 [ext_resource type="PackedScene" uid="uid://ckcfd6c3x2wy3" path="res://scenes/colegiala.tscn" id="9_xgxi2"]
+[ext_resource type="AudioStream" uid="uid://b4xqmlaxiqyal" path="res://assets/Sonidos y Musica/Sonidos y Musica/udaeusmusic.mp3" id="10_sigjx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1noi2"]
 texture = ExtResource("3_n58y7")
@@ -583,7 +584,7 @@ size = Vector2(247.00677, 24.936325)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jjktd"]
 size = Vector2(700.03, 26.64235)
 
-[node name="mapa-1" type="Node2D"]
+[node name="mapa-3" type="Node2D"]
 script = ExtResource("1_beywr")
 cam_limit_top = -290
 cam_limit_right = 656
@@ -712,3 +713,7 @@ position = Vector2(197, -5)
 
 [node name="colegiala2" parent="." instance=ExtResource("9_xgxi2")]
 position = Vector2(606, -38)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_sigjx")
+autoplay = true
