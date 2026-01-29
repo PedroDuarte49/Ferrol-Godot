@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://cdh0i6alksv40"]
+[gd_scene load_steps=21 format=4 uid="uid://cdh0i6alksv40"]
 
 [ext_resource type="Texture2D" uid="uid://dhx4iqhtnhp4i" path="res://assets/Stage Layers/tileset.png" id="1_1kq6m"]
 [ext_resource type="Script" uid="uid://bhnqwgq4tejp3" path="res://scripts/mapa_1.gd" id="1_jl44s"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://dj1ib80drgnk3" path="res://scenes/botella_vida.tscn" id="9_cpwvg"]
 [ext_resource type="PackedScene" uid="uid://ckcfd6c3x2wy3" path="res://scenes/colegiala.tscn" id="10_271fx"]
 [ext_resource type="AudioStream" uid="uid://dr8ta4q1c7cap" path="res://assets/Sonidos y Musica/Sonidos y Musica/musica fondo juego.mp3" id="11_ows7i"]
+[ext_resource type="Texture2D" uid="uid://di0rsoa262116" path="res://assets/logogasthofr.png" id="12_gsgyg"]
+[ext_resource type="Texture2D" uid="uid://c1c6u8fujonri" path="res://assets/bonilla.jpg" id="13_cpwvg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1noi2"]
 texture = ExtResource("1_1kq6m")
@@ -709,6 +711,18 @@ position = Vector2(1697, 26)
 stream = ExtResource("11_ows7i")
 autoplay = true
 max_polyphony = 10
+
+[node name="Logogasthofr" type="Sprite2D" parent="."]
+top_level = true
+position = Vector2(106.00001, -97)
+scale = Vector2(0.185, 0.18)
+texture = ExtResource("12_gsgyg")
+
+[node name="Bonilla" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.92156863)
+position = Vector2(1560, -75)
+scale = Vector2(0.07291667, 0.07206314)
+texture = ExtResource("13_cpwvg")
 
 [connection signal="body_entered" from="InicioZonas/Zona1" to="InicioZonas/Zona1" method="_on_body_entered"]
 [connection signal="body_entered" from="InicioZonas/Zona2" to="InicioZonas/Zona2" method="_on_body_entered"]
