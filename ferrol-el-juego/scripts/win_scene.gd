@@ -5,6 +5,8 @@ extends Control
 @onready var label: Label = $"Fondo Secundario/Titulo" 
 @onready var score: Label = $"Fondo Secundario/Score"
 @onready var submit: Button = $"Fondo Secundario/Subir"
+const API_BASE_URL = "http://127.0.0.1:8000/score"
+#https://breixo.pythonanywhere.com/score" para usar el server online 
 
 func _ready() -> void:
 	# Verificación de seguridad para evitar el error 'null instance'
@@ -41,7 +43,7 @@ func _on_subir_pressed() -> void:
 	var body = JSON.stringify({"player": username, "points": GameManager.score})
 	var headers = ["Content-Type: application/json", "Client-Secret: abc"]
 	
-	var error = http_request.request("http://127.0.0.1:8000/score", headers, HTTPClient.METHOD_POST, body)
+	var error = http_request.request(API_BASE_URL, headers, HTTPClient.METHOD_POST, body)
 	
 	if error != OK:
 		printerr("Error al lanzar la petición HTTP")

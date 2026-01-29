@@ -1,8 +1,8 @@
 extends Control
 
 @onready var score_list: Label = $VBoxContainer/score_list
-
-
+const API_BASE_URL = "http://127.0.0.1:8000/score"
+#https://breixo.pythonanywhere.com/score" para usar el server online 
 func _ready():
 	load_scoreboard()
 
@@ -10,7 +10,7 @@ func load_scoreboard():
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
 	http_request.request_completed.connect(_on_scoreboard_received)
-	http_request.request("http://127.0.0.1:8000/score", [], HTTPClient.METHOD_GET)
+	http_request.request(API_BASE_URL, [], HTTPClient.METHOD_GET)
 
 func _on_scoreboard_received(result, response_code, headers, body):
 	if response_code != 200:

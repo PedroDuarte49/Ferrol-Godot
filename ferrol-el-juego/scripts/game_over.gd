@@ -3,7 +3,8 @@ extends Node
 @onready var label: Label = $Label
 @onready var score: Label = $Score
 @onready var submit: Button = $Subir
-
+const API_BASE_URL = "http://127.0.0.1:8000/score"
+#https://breixo.pythonanywhere.com/score" para usar el server online 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -39,5 +40,5 @@ func _on_subir_pressed() -> void:
 	http_request.connect("request_completed", _on_server_has_responded)
 	var body = JSON.stringify({"player": username, "points": int(score.text)})
 	var headers = ["Content-Type: application/json", "Client-Secret: abc"] 
-	http_request.request("http://127.0.0.1:8000/score", headers, HTTPClient.METHOD_POST, body)
+	http_request.request(API_BASE_URL, headers, HTTPClient.METHOD_POST, body)
 	get_tree().change_scene_to_file("res://scenes/scoreboard.tscn") 
