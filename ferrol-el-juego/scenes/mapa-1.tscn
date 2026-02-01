@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://cdh0i6alksv40"]
+[gd_scene load_steps=26 format=4 uid="uid://cdh0i6alksv40"]
 
 [ext_resource type="Texture2D" uid="uid://dhx4iqhtnhp4i" path="res://assets/Stage Layers/tileset.png" id="1_1kq6m"]
 [ext_resource type="Script" uid="uid://bhnqwgq4tejp3" path="res://scripts/mapa_1.gd" id="1_jl44s"]
@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://dr8ta4q1c7cap" path="res://assets/Sonidos y Musica/Sonidos y Musica/musica fondo juego.mp3" id="11_ows7i"]
 [ext_resource type="Texture2D" uid="uid://di0rsoa262116" path="res://assets/logogasthofr.png" id="12_gsgyg"]
 [ext_resource type="Texture2D" uid="uid://c1c6u8fujonri" path="res://assets/bonilla.jpg" id="13_cpwvg"]
+[ext_resource type="PackedScene" uid="uid://dkyufipcl6b0s" path="res://scenes/botella_eventp.tscn" id="14_271fx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1noi2"]
 texture = ExtResource("1_1kq6m")
@@ -552,6 +553,58 @@ size = Vector2(1986.0732, 26.64235)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gymgq"]
 size = Vector2(13.0850525, 301.0747)
 
+[sub_resource type="Animation" id="Animation_i5rim"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_271fx"]
+resource_name = "to_black"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_oqqrv"]
+resource_name = "to_transparent"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0ad0g"]
+_data = {
+&"RESET": SubResource("Animation_i5rim"),
+&"to_black": SubResource("Animation_271fx"),
+&"to_transparent": SubResource("Animation_oqqrv")
+}
+
 [node name="mapa-1" type="Node2D"]
 script = ExtResource("1_jl44s")
 cam_limit_top = -250
@@ -724,5 +777,27 @@ position = Vector2(1560, -75)
 scale = Vector2(0.07291667, 0.07206314)
 texture = ExtResource("13_cpwvg")
 
+[node name="botella_evento" parent="." instance=ExtResource("14_271fx")]
+position = Vector2(715.231, 81.769)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="botella_evento"]
+
+[node name="ColorRect" type="ColorRect" parent="botella_evento/CanvasLayer"]
+z_index = 4096
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="botella_evento/CanvasLayer/ColorRect"]
+root_node = NodePath("../../..")
+libraries = {
+&"": SubResource("AnimationLibrary_0ad0g")
+}
+
 [connection signal="body_entered" from="InicioZonas/Zona1" to="InicioZonas/Zona1" method="_on_body_entered"]
 [connection signal="body_entered" from="InicioZonas/Zona2" to="InicioZonas/Zona2" method="_on_body_entered"]
+[connection signal="body_entered" from="botella_evento" to="botella_evento" method="_on_body_entered"]
+[connection signal="animation_finished" from="botella_evento/CanvasLayer/ColorRect/AnimationPlayer" to="botella_evento" method="_on_animation_player_animation_finished"]

@@ -9,7 +9,7 @@ func _on_play_pressed():
 
 	# Resetear datos globales
 	GameManager.score = 0
-	get_tree().change_scene_to_file("res://scenes/main_level.tscn")
+	get_tree().change_scene_to_file("res://scenes/scene_inicio.tscn")
 
 func _on_options_pressed():
 	get_tree().change_scene_to_file("res://scenes/opciones.tscn")

@@ -13,6 +13,5 @@ func _on_body_entered(body: Node2D) -> void:
 		picked = true
 		anim.visible = false
 		
-		GameManager.win_game()
-		
+		get_tree().change_scene_to_file("res://scenes/scena_final.tscn")
 	

@@ -36,7 +36,8 @@ func _ready() -> void:
 
 func load_level(path: String) -> void:
 	# Fade a negro instantáneo
-	fade.modulate.a = 1.0
+	if fade:
+		fade.modulate.a = 1.0
 	await get_tree().process_frame  # renderiza un frame completamente negro
 	
 	if current_level:
@@ -173,8 +174,6 @@ func new_zone(cant: int):
 func win_game():
 	pause_enabled = false
 	get_tree().paused = false
-	pause_menu.visible = false
-	await fade.fade_to_black()
 	get_tree().change_scene_to_file("res://scenes/Win_Scene.tscn")
 
 	#para pedro aqui es donde iria tu escena de cinematicas

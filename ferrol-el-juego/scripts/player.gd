@@ -22,7 +22,8 @@ class_name Player
 # -------------------- ESTADOS --------------------
 enum State { IDLE, RUN, ATTACK, HURT, DEAD, DRINK }
 var state: State = State.IDLE
-
+# -------------------- SCENE --------------------
+var block_player = false
 # -------------------- VARIABLES --------------------
 @export var speed := 180
 @export var attack_power := 10
@@ -54,6 +55,7 @@ func _ready():
 
 # -------------------- PHYSICS PROCESS --------------------
 func _physics_process(delta: float) -> void:
+	if block_player: return;
 	z_index = Z_BASE + int(global_position.y)
 	if state == State.DEAD:
 		walk_sound.stop() # Parar pasos si muere
