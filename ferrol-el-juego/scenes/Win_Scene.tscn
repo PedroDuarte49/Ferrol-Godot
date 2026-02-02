@@ -119,7 +119,7 @@ offset_right = 545.0
 offset_bottom = 375.0
 size_flags_stretch_ratio = 0.0
 theme_override_fonts/font = ExtResource("2_ue0dd")
-text = "BACK"
+text = "QUIT"
 
 [node name="LineEdit" type="LineEdit" parent="Fondo Secundario"]
 top_level = true

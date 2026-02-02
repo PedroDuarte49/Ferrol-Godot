@@ -157,7 +157,7 @@ offset_right = 555.0
 offset_bottom = 430.0
 size_flags_stretch_ratio = 0.0
 theme_override_fonts/font = ExtResource("2_tbwuq")
-text = "BACK"
+text = "QUIT"
 
 [node name="Subir" type="Button" parent="."]
 top_level = true
