@@ -79,19 +79,18 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_0bc36")
 text = "OPTIONS"
 horizontal_alignment = 1
 
-[node name="MUSIC" type="Label" parent="VBoxContainer"]
+[node name="SFX" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_wvblx")
-text = "MUSIC
-"
+text = "SFX"
 
 [node name="MusicSlider" type="HSlider" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="SFX" type="Label" parent="VBoxContainer"]
+[node name="MUSIC" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_7bdti")
-text = "SFX"
+text = "MUSIC"
 
 [node name="SfxSlider" type="HSlider" parent="VBoxContainer"]
 layout_mode = 2
